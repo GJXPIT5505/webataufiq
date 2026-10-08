@@ -6,6 +6,7 @@
         "node": "20.x"
     },
     "scripts": {
+        "prebuild": "npm install @rolldown/binding-linux-x64-gnu --no-save || true",
         "build": "vite build",
         "dev": "vite"
     },
