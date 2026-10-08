@@ -4,6 +4,5 @@ NIXPACKS_PHP_ROOT_DIR = "/app/public"
 
 [phases.build]
 cmds = [
-    "npm run build",
-    "php artisan optimize:clear"
+    "npm run build"
 ]
