@@ -1,0 +1,6 @@
+[providers]
+php = true
+node = true
+
+[variables]
+NIXPACKS_PHP_VERSION = "8.4"
