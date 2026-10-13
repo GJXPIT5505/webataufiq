@@ -1,0 +1,73 @@
+// Urutan wajib: PG -> TK -> SD -> SMP -> SMA (dipakai di dropdown navbar & index page)
+export const jenjangList = [
+  {
+    slug: "pg",
+    name: "PG",
+    fullName: "Play Group",
+    order: 1,
+    kampus: "Rajawali",
+    shortDescription: "Pendidikan anak usia dini yang berfokus pada pembiasaan adab, kemandirian, dan sosialisasi dalam lingkungan Islami yang hangat.",
+    heroImage: "/images/jenjang/pg-hero.jpg",
+    curriculum: ["Pembiasaan Adab & Doa Harian", "Sentra Bermain & Kreativitas"],
+    facilities: ["Ruang Kelas Ber-AC & Ramah Anak", "Indoor Playground & Arena Bermain"],
+    strengths: ["Rasio Guru dan Murid Ideal", "Pendekatan Kasih Sayang & Keteladanan"],
+    gallery: ["/images/jenjang/pg-hero.jpg"],
+  },
+  {
+    slug: "tk",
+    name: "TK",
+    fullName: "Taman Kanak-Kanak",
+    order: 2,
+    kampus: "Rajawali",
+    shortDescription: "Menumbuhkan kecintaan belajar, tahfizh juz 30, dan adab Islami melalui metode pembelajaran aktif dan menyenangkan.",
+    heroImage: "/images/jenjang/tk-hero.jpg",
+    curriculum: ["Tahfizh Al-Qur'an Juz 30", "Pengenalan Literasi & Numerasi Calistung Menyenangkan"],
+    facilities: ["Taman Bermain Edukatif Outdoor", "Perpustakaan Mini Ramah Anak"],
+    strengths: ["Lulusan Siap Masuk SD Berakhlak Mulia", "Pembiasaan Sholat & Wudhu Sejak Dini"],
+    gallery: ["/images/jenjang/tk-hero.jpg"],
+  },
+  {
+    slug: "sd",
+    name: "SD",
+    fullName: "Sekolah Dasar",
+    order: 3,
+    kampus: "Rajawali",
+    shortDescription: "Fondasi akademik kokoh berpadu dengan hafalan Al-Qur'an dan karakter Islami untuk generasi berprestasi dan beradab.",
+    heroImage: "/images/jenjang/sd-hero.jpg",
+    curriculum: ["Kurikulum Nasional Terpadu Islam", "Program Tahfizh Target 3-5 Juz"],
+    facilities: ["Laboratorium Komputer & Sains", "Lapangan Olahraga & Masjid"],
+    strengths: ["Bimbingan Prestasi Akademik & Olimpiade", "Pembinaan Karakter Mandiri & Bertanggung Jawab"],
+    gallery: ["/images/jenjang/sd-hero.jpg"],
+  },
+  {
+    slug: "smp",
+    name: "SMP",
+    fullName: "Sekolah Menengah Pertama",
+    order: 4,
+    kampus: "Banjar",
+    shortDescription: "Mengembangkan potensi kepemimpinan, tahfizh Al-Qur'an intensif, serta keunggulan sains dan teknologi di usia remaja.",
+    heroImage: "/images/jenjang/smp-hero.jpg",
+    curriculum: ["Kurikulum Terpadu & Pendalaman Agama", "Program Tahfizh & Bahasa Arab-Inggris"],
+    facilities: ["Lab IPA & Multimedia", "Perpustakaan Lengkap & Masjid Kampus"],
+    strengths: ["Karakter Remaja Tangguh & Berakhlak", "Prestasi Lomba Tingkat Kota & Provinsi"],
+    gallery: ["/images/jenjang/smp-hero.jpg"],
+  },
+  {
+    slug: "sma",
+    name: "SMA",
+    fullName: "Sekolah Menengah Atas",
+    order: 5,
+    kampus: "Banjar",
+    shortDescription: "Mempersiapkan generasi masa depan yang siap menembus perguruan tinggi terbaik, berjiwa pemimpin, dan berpegang teguh pada nilai Islam.",
+    heroImage: "/images/jenjang/sma-hero.jpg",
+    curriculum: ["Persiapan Masuk PTN & Kampus Impian", "Tahfizh & Kepemimpinan Dakwah"],
+    facilities: ["Lab Terpadu & Pusat Riset Siswa", "Sarana Olahraga Lengkap & Asrama/Kampus"],
+    strengths: ["Tingkat Kelulusan PTN Tinggi", "Jaringan Beasiswa & Kerjasama Kampus Islam"],
+    gallery: ["/images/jenjang/sma-hero.jpg"],
+  },
+];
+
+export function getJenjangBySlug(slug) {
+  return jenjangList.find((j) => j.slug === slug);
+}
+

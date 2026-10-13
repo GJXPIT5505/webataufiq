@@ -14,7 +14,7 @@ import {
   Sun,
   Users,
 } from "lucide-react";
-import Reveal from "@/components/home/Reveal";
+import Reveal from "@/Components/home/Reveal";
 
 const steps = [
   {

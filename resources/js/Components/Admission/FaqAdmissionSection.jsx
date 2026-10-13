@@ -10,7 +10,7 @@ import {
   Plus,
   Sun,
 } from "lucide-react";
-import Reveal from "@/components/home/Reveal";
+import Reveal from "@/Components/home/Reveal";
 
 // Dome-cap outline points (normalized)
 const LEFT_DOME_OUTER = [

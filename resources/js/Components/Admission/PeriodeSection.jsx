@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, ChevronRight, FileText, Gift, Shirt, Sun, Users } from "lucide-react";
-import Reveal from "@/components/home/Reveal";
+import Reveal from "@/Components/home/Reveal";
 
 const periods = [
   {

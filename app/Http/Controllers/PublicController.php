@@ -25,22 +25,29 @@ class PublicController extends Controller
 
     public function show($slug)
     {
-        $post = Post::with('category')->where('slug', $slug)->firstOrFail();
+        $post = Post::with('category')->where('slug', $slug)->first();
 
-        $relatedPosts = Post::with('category')
-            ->where('id', '!=', $post->id)
-            ->when($post->category_id, function ($query) use ($post) {
-                return $query->where('category_id', $post->category_id);
-            })
-            ->latest()
-            ->take(3)
-            ->get();
+        if ($post) {
+            $relatedPosts = Post::with('category')
+                ->where('id', '!=', $post->id)
+                ->when($post->category_id, function ($query) use ($post) {
+                    return $query->where('category_id', $post->category_id);
+                })
+                ->latest()
+                ->take(3)
+                ->get();
 
-        $prevPost = Post::where('id', '<', $post->id)->orderBy('id', 'desc')->first();
-        $nextPost = Post::where('id', '>', $post->id)->orderBy('id', 'asc')->first();
+            $prevPost = Post::where('id', '<', $post->id)->orderBy('id', 'desc')->first();
+            $nextPost = Post::where('id', '>', $post->id)->orderBy('id', 'asc')->first();
+        } else {
+            $relatedPosts = [];
+            $prevPost = null;
+            $nextPost = null;
+        }
 
         return Inertia::render('BlogDetail', [
             'post'         => $post,
+            'slug'         => $slug,
             'relatedPosts' => $relatedPosts,
             'prevPost'     => $prevPost,
             'nextPost'     => $nextPost,

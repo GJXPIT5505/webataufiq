@@ -12,8 +12,25 @@ export default {
 
   theme: {
     extend: {
+      colors: {
+        navy: {
+          DEFAULT: '#102380',
+          dark: '#0b1a63',
+        },
+        gold: {
+          DEFAULT: '#fdd000',
+        },
+        lightblue: {
+          DEFAULT: '#00a1e9',
+        },
+        ivory: {
+          DEFAULT: '#fbf6ea',
+          dark: '#f3ecd9',
+        },
+      },
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        heading: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       keyframes: {
         'ken-burns': {
