@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Sun, ChevronDown, ChevronRight, Lightbulb } from "lucide-react";
-import Reveal from "@/components/home/Reveal";
+import Reveal from "@/Components/home/Reveal";
 
 // Same badge silhouette as VisiMisiSection's ArchBadge (contour-traced
 // from the icon-badge reference) — reused verbatim per instruction so the
