@@ -18,6 +18,7 @@ class Post extends Model
         'title',       // Judul artikel atau Nama foto
         'slug',        // URL unik (penting buat SEO/Blog)
         'category_id',
+        'type',        // 'blog' atau 'gallery'
         'content',     // Isi berita atau caption
         'image',       // Path file gambar di storage
         'is_featured', // Untuk menandai konten utama/headline

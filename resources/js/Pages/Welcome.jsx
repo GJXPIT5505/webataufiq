@@ -1,6 +1,5 @@
 // resources/js/Pages/Home.jsx
 
-import React, { useEffect, useRef, useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Link, Head } from '@inertiajs/react';
 import HeroSlider from '@/Layouts/HeroSlider';
@@ -32,14 +31,78 @@ import {
 // DATA ORNAMEN BACKGROUND (Parallax)
 // ==========================================
 const BACKGROUND_ORNAMENTS = [
-    { id: 1, Icon: Sparkles, size: 28, color: "text-amber-400/60", top: "6%", left: "8%", depth: 0.1 },
-    { id: 2, Icon: Cloud, size: 48, color: "text-amber-200/50", top: "18%", right: "6%", depth: 0.15 },
-    { id: 3, Icon: BookOpen, size: 34, color: "text-amber-600/30", top: "32%", left: "5%", depth: 0.08 },
-    { id: 4, Icon: Smile, size: 30, color: "text-amber-400/40", top: "45%", right: "10%", depth: 0.12 },
-    { id: 5, Icon: Heart, size: 32, color: "text-rose-400/35", top: "58%", left: "7%", depth: 0.18 },
-    { id: 6, Icon: Compass, size: 36, color: "text-amber-500/25", top: "72%", right: "8%", depth: 0.1 },
-    { id: 7, Icon: GraduationCap, size: 44, color: "text-amber-700/25", top: "84%", left: "6%", depth: 0.14 },
-    { id: 8, Icon: Star, size: 26, color: "text-amber-400/50", top: "94%", right: "12%", depth: 0.06 },
+    {
+        id: 1,
+        Icon: Sparkles,
+        size: 28,
+        color: "text-amber-400/60",
+        top: "6%",
+        left: "8%",
+        depth: 0.1,
+    },
+    {
+        id: 2,
+        Icon: Cloud,
+        size: 48,
+        color: "text-amber-200/50",
+        top: "18%",
+        right: "6%",
+        depth: 0.15,
+    },
+    {
+        id: 3,
+        Icon: BookOpen,
+        size: 34,
+        color: "text-amber-600/30",
+        top: "32%",
+        left: "5%",
+        depth: 0.08,
+    },
+    {
+        id: 4,
+        Icon: Smile,
+        size: 30,
+        color: "text-amber-400/40",
+        top: "45%",
+        right: "10%",
+        depth: 0.12,
+    },
+    {
+        id: 5,
+        Icon: Heart,
+        size: 32,
+        color: "text-rose-400/35",
+        top: "58%",
+        left: "7%",
+        depth: 0.18,
+    },
+    {
+        id: 6,
+        Icon: Compass,
+        size: 36,
+        color: "text-amber-500/25",
+        top: "72%",
+        right: "8%",
+        depth: 0.1,
+    },
+    {
+        id: 7,
+        Icon: GraduationCap,
+        size: 44,
+        color: "text-amber-700/25",
+        top: "84%",
+        left: "6%",
+        depth: 0.14,
+    },
+    {
+        id: 8,
+        Icon: Star,
+        size: 26,
+        color: "text-amber-400/50",
+        top: "94%",
+        right: "12%",
+        depth: 0.06,
+    },
 ];
 
 const dataKeunggulan = [
@@ -47,7 +110,8 @@ const dataKeunggulan = [
         id: 1,
         title: "Pendidikan Islam Berkualitas",
         desc: "Mengintegrasikan ilmu dunia dan nilai-nilai Islam dalam setiap kegiatan, membentuk pribadi berakhlak, berilmu, dan bertakwa.",
-        position: "left",
+        position: "left", // Frame foto di kiri, Teks di kanan, Gedung di kanan
+        sunPos: { x: "88%", y: "70%" }, // Posisi relatif matahari pada lintasan
         icon: (
             <svg className="w-6 h-6 text-indigo-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -58,7 +122,8 @@ const dataKeunggulan = [
         id: 2,
         title: "Akademik Berkualitas",
         desc: "Proses pembelajaran aktif dan bermakna yang menumbuhkan kemampuan berpikir, kreativitas, dan kemandirian.",
-        position: "right",
+        position: "right", // Frame foto di kanan, Teks di kiri, Gedung di kiri
+        sunPos: { x: "62%", y: "22%" },
         icon: (
             <svg className="w-6 h-6 text-indigo-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -70,7 +135,8 @@ const dataKeunggulan = [
         id: 3,
         title: "Prestasi Nyata, Membanggakan",
         desc: "Mendorong siswa untuk berprestasi di berbagai bidang, baik akademik, tahfiz, olahraga, seni, maupun kepemimpinan.",
-        position: "left",
+        position: "left", // Frame foto di kiri, Teks di kanan, Gedung di kanan
+        sunPos: { x: "32%", y: "10%" },
         icon: (
             <svg className="w-6 h-6 text-indigo-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -81,7 +147,8 @@ const dataKeunggulan = [
         id: 4,
         title: "Guru & Pendamping yang Berdedikasi",
         desc: "Dibimbing oleh guru dan pendamping yang amanah, berpengalaman, dan tulus mendampingi tumbuh kembang ananda setiap hari.",
-        position: "right",
+        position: "right", // Frame foto di kanan, Teks di kiri, Gedung di kiri
+        sunPos: { x: "12%", y: "45%" },
         icon: (
             <svg className="w-6 h-6 text-indigo-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -112,39 +179,45 @@ function useInView(options = { threshold: 0.15 }) {
 export default function Home({ auth, posts = [], galleries = [] }) {
     const [sectionRef, isInView] = useInView();
 
+    // Data 4 Card Aktivitas
     const activities = [
         {
-            icon: <BookOpenText className="w-6 h-6 text-[#1A2D6C]" />,
+            icon: <BookOpenText className="w-6 h-6 text-[#1A2D6C]" />, // Sesuaikan warna ikon di sini
             title: 'Tahfizh Day',
             desc: 'Event puncak dari perjalanan ananda mencintai Al-Qur\'an — lewat teatrikal, visualisasi, dan tilawah.',
-            image: '/images/home/tahfidzhDay.JPG'
+            image: 'images/home/tahfidzhDay.JPG' // Ganti dengan path gambar asli
         },
         {
             icon: <Lightbulb className="w-6 h-6 text-[#1A2D6C]" />,
             title: 'Fun & Creative Learning',
             desc: 'Belajar tak harus duduk diam. Ananda diajak aktif, bereksplorasi, dan menemukan cara belajarnya sendiri.',
-            image: '/images/jenjang/heroPg.png'
+            image: 'images/jenjang/heroPg.png'
         },
         {
             icon: <Target className="w-6 h-6 text-[#1A2D6C]" />,
             title: 'ITC',
             desc: 'Ruang bagi ananda menemukan dan mengembangkan potensinya, dari robotik hingga olahraga, setiap anak punya kesempatan.',
-            image: '/images/home/itc.JPG'
+            image: 'images/home/itc.JPG'
         },
         {
             icon: <Handshake className="w-6 h-6 text-[#1A2D6C]" />,
             title: 'Ilal Liqo\'',
             desc: 'Bukan sekadar perpisahan, tapi momen ananda menunjukkan kesiapannya memberi arti bagi sesama.',
-            image: '/images/home/ilalLiqo.JPG'
+            image: 'images/home/ilalLiqo.JPG'
         },
     ];
 
+    // Variabel konfigurasi animasi halus
     const fadeInUp = {
         hidden: { opacity: 0, y: 30 },
         visible: (customDelay = 0) => ({
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, delay: customDelay, ease: [0.25, 0.4, 0.25, 1] },
+            transition: {
+                duration: 0.8,
+                delay: customDelay,
+                ease: [0.25, 0.4, 0.25, 1],
+            },
         }),
     };
 
@@ -153,16 +226,24 @@ export default function Home({ auth, posts = [], galleries = [] }) {
         visible: {
             opacity: 1,
             x: 0,
-            transition: { duration: 0.9, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] },
+            transition: {
+                duration: 0.9,
+                delay: 0.4,
+                ease: [0.25, 0.4, 0.25, 1],
+            },
         },
     };
 
     const fadeInRight = {
         hidden: { opacity: 0, x: 40 },
         visible: {
-            opacity: 0.88,
+            opacity: 0.88, // opacity target gedung
             x: 0,
-            transition: { duration: 1, delay: 0.5, ease: [0.25, 0.4, 0.25, 1] },
+            transition: {
+                duration: 1,
+                delay: 0.5,
+                ease: [0.25, 0.4, 0.25, 1],
+            },
         },
     };
 
@@ -587,6 +668,7 @@ export default function Home({ auth, posts = [], galleries = [] }) {
                             />
                         ))}
                     </div>
+
                 </div>
 
             </div>
