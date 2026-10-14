@@ -1,5 +1,4 @@
-// resources/js/Pages/Home.jsx
-
+import React, { useState, useEffect, useRef } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Link, Head } from '@inertiajs/react';
 import HeroSlider from '@/Layouts/HeroSlider';
