@@ -12,15 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Buat Akun Admin Kamu (Biar gak ribet register lagi)
-        User::factory()->create([
-            'name' => 'Muhammad Firman Azhary',
-            'email' => 'admin@attaufiq.com',
-            'password' => bcrypt('password'), // Password-nya: password
-        ]);
-
-        // 2. PANGGIL SEEDER LAINNYA DI SINI! (WAJIB)
+        // Panggil Seeder untuk Akun Admin dan Data Awal
         $this->call([
+            AdminUserSeeder::class,
             PostSeeder::class,
             GallerySeeder::class,
         ]);
