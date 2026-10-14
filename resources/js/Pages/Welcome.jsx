@@ -10,6 +10,7 @@ import ClosingCtaSection from '@/Components/home/closing/ClosingCtaSection';
 import TestimonialSection from '@/Components/home/testimonials/TestimonialSection';
 import BlogPreview from '@/Components/home/BlogPreview';
 import PhotoFrame from '@/Components/home/keunggulan/PhotoFrame';
+import CharacterActivitySection from '@/Components/home/CharacterActivitySection';
 
 import {
     Sparkles,
@@ -246,58 +247,7 @@ export default function Home({ auth, posts = [], galleries = [] }) {
         },
     };
 
-    //   UNTUK ANIMASI JALAN
-    const roadSectionRef = useRef(null);
 
-    // Setup Animation Scroll untuk Section Jalan
-    const { scrollYProgress } = useScroll({
-        target: roadSectionRef,
-        // Kita majukan awal animasinya.
-        // "start 80%" artinya progress 0 dimulai saat start section masih 80% di bawah layar.
-        // Saat start section akhirnya menyentuh top layar (start start), progress sudah jalan.
-        offset: ["start 40%", "end end"]
-    });
-
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 60,
-        damping: 20,
-        restDelta: 0.001
-    });
-
-    const rawX = useTransform(
-        smoothProgress,
-        SCROLL_STOPS,
-        ROAD_CURVES.map(val => `${val}%`),
-        { clamp: true } // Pastikan ini ada agar tidak error di ujung
-    );
-
-    // TAMBAHKAN INI: Mengontrol muncul/hilang orang
-    const opacityPeople = useTransform(
-        smoothProgress,
-        // RENTANG PROGRESS: [Awal Sekali (PG), Menjelang Akhir SMA, Akhir Sekali]
-        // Kita hilangkan titik transisi 0.02 agar tidak ada fade-in di atas.
-        [0, 0.94, 1.0],
-        // RENTANG OPACITY: [Muncul Penuh, Muncul Penuh, Hilang Total]
-        [1, 1, 0]
-    );
-
-    // Definisi warna aesthetic & kontras
-    const primaryTextColor = "text-[#0F1E56]"; // Biru Tua
-    // Warna bayangan teks untuk menciptakan kontras di atas area terang
-    const textShadowStyle = { textShadow: '0 2px 4px rgba(255, 255, 255, 0.9), 0 0 1px rgba(255, 255, 255, 1)' };
-
-    // Menggunakan state khusus untuk section jalanan
-    const [isMobileJalanan, setIsMobileJalanan] = useState(false);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobileJalanan(window.innerWidth < 768);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     // UNTUK KEUNGGULAN
     const containerRef = useRef(null);
