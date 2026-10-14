@@ -71,3 +71,20 @@ Kamu akan melihat tulisan:
   - `fly.toml`: Berisi konfigurasi nama app, pengaturan port HTTP (8080), dan volume database.
   - `Dockerfile`: Berisi resep/cara server menginstal dan menyalakan aplikasimu.
   - `.dockerignore`: Daftar file yang tidak dikirim ke server (seperti folder `vendor` dan `node_modules`).
+  - `.github/workflows/fly-deploy.yml`: File otomatisasi GitHub Actions agar server langsung terupdate otomatis setiap ada update kode baru di GitHub.
+
+---
+
+## 🚀 Cara Mengaktifkan Auto-Deploy Otomatis di GitHub
+
+Agar setiap kali ada yang push / update ke GitHub `firmanazhary/Educational-Web-Portal` website **langsung terupdate otomatis ke Fly.io tanpa perlu buka terminal**, ikuti langkah berikut (cukup sekali saja):
+
+1. Buka repositori: [firmanazhary/Educational-Web-Portal Settings](https://github.com/firmanazhary/Educational-Web-Portal/settings/secrets/actions)
+   *(Minta pemilik repo jika kamu tidak punya akses Settings).*
+2. Klik tombol **New repository secret**.
+3. Isi:
+   - **Name**: `FLY_API_TOKEN`
+   - **Secret**: Masukkan token Fly.io deploy kamu.
+4. Klik **Add secret**.
+
+Setelah ini terpasang, setiap commit baru di branch `master` akan langsung otomatis men-deploy ke Fly.io!
