@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { Link, Head } from '@inertiajs/react';
 import HeroSlider from '@/Layouts/HeroSlider';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import JourneySection from "@/Components/home/journey/JourneySection";
 import KeunggulanSection from '@/Components/home/keunggulan/KeunggulanSection';
 import AchievementsSection from "@/Components/home/achievements/AchievementsSection";
