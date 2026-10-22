@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,12 +42,31 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $login = $this->input('email');
+        $isEmail = filter_var($login, FILTER_VALIDATE_EMAIL);
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+        $credentials = [
+            $isEmail ? 'email' : 'name' => $login,
+            'password' => $this->input('password'),
+        ];
+
+        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
+            // If user typed 'admin' or username while email in DB is admin@attaufiq...
+            $fallbackSuccess = false;
+            if (! $isEmail) {
+                if (Auth::attempt(['email' => 'admin@attaufiq.sch.id', 'password' => $this->input('password')], $this->boolean('remember')) ||
+                    Auth::attempt(['email' => 'admin@attaufiq.com', 'password' => $this->input('password')], $this->boolean('remember'))) {
+                    $fallbackSuccess = true;
+                }
+            }
+
+            if (! $fallbackSuccess) {
+                RateLimiter::hit($this->throttleKey());
+
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
         }
 
         RateLimiter::clear($this->throttleKey());

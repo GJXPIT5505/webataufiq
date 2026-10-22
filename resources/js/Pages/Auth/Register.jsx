@@ -1,100 +1,134 @@
-import React from 'react';
-import { Link } from '@inertiajs/react';
-import { ArrowLeft, ShieldCheck, Sparkles } from 'lucide-react';
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import GuestLayout from '@/Layouts/GuestLayout';
+import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function GuestLayout({ children }) {
+export default function Register() {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route('register'), {
+            onFinish: () => reset('password', 'password_confirmation'),
+        });
+    };
+
     return (
-        <div className="min-h-screen bg-[#071938] text-slate-800 font-sans relative flex flex-col justify-center items-center p-4 sm:p-6 overflow-hidden antialiased">
-            
-            {/* ==========================================
-                1. BLUE AMBIENT LIGHT & MESH PATTERN
-            ========================================== */}
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-blue-600/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute top-10 left-10 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <GuestLayout>
+            <Head title="Daftar Akun Baru" />
 
-            {/* Pattern Mesh Biru Halus */}
-            <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:24px_24px]" />
-
-            {/* ==========================================
-                2. TOMBOL KEMBALI KE BERANDA
-            ========================================== */}
-            <div className="relative z-20 mb-6">
-                <Link
-                    href="/"
-                    className="inline-flex items-center space-x-2 text-xs font-semibold text-blue-200 hover:text-white hover:bg-blue-600/30 transition-all py-2 px-4 rounded-full bg-blue-900/40 border border-blue-400/30 backdrop-blur-md shadow-sm"
-                >
-                    <ArrowLeft size={14} className="text-blue-400" />
-                    <span>Kembali ke Beranda</span>
-                </Link>
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold text-slate-800 tracking-tight">Daftar Akun Baru</h2>
+                <p className="text-sm text-slate-500 mt-1">
+                    Silakan isi formulir di bawah untuk membuat akun baru.
+                </p>
             </div>
 
-            {/* ==========================================
-                3. CARD LAYOUT UTAMA (SERBA BIRU ELEGAN)
-            ========================================== */}
-            <div className="relative z-20 w-full sm:max-w-md">
-                
-                {/* Header Logo & Judul */}
-                <div className="text-center mb-6 flex flex-col items-center">
-                    <Link href="/" className="group flex flex-col items-center">
-                        <div className="relative w-20 h-20 rounded-full bg-white flex items-center justify-center p-2 shadow-2xl shadow-blue-500/30 border-2 border-blue-400 group-hover:scale-105 transition-transform duration-300">
-                            <img
-                                src="/images/logo/logo.png"
-                                alt="SIT At-Taufiq Logo"
-                                className="w-full h-full object-contain"
-                                onError={(e) => {
-                                    e.currentTarget.onerror = null;
-                                    e.currentTarget.style.display = 'none';
-                                }}
-                            />
-                            <div className="absolute -bottom-1.5 bg-[#07327F] text-white text-[9px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-md border border-blue-400/50">
-                                Attaufiq
-                            </div>
-                        </div>
+            <form onSubmit={submit} className="space-y-4">
+                <div>
+                    <InputLabel htmlFor="name" value="Nama Lengkap" />
+
+                    <TextInput
+                        id="name"
+                        name="name"
+                        value={data.name}
+                        className="mt-1 block w-full rounded-xl border-slate-200 focus:border-[#07327F] focus:ring focus:ring-[#07327F]/20 text-sm"
+                        autoComplete="name"
+                        isFocused={true}
+                        placeholder="Contoh: Muhammad Firman"
+                        onChange={(e) => setData('name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.name} className="mt-1" />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="email" value="Alamat Email" />
+
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 block w-full rounded-xl border-slate-200 focus:border-[#07327F] focus:ring focus:ring-[#07327F]/20 text-sm"
+                        autoComplete="username"
+                        placeholder="nama@email.com"
+                        onChange={(e) => setData('email', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.email} className="mt-1" />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="password" value="Kata Sandi (Password)" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full rounded-xl border-slate-200 focus:border-[#07327F] focus:ring focus:ring-[#07327F]/20 text-sm"
+                        autoComplete="new-password"
+                        placeholder="Minimal 8 karakter"
+                        onChange={(e) => setData('password', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.password} className="mt-1" />
+                </div>
+
+                <div>
+                    <InputLabel
+                        htmlFor="password_confirmation"
+                        value="Konfirmasi Kata Sandi"
+                    />
+
+                    <TextInput
+                        id="password_confirmation"
+                        type="password"
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        className="mt-1 block w-full rounded-xl border-slate-200 focus:border-[#07327F] focus:ring focus:ring-[#07327F]/20 text-sm"
+                        autoComplete="new-password"
+                        placeholder="Ulangi kata sandi di atas"
+                        onChange={(e) =>
+                            setData('password_confirmation', e.target.value)
+                        }
+                        required
+                    />
+
+                    <InputError
+                        message={errors.password_confirmation}
+                        className="mt-1"
+                    />
+                </div>
+
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <Link
+                        href={route('login')}
+                        className="text-xs text-[#07327F] hover:underline font-medium"
+                    >
+                        Sudah punya akun? Masuk di sini
                     </Link>
 
-                    <h1 className="font-serif font-bold text-2xl text-white mt-5 tracking-wide">
-                        SIT At-Taufiq Jambi
-                    </h1>
-                    <p className="text-xs text-blue-200/80 font-light mt-1">
-                        Sistem Informasi & Layanan Terpadu
-                    </p>
+                    <PrimaryButton
+                        className="w-full sm:w-auto bg-[#07327F] hover:bg-[#052254] active:bg-[#031433] rounded-xl px-6 py-2.5 text-xs font-bold tracking-wider uppercase text-white shadow-md shadow-blue-900/20"
+                        disabled={processing}
+                    >
+                        {processing ? 'Mendaftar...' : 'Daftar Sekarang'}
+                    </PrimaryButton>
                 </div>
-
-                {/* Card Form Bersih dengan Aksen Biru */}
-                <div className="relative bg-white rounded-[32px] p-6 sm:p-8 shadow-2xl shadow-blue-950/60 border border-blue-100 overflow-hidden">
-                    
-                    {/* Aksen Hiasan Biru Atas */}
-                    <div className="flex justify-center mb-6">
-                        <div className="flex items-center space-x-2 text-blue-600">
-                            <span className="w-8 h-[2px] bg-blue-600/20 rounded-full"></span>
-                            <Sparkles size={15} className="text-blue-600 animate-pulse" />
-                            <span className="w-8 h-[2px] bg-blue-600/20 rounded-full"></span>
-                        </div>
-                    </div>
-
-                    {/* Tempat Form Login / Register / Forgot Password */}
-                    <div className="relative z-10">
-                        {children}
-                    </div>
-
-                    {/* Footer Kecil di Dalam Card */}
-                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                        <span className="flex items-center space-x-1.5 text-[#07327F] font-semibold">
-                            <ShieldCheck size={14} className="text-blue-600" />
-                            <span>Akses Terproteksi</span>
-                        </span>
-                        <span className="text-blue-500 font-bold">● ● ●</span>
-                    </div>
-
-                </div>
-
-                {/* Copyright Bawah */}
-                <div className="text-center mt-6 text-[11px] text-blue-200/60 font-sans">
-                    <p>© 2026 SIT At-Taufiq Jambi. Memberi Arti Itu Attaufiq.</p>
-                </div>
-
-            </div>
-        </div>
+            </form>
+        </GuestLayout>
     );
 }

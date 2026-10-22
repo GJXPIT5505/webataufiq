@@ -677,6 +677,16 @@ export default function Footer() {
                         ))}
                     </div>
 
+                    <div style={{ marginTop: px(22) }}>
+                        <a
+                            href="/admin"
+                            className="inline-flex items-center text-white/40 hover:text-[#FDD000] transition-colors"
+                            style={{ fontSize: px(13), gap: px(6) }}
+                        >
+                            <span>🔐 Portal CMS Admin</span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </footer>
