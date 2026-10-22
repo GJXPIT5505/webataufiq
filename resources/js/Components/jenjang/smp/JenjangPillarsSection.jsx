@@ -1,18 +1,29 @@
 import { ScallopBadge } from "@/Components/about/VisiMisiSection";
 import Reveal from "@/Components/home/Reveal";
-import { Sparkles } from "lucide-react";
 
+// Dome/arch shape and icon pictograms both come straight from real
+// editable SVGs the user supplied (arch-dome-attaufiq.svg and
+// attaufiq_3_pilar_icons_editable.svg) — path data copied as-is, only
+// the colors changed (their own navy/gold gradients → our flat brand
+// tokens). No hand-tracing needed once a real source file exists.
 const DOME_PATH =
   "M640 20 C470 95 356 170 270 278 C184 386 112 515 108 643 C63 657 24 696 24 754 L24 1145 L1256 1145 L1256 754 C1256 696 1217 657 1172 643 C1168 515 1096 386 1010 278 C924 170 810 95 640 20 Z";
 const DOME_INNER_TRIM_PATH =
   "M640 61 C486 130 382 200 305 300 C223 406 151 526 145 668 C96 670 63 708 63 757 L63 1125 L1217 1125 L1217 757 C1217 708 1184 670 1135 668 C1129 526 1057 406 975 300 C898 200 794 130 640 61 Z";
 
-const NAVY = "#0B2559";
+const NAVY = "#102380";
 const GOLD = "#FDD000";
 
+// Icon pictograms — extracted from attaufiq_3_pilar_icons_editable.svg
+// (each icon group there included its own small arch-frame outline
+// around the pictogram; only the pictogram's own paths are kept here,
+// since the dome above already provides the frame). Original coordinate
+// space preserved as-is (each icon's own paths sit within roughly x
+// 45-495, y 35-470), stroke recolored from the source's fixed "#8A6A32"
+// to currentColor so it can take gold or navy depending on the card.
 function KnowledgeIcon({ color }) {
   return (
-    <svg viewBox="30 20 480 470" className="h-full w-full transition-transform duration-300 group-hover:scale-110" fill="none" stroke={color} aria-hidden="true">
+    <svg viewBox="30 20 480 470" className="h-full w-full" fill="none" stroke={color} aria-hidden="true">
       <path d="M155 320V205C205 190 240 200 270 230V365C240 335 205 325 155 340Z" strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />
       <path d="M270 230C300 200 335 190 385 205V340C335 325 300 335 270 365" strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />
       <path d="M270 230V365" strokeWidth={12} strokeLinecap="round" strokeLinejoin="round" />
@@ -36,7 +47,7 @@ function KnowledgeIcon({ color }) {
 
 function LoveIcon({ color }) {
   return (
-    <svg viewBox="30 20 480 470" className="h-full w-full transition-transform duration-300 group-hover:scale-110" fill="none" stroke={color} aria-hidden="true">
+    <svg viewBox="30 20 480 470" className="h-full w-full" fill="none" stroke={color} aria-hidden="true">
       <path
         d="M270 395L145 275C90 222 105 135 180 125C225 119 255 145 270 170C285 145 315 119 360 125C435 135 450 222 395 275Z"
         strokeWidth={12}
@@ -49,7 +60,7 @@ function LoveIcon({ color }) {
 
 function GrowthIcon({ color }) {
   return (
-    <svg viewBox="30 20 480 470" className="h-full w-full transition-transform duration-300 group-hover:scale-110" fill="none" stroke={color} aria-hidden="true">
+    <svg viewBox="30 20 480 470" className="h-full w-full" fill="none" stroke={color} aria-hidden="true">
       <path
         d="M155 405C175 370 205 365 235 385C255 365 285 365 305 385C335 365 365 370 385 405M120 425H420M270 385V180"
         strokeWidth={12}
@@ -95,31 +106,30 @@ function PillarCard({ title, description, Icon, inverted }) {
   const iconColor = inverted ? NAVY : GOLD;
 
   return (
-    <div
-      className="group relative mx-auto w-full max-w-[280px] transition-transform duration-300 hover:-translate-y-2"
-      style={{ aspectRatio: "1260 / 1145" }}
-    >
+    <div className="relative mx-auto w-full max-w-[280px]" style={{ aspectRatio: "1260 / 1145" }}>
       <svg
         viewBox="10 10 1260 1145"
         preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full drop-shadow-md"
+        className="absolute inset-0 h-full w-full"
         aria-hidden="true"
       >
         <path d={DOME_PATH} fill={bg} />
         <path d={DOME_INNER_TRIM_PATH} fill="none" stroke={outline} strokeWidth="10" />
       </svg>
 
+      {/* Icon + text: raised 2cm from the original position, then lowered
+          1.5cm back per follow-up instruction, netting a 0.5cm raise. */}
       <div
-        className="absolute inset-0 z-10 flex flex-col items-center px-6 text-center"
+        className="relative z-10 flex h-full flex-col items-center px-6 text-center"
         style={{ paddingTop: "calc(4rem - 0.5cm)" }}
       >
         <div className="h-14 w-14">
           <Icon color={iconColor} />
         </div>
-        <h3 className={`font-serif mt-3 text-2xl font-bold ${inverted ? "text-[#0B2559]" : "text-white"}`}>
+        <h3 className={`font-heading mt-3 text-2xl font-bold ${inverted ? "text-navy" : "text-white"}`}>
           {title}
         </h3>
-        <p className={`mt-3 text-sm leading-relaxed ${inverted ? "text-[#0B2559]/80" : "text-white/80"}`}>
+        <p className={`mt-3 text-sm leading-relaxed ${inverted ? "text-navy/70" : "text-white/70"}`}>
           {description}
         </p>
       </div>
@@ -129,31 +139,49 @@ function PillarCard({ title, description, Icon, inverted }) {
 
 export default function JenjangPillarsSection() {
   return (
-    <section className="relative overflow-hidden bg-[#FAF5EE]">
-      <div className="pointer-events-none absolute top-8 left-1/2 -translate-x-1/2 h-64 w-[500px] rounded-full bg-amber-200/25 blur-[120px]" />
-      <div className="pointer-events-none absolute top-14 left-10 text-xl text-amber-500/30 animate-pulse">✦</div>
-      <div className="pointer-events-none absolute top-16 right-12 text-sm text-amber-600/30 animate-ping" style={{ animationDuration: "3.5s" }}>✨</div>
+    <section className="relative bg-ivory">
+      {/* Region A — top padding + heading + cards. The zellige pattern
+          lives ONLY here (sized to match this region's own height, not
+          the whole section), so it can never bleed past the gold divider
+          below. Opacity bumped +5% (0.18 -> 0.23) and the fade direction
+          is unchanged (opaque near the bottom of this region — i.e. near
+          the cards / the gold line — fading out going up toward the
+          heading), per instruction. */}
+      <div className="relative overflow-hidden px-6 pt-16 md:pt-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.138]"
+          style={{
+            maskImage: "linear-gradient(to top, black 0%, black 25%, transparent 75%)",
+            WebkitMaskImage: "linear-gradient(to top, black 0%, black 25%, transparent 75%)",
+          }}
+        >
+          {/* A single large square, centered and bottom-anchored (so its
+              bottom edge sits flush with the gold line below), rotated
+              -90deg around its OWN center. Since it's a true square, the
+              rotation doesn't change its bounding box, so it still spans
+              the full container width edge to edge — only the motif
+              inside visibly reorients. (Rotating the outer wrapper itself
+              instead would collapse its wide/short box into a narrow
+              vertical band, which is the bug this replaced.) */}
+          <div
+            className="absolute left-1/2"
+            style={{
+              bottom: "-15vw",
+              width: "100vw",
+              height: "100vw",
+              backgroundImage: "url(/images/patterns/zellige-lattice.png)",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "100% 100%",
+              transform: "translateX(-50%) rotate(-90deg)",
+            }}
+          />
+        </div>
 
-      <div className="relative z-10 overflow-hidden px-6 pt-12 md:pt-16">
         <div className="relative mx-auto max-w-6xl">
-          <Reveal className="flex flex-col items-center justify-center text-center">
-            <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#B58900]">
-              <Sparkles className="h-3 w-3" />
-              <span>Pondasi Pendidikan Karakter</span>
-            </div>
-
-            <div className="flex items-center justify-center gap-3">
-              <ScallopBadge n={1} />
-              <h2 className="font-serif text-3xl font-bold tracking-wide text-[#0B2559] sm:text-4xl">
-                3 Pilar Utama Kami
-              </h2>
-            </div>
-
-            <div className="mt-3 flex items-center gap-2">
-              <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FDD000]" />
-              <div className="h-1 w-12 rounded-full bg-[#FDD000]" />
-              <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#FDD000]" />
-            </div>
+          <Reveal className="flex items-center justify-center gap-3">
+            <ScallopBadge n={1} />
+            <h2 className="font-heading text-2xl text-navy sm:text-3xl">3 Pilar Utama Kami</h2>
           </Reveal>
 
           <div className="mt-12 grid gap-8 sm:grid-cols-3">
@@ -165,10 +193,17 @@ export default function JenjangPillarsSection() {
           </div>
         </div>
 
-        <div style={{ height: "1.5cm" }} />
+        {/* Pushes Region A's own bottom edge (and therefore the gold
+            divider + pattern anchor right after it) 1cm past the cards'
+            bottom edge, per instruction. */}
+        <div style={{ height: "1cm" }} />
       </div>
 
-      <div className="h-px w-full bg-[#FDD000]/25" />
+      {/* Gold divider — immediately follows Region A (which now carries an
+          extra 1cm of bottom space), so it sits 1cm past the pillar
+          domes' own bottom outline. Below this line: plain ivory, no
+          pattern at all. */}
+      <div className="h-px w-full bg-gold/[0.147]" />
       <div className="pb-16 md:pb-20" />
     </section>
   );

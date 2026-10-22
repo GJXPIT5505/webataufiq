@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function Reveal({ children, delay = 0, className = "" }) {
+export default function Reveal({ children, delay = 0, className = "", style }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -10,6 +10,7 @@ export default function Reveal({ children, delay = 0, className = "" }) {
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>

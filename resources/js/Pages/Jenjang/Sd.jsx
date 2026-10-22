@@ -14,8 +14,8 @@ export default function SdPage() {
     <AppLayout title="SD - SIT At-Taufiq">
       <Head title="SD - SIT At-Taufiq" />
 
-      {/* <main className="min-h-screen w-full bg-[#FFFBEF] text-indigo-950 flex flex-col overflow-x-hidden selection:bg-amber-100 selection:text-amber-800"> */}
-        <JenjangDetailHero photoSrc="/images/jenjang/pg-hero.jpg" />
+      
+        <JenjangDetailHero photoSrc="/images/jenjang/sd-hero.jpg" />
         <JenjangPillarsSection />
         <WhyChooseSection />
         <FacilitiesSection />
@@ -23,7 +23,7 @@ export default function SdPage() {
         <JoinSection />
         <TestimonialsSection />
         <GallerySection />
-      {/* </main> */}
+      
     </AppLayout>
   );
 }
