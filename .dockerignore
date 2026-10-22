@@ -4,3 +4,4 @@ vendor
 .env
 fly.zip
 fly_bin
+.agents
