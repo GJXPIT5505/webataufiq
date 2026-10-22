@@ -12,6 +12,7 @@ import {
 import { LinkButton } from "@/Components/ui/Button";
 import ImagePlaceholder from "@/Components/ui/ImagePlaceholder";
 import Reveal from "@/Components/home/Reveal";
+import { dummyBlogPosts } from "@/data/blog";
 
 const BG_SRC = "/images/blog/blog-preview-bg.png";
 
@@ -37,10 +38,18 @@ function formatDate(dateString) {
 }
 
 export default function BlogPreview({ posts = [] }) {
+  const hasPosts = Array.isArray(posts)
+    ? posts.length > 0
+    : Boolean(posts?.data && posts.data.length > 0);
+
+  const effectivePosts = hasPosts
+    ? (Array.isArray(posts) ? posts : posts.data)
+    : dummyBlogPosts;
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Jika data posts belum ada atau array kosong
-  if (!posts || posts.length === 0) {
+  if (!effectivePosts || effectivePosts.length === 0) {
     return (
       <section className="relative overflow-hidden py-20 text-center font-sans">
         <p className="font-medium text-[#102380]/70">
@@ -50,13 +59,13 @@ export default function BlogPreview({ posts = [] }) {
     );
   }
 
-  const count = posts.length;
+  const count = effectivePosts.length;
   const prevIndex = (activeIndex - 1 + count) % count;
   const nextIndex = (activeIndex + 1) % count;
 
-  const active = posts[activeIndex] || {};
-  const prev = posts[prevIndex] || {};
-  const next = posts[nextIndex] || {};
+  const active = effectivePosts[activeIndex] || {};
+  const prev = effectivePosts[prevIndex] || {};
+  const next = effectivePosts[nextIndex] || {};
 
   return (
     <section className="relative overflow-hidden py-20 font-sans md:py-28">

@@ -2,10 +2,13 @@ import { jenjangList } from "./jenjang";
 import { eventsList } from "./events";
 import { programsList } from "./programs";
 
-// Struktur navbar utama. Submenu Jenjang/Events/Programs digenerate dari data
-// array masing-masing (src/data/jenjang.js, events.js, programs.js) — nambah
-// atau hapus item di sana otomatis muncul/hilang di navbar.
-export function getNavItems() {
+// Struktur navbar utama.
+// Submenu Events & Programs dapat menerima data dinamis dari database (via Inertia props).
+// Jika database belum diisi, otomatis menggunakan fallback static data.
+export function getNavItems({ navEvents = [], navPrograms = [] } = {}) {
+  const eventsData = navEvents && navEvents.length > 0 ? navEvents : eventsList;
+  const programsData = navPrograms && navPrograms.length > 0 ? navPrograms : programsList;
+
   return [
     { label: "Home", href: "/" },
     {
@@ -28,7 +31,7 @@ export function getNavItems() {
     {
       label: "Events",
       href: "/events",
-      children: eventsList.map((e) => ({
+      children: eventsData.map((e) => ({
         label: e.title,
         href: `/events?event=${e.slug}`,
       })),
@@ -36,7 +39,7 @@ export function getNavItems() {
     {
       label: "Programs",
       href: "/programs",
-      children: programsList.map((p) => ({
+      children: programsData.map((p) => ({
         label: p.title,
         href: `/programs?program=${p.slug}`,
       })),
@@ -44,4 +47,3 @@ export function getNavItems() {
     { label: "Blog", href: "/blog" },
   ];
 }
-

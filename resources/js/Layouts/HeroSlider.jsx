@@ -1,10 +1,8 @@
-"use client";
-
 import { useCallback, useEffect, useRef, useState } from "react";
-import { heroSlides } from "../data/heroSlides";
+import { heroSlides } from "@/data/heroSlides";
 import HeroSlideContent from "@/Components/home/HeroSlideContent";
-import SunNavButton from "@/Components/home/SunNavButton";
 import HeroPagination from "@/Components/home/HeroPagination";
+import SunNavButton from "@/Components/home/SunNavButton";
 
 const AUTO_ADVANCE_MS = 6000;
 const SWIPE_THRESHOLD = 60;
@@ -57,51 +55,38 @@ export default function HeroSlider() {
 
   return (
     <section
-      className="relative h-screen w-full overflow-hidden bg-[#102380]"
+      className="relative h-[560px] overflow-hidden bg-navy md:aspect-[16/9] md:h-auto md:min-h-[720px]"
       role="region"
       aria-roledescription="carousel"
       aria-label="Sorotan Attaufiq"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Slider Track */}
       <div
-        className="flex h-full w-full transition-transform duration-700 ease-in-out"
+        className="flex h-full transition-transform duration-700 ease-in-out"
         style={{
-          transform: `translateX(-${index * 100}%)`,
+          width: `${SLIDE_COUNT * 100}%`,
+          transform: `translateX(-${index * (100 / SLIDE_COUNT)}%)`,
         }}
       >
         {heroSlides.map((slide, i) => (
           <div
             key={slide.id}
             aria-hidden={i !== index}
-            className="relative h-full w-full shrink-0 grow-0 bg-[#102380]"
+            className="relative h-full shrink-0"
+            style={{ width: `${100 / SLIDE_COUNT}%` }}
           >
             <HeroSlideContent slide={slide} priority={i === 0} />
           </div>
         ))}
       </div>
 
-      {/* Top-Right Pagination (Dinaikkan agar sejajar under navbar) */}
-      <div className="absolute right-8 top-24 z-30 md:right-16 md:top-28">
-        <HeroPagination
-          count={SLIDE_COUNT}
-          index={index}
-          onSelect={(i) => goTo(i)}
-        />
+      <div className="absolute right-6 top-24 z-20 md:right-10">
+        <HeroPagination count={SLIDE_COUNT} index={index} onSelect={goTo} />
       </div>
 
-      {/* Navigation Buttons */}
-      <SunNavButton
-        direction="prev"
-        onClick={() => goTo(index - 1)}
-        className="absolute left-2 top-1/2 z-30 -translate-y-1/2 sm:left-4"
-      />
-      <SunNavButton
-        direction="next"
-        onClick={() => goTo(index + 1)}
-        className="absolute right-2 top-1/2 z-30 -translate-y-1/2 sm:right-4"
-      />
+      <SunNavButton direction="prev" onClick={() => goTo(index - 1)} className="left-2 sm:left-4" />
+      <SunNavButton direction="next" onClick={() => goTo(index + 1)} className="right-2 sm:right-4" />
     </section>
   );
 }

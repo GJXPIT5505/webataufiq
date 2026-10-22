@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. PANGGIL SEEDER LAINNYA DI SINI! (WAJIB)
+        // 2. Panggil Seeder untuk Akun Admin dan Data Awal
         $this->call([
+            AdminUserSeeder::class,
             PostSeeder::class,
             GallerySeeder::class,
         ]);

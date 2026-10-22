@@ -57,7 +57,7 @@ function ShelfStrip({ decorLeft, decorRight }) {
   return (
     <div
       className="relative z-0 -mt-[41px] sm:-mt-[51px]"
-      style={{ perspective: 500, marginLeft: "-3cm", marginRight: "-3cm" }}
+      style={{ perspective: 500, marginLeft: "-4cm", marginRight: "-4cm" }}
     >
       <div
         aria-hidden="true"
@@ -85,7 +85,7 @@ function ShelfStrip({ decorLeft, decorRight }) {
           className="absolute bottom-7 left-[calc(0.5rem+0.5cm)] z-20 h-[195px] w-[137px] sm:bottom-8 sm:left-[calc(1.5rem+0.5cm)] sm:h-[285px] sm:w-[200px]"
         >
           <img
-            src="/images/footer/footer-lantern.png"
+            src="/images/blog/shelf-lantern.png"
             alt=""
             className="h-full w-full object-contain object-bottom drop-shadow-lg"
           />
@@ -98,7 +98,7 @@ function ShelfStrip({ decorLeft, decorRight }) {
           className="absolute bottom-[calc(1.75rem-0.5cm)] right-[calc(0.5rem-0.5cm)] z-20 h-[180px] w-[187px] sm:bottom-[calc(2rem-0.5cm)] sm:right-[calc(1.5rem-0.5cm)] sm:h-[260px] sm:w-[270px]"
         >
           <img
-            src="/images/hero/bgPot-right.png"
+            src="/images/blog/shelf-plant.png"
             alt=""
             className="h-full w-full object-contain object-bottom drop-shadow-lg"
           />
@@ -194,7 +194,8 @@ export default function BlogGridSection({ posts = [], categories = [] }) {
 
   // Unified items list: DB posts if available, else static
   const allArticles = useMemo(() => {
-    if (posts && posts.length > 0) return posts;
+    const raw = Array.isArray(posts) ? posts : (posts?.data || []);
+    if (raw.length > 0) return raw;
     return staticArticles;
   }, [posts]);
 
@@ -242,7 +243,7 @@ export default function BlogGridSection({ posts = [], categories = [] }) {
   const featuredCatLabel = featuredCatObj?.name || featuredCatObj?.label || (typeof featured?.category === "string" ? featured.category : "");
 
   return (
-    <section className="bg-ivory px-6 py-16 md:py-20 overflow-hidden">
+    <section className="bg-ivory px-6 py-16 md:py-20 overflow-x-clip">
       <div className="mx-auto max-w-6xl">
         {/* Featured article */}
         {featured && (
@@ -333,7 +334,7 @@ export default function BlogGridSection({ posts = [], categories = [] }) {
         </div>
 
         {/* Book grid on wooden shelves */}
-        <div className="mt-10 overflow-hidden py-4">
+        <div className="mt-10 py-4">
           {chunk(pageItems, cols).map((row, rowIndex) => (
             <div key={row[0]?.slug ?? rowIndex} className="mb-10">
               <div

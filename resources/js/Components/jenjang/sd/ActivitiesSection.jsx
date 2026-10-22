@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ScallopBadge } from "@/Components/about/VisiMisiSection";
 import ImagePlaceholder from "@/Components/ui/ImagePlaceholder";
 import SectionBox from "../SectionBox";
 import Reveal from "@/Components/home/Reveal";
+
 
 const CATEGORIES = [
   { key: "adab-keseharian", label: "Adab dan Keseharian" },
@@ -16,82 +17,113 @@ const CATEGORIES = [
   { key: "outdoor", label: "Outdoor" },
 ];
 
+// Every kegiatan photo, tagged by pill category. "Semua" is just the
+// union of all of these (no separate curated list) — filtering narrows
+// this same array down instead of swapping in different data.
 const ACTIVITIES = [
   // Adab dan Keseharian
-  { category: "adab-keseharian", caption: "Mengucapkan Salam" },
-  { category: "adab-keseharian", caption: "Mendoakan Teman" },
-  { category: "adab-keseharian", caption: "Naik Turun Tangga" },
-  { category: "adab-keseharian", caption: "Meletakkan Tas" },
-  { category: "adab-keseharian", caption: "Meletakkan Sepatu" },
-  { category: "adab-keseharian", caption: "Antri" },
-  { category: "adab-keseharian", caption: "Merapihkan Mainan" },
-  { category: "adab-keseharian", caption: "Mengangkat Tangan" },
+  { category: "adab-keseharian", caption: "Morning Tilawah" },
+  { category: "adab-keseharian", caption: "Adab Masuk & Keluar Kelas" },
+  { category: "adab-keseharian", caption: "Adab Belajar" },
+  { category: "adab-keseharian", caption: "Adab Berteman" },
+  { category: "adab-keseharian", caption: "Adab Makan & Minum" },
   { category: "adab-keseharian", caption: "Adab Kamar Mandi" },
-  { category: "adab-keseharian", caption: "Menjaga Kebersihan" },
-  { category: "adab-keseharian", caption: "Berdoa" },
-  { category: "adab-keseharian", caption: "Membuang Sampah" },
+  { category: "adab-keseharian", caption: "Adab Kebersihan" },
+  { category: "adab-keseharian", caption: "Merapikan Barang Pribadi" },
+  { category: "adab-keseharian", caption: "Adab Naik & Turun Tangga" },
+  { category: "adab-keseharian", caption: "Antri" },
+  { category: "adab-keseharian", caption: "Disiplin Waktu" },
+  { category: "adab-keseharian", caption: "Classroom Duty" },
+  { category: "adab-keseharian", caption: "Bebas Komibah" },
   // Akademik
-  { category: "akademik", caption: "Math" },
+  { category: "akademik", caption: "ITC" },
+  { category: "akademik", caption: "Fun & Creative Learning" },
+  { category: "akademik", caption: "Project Based Learning" },
+  { category: "akademik", caption: "Robotik" },
+  { category: "akademik", caption: "Coding" },
+  { category: "akademik", caption: "Literasi dan Membaca" },
+  { category: "akademik", caption: "Writing" },
   { category: "akademik", caption: "Science" },
-  { category: "akademik", caption: "Technology" },
   { category: "akademik", caption: "Engineering" },
-  { category: "akademik", caption: "Membaca" },
-  { category: "akademik", caption: "Menulis" },
-  { category: "akademik", caption: "Public Speaking" },
-  { category: "akademik", caption: "Motorik Halus" },
-  { category: "akademik", caption: "Kognitif" },
-  { category: "akademik", caption: "Sensory" },
+  { category: "akademik", caption: "Math" },
+  { category: "akademik", caption: "Presentasi" },
+  { category: "akademik", caption: "Discussions" },
+  { category: "akademik", caption: "Group Work" },
+  { category: "akademik", caption: "Problem Solving" },
+  { category: "akademik", caption: "Eksperimen" },
   // Deenul Islam
-  { category: "deenul-islam", caption: "Mengenal Doa Harian" },
-  { category: "deenul-islam", caption: "Qissoh Sahabat & Rasul" },
-  { category: "deenul-islam", caption: "Praktik Wudhu" },
-  { category: "deenul-islam", caption: "Praktik Sholat" },
-  { category: "deenul-islam", caption: "Doa Pendek" },
-  { category: "deenul-islam", caption: "Surat Pendek" },
+  { category: "deenul-islam", caption: "Qiblati" },
+  { category: "deenul-islam", caption: "Eidul Jumuah" },
+  { category: "deenul-islam", caption: "Lil Banaat" },
+  { category: "deenul-islam", caption: "Tahfizh Camp" },
   { category: "deenul-islam", caption: "Murojaah" },
-  { category: "deenul-islam", caption: "Infaq" },
-  { category: "deenul-islam", caption: "Sholat Dhuha" },
+  { category: "deenul-islam", caption: "Tilawah" },
   { category: "deenul-islam", caption: "Tahsin" },
-  { category: "deenul-islam", caption: "Aqidah & Akhlak" },
+  { category: "deenul-islam", caption: "Doa Harian" },
   { category: "deenul-islam", caption: "Hafalan Hadits" },
+  { category: "deenul-islam", caption: "Hafalan Dzikir" },
+  { category: "deenul-islam", caption: "Fiqih Pubertas" },
+  { category: "deenul-islam", caption: "Sirah Nabawiyah" },
+  { category: "deenul-islam", caption: "Islamic Stories" },
+  { category: "deenul-islam", caption: "Praktik Ibadah" },
+  { category: "deenul-islam", caption: "Praktik Wudhu" },
+  { category: "deenul-islam", caption: "Praktik Shalat" },
+  { category: "deenul-islam", caption: "Shalat Berjamaah" },
+  { category: "deenul-islam", caption: "Dzikir Pagi dan Petang" },
+  { category: "deenul-islam", caption: "Sholat Dhuha" },
+  { category: "deenul-islam", caption: "Tarhib Ramadhan" },
+  { category: "deenul-islam", caption: "Infaq" },
   // Lifeskills
+  { category: "lifeskills", caption: "Melipat Pakaian" },
+  { category: "lifeskills", caption: "Menyetrika" },
+  { category: "lifeskills", caption: "Merapihkan Kelas" },
+  { category: "lifeskills", caption: "Merapihkan Lemari" },
   { category: "lifeskills", caption: "Fun Cooking" },
-  { category: "lifeskills", caption: "Makan & Minum Sendiri" },
-  { category: "lifeskills", caption: "Toilet Training" },
-  { category: "lifeskills", caption: "Cuci Tangan" },
-  { category: "lifeskills", caption: "Memakai Sepatu" },
-  { category: "lifeskills", caption: "Menyiapkan Alat Makan" },
-  { category: "lifeskills", caption: "Melipat Baju" },
-  { category: "lifeskills", caption: "Menjaga Kebersihan Diri" },
+  { category: "lifeskills", caption: "Basic Sewing" },
+  { category: "lifeskills", caption: "Cleaning" },
   { category: "lifeskills", caption: "Menyapu" },
+  { category: "lifeskills", caption: "Mengepel" },
+  { category: "lifeskills", caption: "Time Management" },
+  { category: "lifeskills", caption: "Teamwork" },
   // Kreativitas
-  { category: "kreativitas", caption: "Painting" },
-  { category: "kreativitas", caption: "Kolase" },
   { category: "kreativitas", caption: "Menggambar" },
   { category: "kreativitas", caption: "Mewarnai" },
+  { category: "kreativitas", caption: "Craft" },
+  { category: "kreativitas", caption: "Kolase" },
+  { category: "kreativitas", caption: "Prakarya dari Bahan Bekas" },
+  { category: "kreativitas", caption: "Karya 3D" },
+  { category: "kreativitas", caption: "Creative Writing" },
+  { category: "kreativitas", caption: "Storytelling" },
   { category: "kreativitas", caption: "Roleplay" },
-  { category: "kreativitas", caption: "Building Block" },
-  { category: "kreativitas", caption: "Arts" },
+  { category: "kreativitas", caption: "Display" },
+  { category: "kreativitas", caption: "Vlog" },
   // Outdoor
-  { category: "outdoor", caption: "Playground Time" },
-  { category: "outdoor", caption: "Sports and Games" },
-  { category: "outdoor", caption: "Bermain Sepeda" },
-  { category: "outdoor", caption: "Permainan Tradisional" },
-  { category: "outdoor", caption: "Aqua Play" },
-  { category: "outdoor", caption: "Fieldtrip" },
-  { category: "outdoor", caption: "Outbound" },
+  { category: "outdoor", caption: "Sport & Games" },
+  { category: "outdoor", caption: "Morning Exercise" },
+  { category: "outdoor", caption: "Outdoor Games" },
+  { category: "outdoor", caption: "Fun Games" },
+  { category: "outdoor", caption: "Team Games" },
+  { category: "outdoor", caption: "Traditional Games" },
+  { category: "outdoor", caption: "Outing" },
+  { category: "outdoor", caption: "Field Trip" },
+  { category: "outdoor", caption: "Outdoor Learning" },
 ];
 
+// Section 4 — "Kegiatan Ananda". Same elevated SectionBox shell as the
+// other sections, with a pill filter row (Semua + 6 kategori) above a
+// horizontally-scrolling photo strip, matching Facilities/Gallery's
+// scroller mechanics. Photos are placeholders for now — no real
+// activity photos supplied yet.
 export default function ActivitiesSection() {
   const [activeCategory, setActiveCategory] = useState("semua");
   const scrollerRef = useRef(null);
 
   useEffect(() => {
-    scrollerRef.current?.scrollTo({ left: 0, behavior: "smooth" });
+    scrollerRef.current?.scrollTo({ left: 0 });
   }, [activeCategory]);
 
   const scrollBy = (dir) => {
-    scrollerRef.current?.scrollBy({ left: dir * 280, behavior: "smooth" });
+    scrollerRef.current?.scrollBy({ left: dir * 260, behavior: "smooth" });
   };
 
   const items =
@@ -100,126 +132,78 @@ export default function ActivitiesSection() {
       : ACTIVITIES.filter((a) => a.category === activeCategory);
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF5EE] px-6 py-14 sm:py-16">
-      {/* Ambient Lighting Ornaments */}
-      <div className="pointer-events-none absolute top-10 left-1/2 h-72 w-[600px] -translate-x-1/2 rounded-full bg-amber-200/20 blur-[130px]" />
-      <div className="pointer-events-none absolute bottom-8 right-10 h-64 w-64 rounded-full bg-blue-900/5 blur-[100px]" />
-      <div className="pointer-events-none absolute top-14 left-8 text-xl text-amber-500/30 animate-pulse">✦</div>
-      <div className="pointer-events-none absolute top-20 right-10 text-sm text-amber-600/30 animate-ping" style={{ animationDuration: "3.5s" }}>✨</div>
-
-      <div className="mx-auto max-w-6xl">
+    <section className="bg-ivory px-6 py-14">
+      <div className="mx-auto" style={{ maxWidth: "calc(72rem + 6cm)" }}>
         <Reveal>
           <SectionBox>
-            <div className="relative overflow-hidden rounded-[2rem] border border-[#FDD000]/30 bg-gradient-to-br from-[#FFFDF7] via-[#FFFBF0] to-[#FFF6E3] p-6 shadow-xl shadow-amber-950/5 sm:p-8 md:p-10">
-              
-              {/* Header Title Section */}
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#B58900]">
-                  <Sparkles className="h-3 w-3" />
-                  <span>Aktivitas & Pembiasaan</span>
-                </div>
-
-                <div className="flex items-center justify-center gap-3">
-                  <ScallopBadge n={4} />
-                  <h2 className="font-serif text-3xl font-bold tracking-wide text-[#102380] sm:text-4xl">
-                    Kegiatan Ananda
-                  </h2>
-                </div>
-
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FDD000]" />
-                  <div className="h-1 w-12 rounded-full bg-[#FDD000]" />
-                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#FDD000]" />
-                </div>
+            <div className="p-6 sm:p-8">
+              <div className="flex items-center justify-center gap-3">
+                <ScallopBadge n={4} />
+                <h2 className="font-heading text-2xl text-navy sm:text-3xl">Kegiatan Ananda</h2>
               </div>
 
-              {/* Category Pills Navigation */}
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
                   onClick={() => setActiveCategory("semua")}
-                  className={`rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     activeCategory === "semua"
-                      ? "bg-[#102380] text-white shadow-md shadow-blue-950/20"
-                      : "border border-amber-300/50 bg-white/70 text-[#102380]/75 hover:border-amber-400 hover:bg-white hover:text-[#102380]"
+                      ? "bg-navy text-white shadow-md"
+                      : "border border-navy/15 text-navy/70 hover:bg-navy/5"
                   }`}
                 >
                   Semua
                 </button>
-                {CATEGORIES.map((c) => {
-                  const isActive = activeCategory === c.key;
-                  return (
-                    <button
-                      key={c.key}
-                      type="button"
-                      onClick={() => setActiveCategory(c.key)}
-                      className={`rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 ${
-                        isActive
-                          ? "bg-[#102380] text-white shadow-md shadow-blue-950/20"
-                          : "border border-amber-300/50 bg-white/70 text-[#102380]/75 hover:border-amber-400 hover:bg-white hover:text-[#102380]"
-                      }`}
-                    >
-                      {c.label}
-                    </button>
-                  );
-                })}
+                {CATEGORIES.map((c) => (
+                  <button
+                    key={c.key}
+                    type="button"
+                    onClick={() => setActiveCategory(c.key)}
+                    className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                      activeCategory === c.key
+                        ? "bg-navy text-white shadow-md"
+                        : "border border-navy/15 text-navy/70 hover:bg-navy/5"
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Controls Bar */}
-              <div className="mt-8 flex items-center justify-between border-b border-amber-200/60 pb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#102380]/70">
-                  Menampilkan <span className="text-[#102380] font-bold">{items.length}</span> Kegiatan
-                </span>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    aria-label="Geser ke kiri"
-                    onClick={() => scrollBy(-1)}
-                    className="flex h-8 w-8 items-center justify-center rounded-xl border border-amber-200 bg-white text-[#102380] shadow-sm transition-all duration-200 hover:border-[#102380] hover:bg-[#102380] hover:text-[#FDD000] active:scale-95"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Geser ke kanan"
-                    onClick={() => scrollBy(1)}
-                    className="flex h-8 w-8 items-center justify-center rounded-xl border border-amber-200 bg-white text-[#102380] shadow-sm transition-all duration-200 hover:border-[#102380] hover:bg-[#102380] hover:text-[#FDD000] active:scale-95"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
+              <div className="relative mt-8">
+                <button
+                  type="button"
+                  aria-label="Geser ke kiri"
+                  onClick={() => scrollBy(-1)}
+                  className="absolute top-[40%] left-0 z-10 -translate-x-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center rounded-full bg-white text-navy shadow-md transition-colors hover:bg-navy hover:text-white"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
 
-              {/* Scrollable Cards Carousel */}
-              <div className="relative mt-5">
                 <div
                   ref={scrollerRef}
-                  className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
                 >
                   {items.map((item) => (
-                    <div
-                      key={`${item.category}-${item.caption}`}
-                      className="group/card w-44 shrink-0 snap-start sm:w-52"
-                    >
-                      <div className="overflow-hidden rounded-2xl border border-amber-300/40 bg-white/80 p-2 shadow-sm transition-all duration-300 group-hover/card:-translate-y-1.5 group-hover/card:border-amber-400 group-hover/card:shadow-md group-hover/card:shadow-amber-950/10">
-                        <div className="relative h-32 w-full overflow-hidden rounded-xl bg-slate-900 sm:h-36">
-                          <ImagePlaceholder
-                            label={`[Foto ${item.caption}]`}
-                            className="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
-                          />
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#102380]/60 via-transparent to-transparent opacity-60" />
-                        </div>
-                        <div className="pt-2.5 pb-1 px-1">
-                          <p className="text-center font-serif text-sm font-semibold text-[#102380] transition-colors group-hover/card:text-amber-700">
-                            {item.caption}
-                          </p>
-                        </div>
-                      </div>
+                    <div key={`${item.category}-${item.caption}`} className="w-44 shrink-0 snap-start sm:w-48">
+                      <ImagePlaceholder
+                        label={`[ISI: Foto ${item.caption}]`}
+                        className="h-36 w-44 rounded-2xl sm:h-40 sm:w-48"
+                      />
+                      <p className="mt-2 text-center text-sm font-medium text-navy">{item.caption}</p>
                     </div>
                   ))}
                 </div>
-              </div>
 
+                <button
+                  type="button"
+                  aria-label="Geser ke kanan"
+                  onClick={() => scrollBy(1)}
+                  className="absolute top-[40%] right-0 z-10 grid h-10 w-10 translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-md transition-colors hover:bg-navy hover:text-white"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </SectionBox>
         </Reveal>

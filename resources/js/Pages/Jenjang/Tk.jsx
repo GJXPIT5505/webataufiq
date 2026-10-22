@@ -14,8 +14,8 @@ export default function TkPage() {
     <AppLayout title="TK - SIT At-Taufiq">
       <Head title="TK - SIT At-Taufiq" />
 
-      {/* <main className="min-h-screen w-full bg-[#FFFBEF] text-indigo-950 flex flex-col overflow-x-hidden selection:bg-amber-100 selection:text-amber-800"> */}
-        <JenjangDetailHero photoSrc="/images/jenjang/pg-hero.jpg" />
+      
+        <JenjangDetailHero photoSrc="/images/jenjang/tk-hero.jpg" />
         <JenjangPillarsSection />
         <WhyChooseSection />
         <FacilitiesSection />
@@ -23,7 +23,7 @@ export default function TkPage() {
         <JoinSection />
         <TestimonialsSection />
         <GallerySection />
-      {/* </main> */}
+      
     </AppLayout>
   );
 }

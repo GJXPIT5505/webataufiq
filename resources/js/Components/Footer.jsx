@@ -197,6 +197,35 @@ const ARCH_PATH_D = [
         [...ARCH_LEFT_HALF].reverse().map(([x, y]) => [2 * ARCH_PEAK_X - x, y])
     ),
 ].join(" ");
+
+// Dome-only variant (no straight side-walls dropping to the floor)
+// for use as a standalone decorative frame elsewhere on the site —
+// specifically row 4 of each card in Admission's PersyaratanSection.
+const ARCH_DOME_ONLY_PATH_D = [
+    `M${ARCH_LEFT_HALF[0][0]},${ARCH_LEFT_HALF[0][1]}`,
+    catmullRomPath(ARCH_LEFT_HALF),
+    catmullRomPath(
+        [...ARCH_LEFT_HALF].reverse().map(([x, y]) => [2 * ARCH_PEAK_X - x, y])
+    ),
+].join(" ");
+
+export function FooterArchLineArt({ className, domeOnly }) {
+    return (
+        <svg
+            viewBox={domeOnly ? "180 109 494 178" : "180 103 494 581"}
+            className={className}
+            aria-hidden="true"
+        >
+            <path
+                d={domeOnly ? ARCH_DOME_ONLY_PATH_D : ARCH_PATH_D}
+                fill="none"
+                stroke="#FDD000"
+                strokeWidth="3"
+            />
+        </svg>
+    );
+}
+
 const ARCH_RIGHT_FADE_PATH_D = `M${ARCH_RIGHT_FOOT_X},${ARCH_LEFT_HALF[0][1]} L${ARCH_RIGHT_FOOT_X},${ARCH_RIGHT_FADE_BOTTOM_Y}`;
 
 // Closed silhouette (dome + both sides + a flat bottom) used ONLY as a
@@ -335,7 +364,7 @@ function MailIcon(props) {
 // should not be rounded circle". Built as one shape (bubble outline +
 // filled handset) rather than a lucide icon dropped into a circular
 // badge.
-function WhatsappIcon(props) {
+export function WhatsappIcon(props) {
     return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
             <path
@@ -553,7 +582,7 @@ export default function Footer() {
                     style={{ left: px(234), top: px(164), width: px(409) }}
                 />
 
-                <p className="absolute font-bold text-[#FDD000] md:text-[#FDD000]" style={{ left: px(185), top: px(360), width: px(450), fontSize: px(26) }}>
+                <p className="absolute font-bold text-[#FDD000]" style={{ left: px(215), top: px(360), width: px(420), fontSize: px(26) }}>
                     Memberi Arti itu ATTAUFIQ
                 </p>
 
@@ -564,7 +593,7 @@ export default function Footer() {
             spills out past the arch's inner edge. */}
                 <p
                     className="absolute text-white/90 leading-relaxed"
-                    style={{ left: px(185), top: px(412), width: px(450), fontSize: px(16) }}
+                    style={{ left: px(215), top: px(412), width: px(420), fontSize: px(16) }}
                 >
                     Membina generasi beradab dengan pendidikan Islam yang menyeluruh, menggabungkan ilmu, karakter, dan
                     spiritualitas untuk masa depan yang penuh keberkahan.
@@ -582,7 +611,7 @@ export default function Footer() {
                     style={{ left: px(660), top: px(188), height: px(365) }}
                 />
 
-                <div className="absolute text-white" style={{ left: px(700), top: px(205), width: px(340) }}>
+                <div id="footer-location" className="absolute text-white" style={{ left: px(700), top: px(205), width: px(340) }}>
                     {ALAMAT_BLOCKS.map((block, i) => (
                         <div key={block.heading} style={{ marginTop: i === 0 ? 0 : px(30) }}>
                             <div className="flex items-center" style={{ gap: px(10) }}>
@@ -629,7 +658,7 @@ export default function Footer() {
                             <a
                                 key={i}
                                 href={row.href}
-                                className="flex items-center border-b border-dotted border-[#FDD000]/40 hover:text-#FDD000 transition-colors"
+                                className="flex items-center border-b border-dotted border-[#FDD000]/40 hover:text-[#FDD000] transition-colors"
                                 style={{ gap: px(16), paddingBottom: px(9), marginTop: i === 0 ? 0 : px(18) }}
                             >
                                 <row.Icon style={{ width: px(row.size), height: px(row.size) }} className="shrink-0 text-[#FDD000]" />

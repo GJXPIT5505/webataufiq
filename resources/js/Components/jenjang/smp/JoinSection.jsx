@@ -1,9 +1,14 @@
-import { Sparkles, ArrowRight } from "lucide-react";
+
 import { ScallopBadge } from "@/Components/about/VisiMisiSection";
 import { LinkButton } from "@/Components/ui/Button";
 import SectionBox from "../SectionBox";
 import Reveal from "@/Components/home/Reveal";
 
+// Step icons — vector-traced from the user's second, high-resolution
+// reference image (transparent PNG, clean strokes — a much better source
+// than the first low-contrast glow render). Contour-extracted straight
+// from the alpha channel via cv2.findContours, same pipeline as the
+// facility tab icons.
 function RegistrationIcon() {
   return (
     <svg viewBox="0 0 553 583" fill="currentColor" fillRule="evenodd" className="h-full w-full" aria-hidden="true">
@@ -43,139 +48,75 @@ const STEPS = [
   },
   {
     number: 3,
-    title: "Konfirmasi & Mulai",
+    title: "Konfirmasi & Awal Belajar",
     description: "Setelah konfirmasi, Ananda siap memulai pengalaman belajar menyenangkan di Attaufiq!",
     Icon: AdmissionIcon,
   },
-];
+] ;
 
+// Section 5 — "Cara Bergabung di PG Attaufiq". Title centered. Below it,
+// the navy CTA card is sized FIRST — wide enough for the logo mark to
+// sit beside the text+button rather than cramped underneath — and the
+// leftover space is what gets split into 3 equal step columns. Each
+// step is a horizontal row: icon on the left, number/title/description
+// stacked to its right. Title is a prop (defaulting to PG's own copy)
+// so other jenjang detail pages can reuse this exact component with
+// just their own heading swapped in.
 export default function JoinSection({
   title = "Cara Bergabung di SMP Attaufiq",
 }) {
   return (
-    <section className="relative overflow-hidden bg-[#FAF5EE] px-6 py-14 sm:py-16">
-      {/* Ambient Lighting Ornaments */}
-      <div className="pointer-events-none absolute top-10 left-1/2 h-72 w-[600px] -translate-x-1/2 rounded-full bg-amber-200/20 blur-[130px]" />
-      <div className="pointer-events-none absolute bottom-8 left-10 h-64 w-64 rounded-full bg-blue-900/5 blur-[100px]" />
-      <div className="pointer-events-none absolute top-14 left-8 text-xl text-amber-500/30 animate-pulse">✦</div>
-      <div className="pointer-events-none absolute top-20 right-10 text-sm text-amber-600/30 animate-ping" style={{ animationDuration: "3.5s" }}>✨</div>
-
-      <div className="mx-auto max-w-6xl">
+    <section className="bg-ivory px-6 py-14">
+      <div className="mx-auto" style={{ maxWidth: "calc(72rem + 6cm)" }}>
         <Reveal>
-          <SectionBox>
-            <div className="relative overflow-hidden rounded-[2rem] border border-[#FDD000]/30 bg-gradient-to-br from-[#FFFDF7] via-[#FFFBF0] to-[#FFF6E3] p-6 shadow-xl shadow-amber-950/5 sm:p-8 md:p-10">
-              
-              {/* Header Title Section */}
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#B58900]">
-                  <Sparkles className="h-3 w-3" />
-                  <span>Alur Pendaftaran Ananda</span>
-                </div>
+        <SectionBox>
+          <div className="p-6 sm:p-8">
+            <div className="flex items-center justify-center gap-3">
+              <ScallopBadge n={5} />
+              <h2 className="font-heading text-2xl text-navy sm:text-3xl">{title}</h2>
+            </div>
 
-                <div className="flex items-center justify-center gap-3">
-                  <ScallopBadge n={5} />
-                  <h2 className="font-serif text-3xl font-bold tracking-wide text-[#102380] sm:text-4xl">
-                    {title}
-                  </h2>
-                </div>
-
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FDD000]" />
-                  <div className="h-1 w-12 rounded-full bg-[#FDD000]" />
-                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#FDD000]" />
-                </div>
-              </div>
-
-              {/* Grid 4 Kartu: 3 Step + 1 Banner Aksi Admission */}
-              <div className="mt-10 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {STEPS.map((step, i) => (
-                  <Reveal
-                    key={step.number}
-                    delay={i * 0.1}
-                    className="group flex flex-col justify-between rounded-2xl border border-amber-300/40 bg-white/70 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-amber-400 hover:bg-white hover:shadow-md hover:shadow-amber-950/10"
-                  >
-                    <div>
-                      {/* Nomor Step & Icon */}
-                      <div className="flex items-center justify-between">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#FDD000] to-amber-400 font-serif text-sm font-bold text-[#102380] shadow-sm">
-                          0{step.number}
-                        </span>
-                        <div className="h-12 w-12 text-[#102380]/80 transition-transform duration-300 group-hover:scale-110 group-hover:text-[#102380]">
-                          <step.Icon />
-                        </div>
-                      </div>
-
-                      {/* Judul & Garis Emas */}
-                      <h3 className="font-serif mt-5 text-lg font-bold text-[#102380]">
-                        {step.title}
-                      </h3>
-                      <div className="mt-2 h-0.5 w-8 rounded-full bg-[#FDD000] transition-all duration-300 group-hover:w-12" />
-
-                      {/* Deskripsi */}
-                      <p className="mt-3 text-xs leading-relaxed text-[#102380]/75 sm:text-sm">
-                        {step.description}
-                      </p>
-                    </div>
-
-                    <div className="mt-5 border-t border-amber-100 pt-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-amber-600/90">
-                      <span>Langkah 0{step.number}</span>
-                      <ArrowRight className="h-3 w-3" />
-                    </div>
-                  </Reveal>
-                ))}
-
-                {/* Kartu Banner Aksi: Admission CTA (Dengan Logo Kontras Tinggi & Terlihat Jelas) */}
+            <div className="mt-8 grid gap-4 sm:grid-cols-[1fr_1fr_1fr_400px]">
+              {STEPS.map((step, i) => (
                 <Reveal
-                  delay={STEPS.length * 0.1}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-amber-400/40 bg-gradient-to-br from-[#102380] via-[#0E2070] to-[#0A164D] p-5 text-white shadow-lg shadow-blue-950/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
+                  key={step.number}
+                  delay={i * 0.1}
+                  className="flex items-start gap-4 rounded-2xl border border-navy/10 p-5"
                 >
-                  {/* Ambient Lighting di Sudut */}
-                  <div className="pointer-events-none absolute -top-8 -right-8 h-28 w-28 rounded-full bg-amber-400/20 blur-xl" />
-
-                  <div className="relative z-10 flex flex-col gap-4">
-                    {/* Header Kartu: Badge Admission & Logo Brand Menjolok */}
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#FDD000]">
-                        <Sparkles className="h-3.5 w-3.5 text-[#FDD000]" />
-                        <span>Admission</span>
-                      </div>
-
-                      {/* Wadah Logo Berlatar Putih Solid dengan Border Emas & Aura Glow */}
-                      <div className="relative group/logo">
-                        <div className="absolute -inset-1 rounded-2xl bg-[#FDD000]/30 blur-md transition-all duration-300 group-hover/logo:bg-[#FDD000]/50" />
-                        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-[#FDD000] bg-white p-1.5 shadow-[0_8px_18px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover/logo:scale-105">
-                          <img
-                            src="/images/brand/logo-mark-color.png"
-                            alt="Logo SIT Attaufiq"
-                            className="h-full w-full object-contain"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <p className="font-serif text-base font-semibold leading-snug text-white sm:text-lg">
-                        Info lengkap &amp; pendaftaran kunjungi halaman Admission
-                      </p>
-                    </div>
+                  <div className="h-14 w-14 shrink-0 text-navy">
+                    <step.Icon />
                   </div>
-
-                  <div className="relative z-10 mt-6 border-t border-white/10 pt-4">
-                    <LinkButton
-                      href="/admission"
-                      variant="gold"
-                      size="sm"
-                      className="w-full justify-center py-2.5 text-xs font-semibold shadow-md transition-transform duration-200 hover:scale-[1.02] active:scale-95"
-                    >
-                      Lihat Halaman Admission
-                      <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-                    </LinkButton>
+                  <div>
+                    <span className="font-heading text-lg font-bold text-gold">{step.number}</span>
+                    <h3 className="font-heading text-base font-bold text-navy">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-navy/70">{step.description}</p>
                   </div>
                 </Reveal>
-              </div>
+              ))}
 
+              <Reveal delay={STEPS.length * 0.1} className="flex items-center gap-4 rounded-2xl bg-navy p-5 text-white">
+                <div className="flex-1">
+                  <p className="text-sm leading-relaxed">
+                    Info lengkap &amp; pendaftaran kunjungi halaman Admission
+                  </p>
+                  <LinkButton
+                    href="/admission"
+                    variant="gold"
+                    size="sm"
+                    className="mt-4 w-fit whitespace-nowrap px-4 text-xs"
+                  >
+                    Lihat Halaman Admission
+                    <span aria-hidden="true">&gt;</span>
+                  </LinkButton>
+                </div>
+
+                <div className="relative h-28 w-28 shrink-0">
+                  <img src="/images/brand/logo-mark-color.png" alt="Logo SIT Attaufiq" className="h-full w-full object-contain" />
+                </div>
+              </Reveal>
             </div>
-          </SectionBox>
+          </div>
+        </SectionBox>
         </Reveal>
       </div>
     </section>
