@@ -194,7 +194,8 @@ export default function BlogGridSection({ posts = [], categories = [] }) {
 
   // Unified items list: DB posts if available, else static
   const allArticles = useMemo(() => {
-    if (posts && posts.length > 0) return posts;
+    const raw = Array.isArray(posts) ? posts : (posts?.data || []);
+    if (raw.length > 0) return raw;
     return staticArticles;
   }, [posts]);
 

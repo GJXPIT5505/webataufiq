@@ -9,8 +9,17 @@ import AchievementsSection from '@/Components/home/achievements/AchievementsSect
 import ClosingCtaSection from '@/Components/home/closing/ClosingCtaSection';
 import TestimonialSection from '@/Components/home/testimonials/TestimonialSection';
 import BlogPreview from '@/Components/home/BlogPreview';
+import { dummyBlogPosts } from '@/data/blog';
 
 export default function Welcome({ auth, posts = [], galleries = [], categories = [] }) {
+    const hasPosts = Array.isArray(posts)
+        ? posts.length > 0
+        : Boolean(posts?.data && posts.data.length > 0);
+
+    const effectivePosts = hasPosts
+        ? (Array.isArray(posts) ? posts : posts.data)
+        : dummyBlogPosts;
+
     return (
         <AppLayout title="Home">
             <Head title="SIT At-Taufiq Jambi - Mencetak Generasi Robbani" />
@@ -37,7 +46,7 @@ export default function Welcome({ auth, posts = [], galleries = [], categories =
             <TestimonialSection />
 
             {/* 8. Blog Section */}
-            <BlogPreview posts={posts} />
+            <BlogPreview posts={effectivePosts} />
         </AppLayout>
     );
 }

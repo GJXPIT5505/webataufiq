@@ -1,22 +1,26 @@
 export const blogCategories = [
-  { slug: "parenting", label: "Parenting", icon: "Users" },
-  { slug: "tahfizh", label: "Tahfizh", icon: "BookOpen" },
-  { slug: "pendidikan", label: "Pendidikan", icon: "GraduationCap" },
-  { slug: "kegiatan", label: "Kegiatan", icon: "CalendarDays" },
-  { slug: "prestasi", label: "Prestasi", icon: "Award" },
-  { slug: "tips-belajar", label: "Tips Belajar", icon: "Lightbulb" },
-  { slug: "berita", label: "Berita", icon: "Newspaper" },
+  { id: 1, slug: "parenting", name: "Parenting", label: "Parenting", icon: "Users" },
+  { id: 2, slug: "tahfizh", name: "Tahfizh", label: "Tahfizh", icon: "BookOpen" },
+  { id: 3, slug: "pendidikan", name: "Pendidikan", label: "Pendidikan", icon: "GraduationCap" },
+  { id: 4, slug: "kegiatan", name: "Kegiatan", label: "Kegiatan", icon: "CalendarDays" },
+  { id: 5, slug: "prestasi", name: "Prestasi", label: "Prestasi", icon: "Award" },
+  { id: 6, slug: "tips-belajar", name: "Tips Belajar", label: "Tips Belajar", icon: "Lightbulb" },
+  { id: 7, slug: "berita", name: "Berita", label: "Berita", icon: "Newspaper" },
 ];
 
 export const blogArticles = [
   {
+    id: 1,
     slug: "tips-memilih-sekolah-islam-untuk-anak-di-era-digital",
     title: "Tips Memilih Sekolah Islam untuk Anak di Era Digital",
-    category: "parenting",
+    category_id: 1,
+    category: { id: 1, name: "Parenting", label: "Parenting", slug: "parenting" },
+    image: "/images/journey/foto-sd.jpg",
     excerpt:
       "Panduan lengkap untuk Bunda dan Ayah dalam memilih sekolah Islam yang tepat agar anak tumbuh berilmu, berakhlak, dan siap menghadapi masa depan.",
     readingTime: "7 menit membaca",
     date: "2024-05-16",
+    created_at: "2024-05-16T08:00:00.000000Z",
     author: "Tim Attaufiq",
     featured: true,
     content: [
@@ -59,13 +63,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 2,
     slug: "membangun-kemandirian-anak-sejak-dini",
     title: "Membangun Kemandirian Anak Sejak Dini",
-    category: "parenting",
+    category_id: 1,
+    category: { id: 1, name: "Parenting", label: "Parenting", slug: "parenting" },
+    image: "/images/about/faq-pgtk.jpg",
     excerpt:
       "Kemandirian adalah bekal penting yang perlu ditanamkan sejak usia dini. Berikut cara sederhana membantu Bunda dan Ayah membangunnya di rumah.",
     readingTime: "5 menit membaca",
     date: "2024-05-15",
+    created_at: "2024-05-15T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -102,13 +110,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 3,
     slug: "5-cara-menanamkan-cinta-al-quran-pada-anak",
     title: "5 Cara Menanamkan Cinta Al-Qur'an pada Anak",
-    category: "tahfizh",
+    category_id: 2,
+    category: { id: 2, name: "Tahfizh", label: "Tahfizh", slug: "tahfizh" },
+    image: "/images/journey/foto-smp.jpg",
     excerpt:
       "Menumbuhkan kecintaan pada Al-Qur'an sejak dini akan membekas hingga anak dewasa. Berikut cara yang bisa Bunda dan Ayah terapkan di rumah.",
     readingTime: "6 menit membaca",
     date: "2024-05-14",
+    created_at: "2024-05-14T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -145,13 +157,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 4,
     slug: "pendidikan-islam-holistik-untuk-generasi-berarti",
     title: "Pendidikan Islam Holistik untuk Generasi Berarti",
-    category: "pendidikan",
+    category_id: 3,
+    category: { id: 3, name: "Pendidikan", label: "Pendidikan", slug: "pendidikan" },
+    image: "/images/about/faq-sd.jpg",
     excerpt:
       "Pendidikan yang utuh tidak hanya membentuk kecerdasan, tetapi juga akhlak dan spiritualitas anak. Inilah makna pendidikan Islam holistik.",
     readingTime: "7 menit membaca",
     date: "2024-05-13",
+    created_at: "2024-05-13T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -188,13 +204,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 5,
     slug: "keseruan-outdoor-learning-di-attaufiq",
     title: "Keseruan Outdoor Learning di Attaufiq",
-    category: "kegiatan",
+    category_id: 4,
+    category: { id: 4, name: "Kegiatan", label: "Kegiatan", slug: "kegiatan" },
+    image: "/images/journey/foto-pg.jpg",
     excerpt:
       "Belajar tidak selalu di dalam kelas. Outdoor Learning di Attaufiq menghadirkan pengalaman belajar yang seru sekaligus bermakna.",
     readingTime: "4 menit membaca",
     date: "2024-05-12",
+    created_at: "2024-05-12T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -226,13 +246,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 6,
     slug: "attaufiq-borong-juara-di-ajang-olimpiade-sains",
     title: "Attaufiq Borong Juara di Ajang Olimpiade Sains",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/faq-sma.jpg",
     excerpt:
       "Prestasi membanggakan kembali ditorehkan ananda Attaufiq dalam ajang Olimpiade Sains tingkat kota.",
     readingTime: "5 menit membaca",
     date: "2024-05-11",
+    created_at: "2024-05-11T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SD Attaufiq",
@@ -266,13 +290,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 7,
     slug: "juara-tahfizh-5-juz-tingkat-provinsi",
     title: "Juara Tahfizh 5 Juz Tingkat Provinsi",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/journey/foto-sma.jpg",
     excerpt:
       "Ananda SMP Attaufiq berhasil meraih juara dalam ajang tahfizh 5 juz tingkat provinsi, hasil dari ketekunan menghafal yang konsisten.",
     readingTime: "4 menit membaca",
     date: "2024-05-04",
+    created_at: "2024-05-04T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Provinsi",
     achievementUnit: "SMP Attaufiq",
@@ -306,13 +334,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 8,
     slug: "juara-2-lomba-cerdas-cermat-tingkat-kota",
     title: "Juara 2 Lomba Cerdas Cermat Tingkat Kota",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/faq-smp.jpg",
     excerpt:
       "Tim cerdas cermat SMP Attaufiq meraih juara 2 tingkat kota, hasil kerja sama tim dan persiapan yang matang.",
     readingTime: "3 menit membaca",
     date: "2024-05-03",
+    created_at: "2024-05-03T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SMP Attaufiq",
@@ -341,13 +373,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 9,
     slug: "juara-1-futsal-putra-tingkat-kota",
     title: "Juara 1 Futsal Putra Tingkat Kota",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/hari-ini-kecil-1.jpg",
     excerpt:
       "Tim futsal putra SMA Attaufiq keluar sebagai juara 1 tingkat kota, membawa pulang piala setelah pertandingan yang ketat.",
     readingTime: "3 menit membaca",
     date: "2024-05-02",
+    created_at: "2024-05-02T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SMA Attaufiq",
@@ -376,13 +412,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 10,
     slug: "juara-1-lomba-mtq-tingkat-kota",
     title: "Juara 1 Lomba MTQ Tingkat Kota",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/hari-ini-kecil-2.jpg",
     excerpt:
       "Ananda SMA Attaufiq meraih juara 1 pada ajang MTQ tingkat kota, membanggakan keluarga besar Attaufiq.",
     readingTime: "4 menit membaca",
     date: "2024-05-01",
+    created_at: "2024-05-01T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SMA Attaufiq",
@@ -411,13 +451,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 11,
     slug: "juara-1-karya-ilmiah-remaja-tingkat-provinsi",
     title: "Juara 1 Karya Ilmiah Remaja Tingkat Provinsi",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/sejarah-1982.jpg",
     excerpt:
       "Karya ilmiah ananda SMP Attaufiq meraih juara 1 tingkat provinsi, hasil riset dan kerja keras yang membanggakan.",
     readingTime: "4 menit membaca",
     date: "2024-04-30",
+    created_at: "2024-04-30T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Provinsi",
     achievementUnit: "SMP Attaufiq",
@@ -446,13 +490,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 12,
     slug: "juara-harapan-1-lomba-kaligrafi-tingkat-provinsi",
     title: "Juara Harapan 1 Lomba Kaligrafi Tingkat Provinsi",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/hero-banner/hero-banner-photo-example.jpg",
     excerpt:
       "Ananda SMP Attaufiq meraih Juara Harapan 1 dalam lomba kaligrafi tingkat provinsi, menampilkan keindahan seni tulis Al-Qur'an.",
     readingTime: "3 menit membaca",
     date: "2024-04-29",
+    created_at: "2024-04-29T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Provinsi",
     achievementUnit: "SMP Attaufiq",
@@ -481,13 +529,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 13,
     slug: "juara-umum-perkemahan-tingkat-kota",
     title: "Juara Umum Perkemahan Tingkat Kota",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/journey/foto-sd.jpg",
     excerpt:
       "Regu pramuka SMP Attaufiq meraih gelar Juara Umum dalam perkemahan tingkat kota, hasil kekompakan dan kedisiplinan tim.",
     readingTime: "4 menit membaca",
     date: "2024-04-28",
+    created_at: "2024-04-28T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SMP Attaufiq",
@@ -516,13 +568,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 14,
     slug: "juara-1-olimpiade-matematika-tingkat-kota",
     title: "Juara 1 Olimpiade Matematika Tingkat Kota",
-    category: "prestasi",
+    category_id: 5,
+    category: { id: 5, name: "Prestasi", label: "Prestasi", slug: "prestasi" },
+    image: "/images/about/faq-pgtk.jpg",
     excerpt:
       "Ananda SD Attaufiq meraih juara 1 Olimpiade Matematika tingkat kota, hasil ketekunan berlatih soal-soal penalaran.",
     readingTime: "4 menit membaca",
     date: "2024-04-27",
+    created_at: "2024-04-27T08:00:00.000000Z",
     author: "Tim Attaufiq",
     achievementLevel: "Tingkat Kota",
     achievementUnit: "SD Attaufiq",
@@ -551,13 +607,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 15,
     slug: "screen-time-dampak-dan-cara-bijak-mengelola",
     title: "Screen Time: Dampak dan Cara Bijak Mengelola",
-    category: "parenting",
+    category_id: 1,
+    category: { id: 1, name: "Parenting", label: "Parenting", slug: "parenting" },
+    image: "/images/journey/foto-smp.jpg",
     excerpt:
       "Penggunaan gadget yang tidak terkontrol dapat berdampak pada tumbuh kembang anak. Berikut cara bijak mengelola screen time di rumah.",
     readingTime: "4 menit membaca",
     date: "2024-05-10",
+    created_at: "2024-05-10T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -594,13 +654,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 16,
     slug: "rutinitas-harian-penghafal-al-quran-yang-efektif",
     title: "Rutinitas Harian Penghafal Al-Qur'an yang Efektif",
-    category: "tahfizh",
+    category_id: 2,
+    category: { id: 2, name: "Tahfizh", label: "Tahfizh", slug: "tahfizh" },
+    image: "/images/about/faq-sd.jpg",
     excerpt:
       "Konsistensi adalah kunci utama dalam menghafal Al-Qur'an. Berikut rutinitas harian yang bisa membantu ananda menjaga hafalannya.",
     readingTime: "5 menit membaca",
     date: "2024-05-09",
+    created_at: "2024-05-09T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -637,13 +701,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 17,
     slug: "peran-guru-dalam-membentuk-karakter-anak",
     title: "Peran Guru dalam Membentuk Karakter Anak",
-    category: "pendidikan",
+    category_id: 3,
+    category: { id: 3, name: "Pendidikan", label: "Pendidikan", slug: "pendidikan" },
+    image: "/images/journey/foto-pg.jpg",
     excerpt:
       "Guru bukan hanya pengajar ilmu, tetapi juga teladan karakter bagi ananda. Berikut peran penting guru dalam membentuk akhlak anak.",
     readingTime: "6 menit membaca",
     date: "2024-05-08",
+    created_at: "2024-05-08T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -680,13 +748,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 18,
     slug: "7-kebiasaan-belajar-yang-membuat-anak-lebih-fokus",
     title: "7 Kebiasaan Belajar yang Membuat Anak Lebih Fokus",
-    category: "tips-belajar",
+    category_id: 6,
+    category: { id: 6, name: "Tips Belajar", label: "Tips Belajar", slug: "tips-belajar" },
+    image: "/images/about/faq-sma.jpg",
     excerpt:
       "Fokus belajar yang baik tidak datang begitu saja. Berikut kebiasaan sederhana yang bisa membantu ananda lebih fokus saat belajar.",
     readingTime: "4 menit membaca",
     date: "2024-05-07",
+    created_at: "2024-05-07T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -723,13 +795,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 19,
     slug: "attaufiq-jalin-kerjasama-dengan-universitas-islam",
     title: "Attaufiq Jalin Kerjasama dengan Universitas Islam",
-    category: "berita",
+    category_id: 7,
+    category: { id: 7, name: "Berita", label: "Berita", slug: "berita" },
+    image: "/images/journey/foto-sma.jpg",
     excerpt:
       "Attaufiq menjalin kerja sama dengan universitas Islam untuk memperluas peluang dan wawasan pendidikan bagi ananda.",
     readingTime: "3 menit membaca",
     date: "2024-05-06",
+    created_at: "2024-05-06T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -761,13 +837,17 @@ export const blogArticles = [
     ],
   },
   {
+    id: 20,
     slug: "peringatan-maulid-nabi-muhammad-saw-di-attaufiq",
     title: "Peringatan Maulid Nabi Muhammad SAW di Attaufiq",
-    category: "kegiatan",
+    category_id: 4,
+    category: { id: 4, name: "Kegiatan", label: "Kegiatan", slug: "kegiatan" },
+    image: "/images/about/faq-smp.jpg",
     excerpt:
       "Attaufiq memperingati Maulid Nabi Muhammad SAW dengan rangkaian kegiatan yang penuh makna bagi ananda.",
     readingTime: "4 menit membaca",
     date: "2024-05-05",
+    created_at: "2024-05-05T08:00:00.000000Z",
     author: "Tim Attaufiq",
     content: [
       {
@@ -804,7 +884,23 @@ export function getBlogArticleBySlug(slug) {
   return blogArticles.find((a) => a.slug === slug);
 }
 
-export function getBlogCategory(slug) {
-  return blogCategories.find((c) => c.slug === slug);
+export function getBlogCategory(slugOrCategory) {
+  if (!slugOrCategory) return blogCategories[0];
+  if (typeof slugOrCategory === "object") return slugOrCategory;
+  return (
+    blogCategories.find(
+      (c) =>
+        c.slug === slugOrCategory ||
+        c.name.toLowerCase() === String(slugOrCategory).toLowerCase()
+    ) || {
+      id: 99,
+      slug: slugOrCategory,
+      name: slugOrCategory,
+      label: slugOrCategory,
+      icon: "Newspaper",
+    }
+  );
 }
+
+export const dummyBlogPosts = blogArticles;
 

@@ -99,12 +99,12 @@ const REQUIREMENTS_BY_JENJANG = {
 };
 
 function PersyaratanTab({ active, Icon, name, subtitle, isDesktop }) {
-  const archWidth = isDesktop ? 195 : 172;
-  const archHeight = isDesktop ? 220 : 195;
-  const iconSize = isDesktop ? 41 : 36;
-  const sunSize = isDesktop ? 18 : 15;
+  const archWidth = isDesktop ? 195 : 160;
+  const archHeight = isDesktop ? 220 : 185;
+  const iconSize = isDesktop ? 41 : 32;
+  const sunSize = isDesktop ? 18 : 14;
   const nameSize = isDesktop ? 18 : 15;
-  const subtitleSize = isDesktop ? 12 : 11;
+  const subtitleSize = isDesktop ? 12 : 10.5;
 
   return (
     <div
@@ -131,7 +131,7 @@ function PersyaratanTab({ active, Icon, name, subtitle, isDesktop }) {
           <Sun
             aria-hidden="true"
             className="relative mb-1.5 shrink-0 text-gold"
-            style={{ width: sunSize, height: sunSize, top: "-0.5cm" }}
+            style={{ width: sunSize, height: sunSize, top: isDesktop ? "-0.5cm" : "-0.3cm" }}
           />
         )}
         <div
@@ -188,7 +188,7 @@ export default function PersyaratanSection() {
 
   const [isDesktop, setIsDesktop] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 640px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     setIsDesktop(mq.matches);
     const onChange = (e) => setIsDesktop(e.matches);
     mq.addEventListener("change", onChange);
@@ -204,13 +204,13 @@ export default function PersyaratanSection() {
   }, [active, isDesktop]);
 
   return (
-    <section className="relative py-20 md:py-28">
+    <section className="relative py-16 sm:py-20 md:py-28">
       <style>{`
         .persyaratan-tab-btn { transition: transform 0.2s ease; }
         .persyaratan-tab-btn:hover { transform: translateY(-6px); }
       `}</style>
 
-      <div className="relative mx-auto max-w-6xl px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative">
           <div
             className="pointer-events-none absolute bottom-0 left-1/2 w-screen -translate-x-1/2"
@@ -228,54 +228,57 @@ export default function PersyaratanSection() {
             <span className="mt-3 block text-xs font-bold uppercase tracking-[0.2em] text-gold">
               Persyaratan Pendaftaran
             </span>
-            <h2 className="font-heading mt-4 text-4xl leading-[1.1] text-navy md:text-5xl">
+            <h2 className="font-heading mt-4 text-3xl leading-[1.15] text-navy sm:text-4xl md:text-5xl">
               Pilih Jenjang Pendidikan
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-navy/70 sm:text-base">
+            <p className="mt-4 text-xs leading-relaxed text-navy/70 sm:text-sm md:text-base">
               Setiap jenjang memiliki persyaratan yang berbeda.
               <br />
               Silakan pilih jenjang yang sesuai untuk melihat detail persyaratan.
             </p>
           </Reveal>
 
+          {/* Arched tabs: horizontally swipeable on mobile/tablet, centered on desktop */}
           <div
-            className="relative mx-auto mt-12 flex flex-wrap items-start justify-center gap-6 sm:gap-8"
+            className="relative mx-auto mt-10 sm:mt-12 flex gap-4 overflow-x-auto pb-4 pt-2 -mx-4 px-4 scrollbar-none snap-x snap-mandatory justify-start lg:justify-center sm:gap-6 lg:gap-8 lg:overflow-visible lg:mx-0 lg:px-0"
             style={{
-              marginLeft: "-4cm",
-              marginRight: "-4cm",
+              marginLeft: isDesktop ? "-4cm" : undefined,
+              marginRight: isDesktop ? "-4cm" : undefined,
             }}
           >
             {JENJANG.map((j, i) => {
               const isActive = active === i;
               return (
-                <Reveal key={j.name} delay={i * 0.08}>
-                  <button
-                    type="button"
-                    onClick={() => setActive(i)}
-                    aria-pressed={isActive}
-                    className="persyaratan-tab-btn flex cursor-pointer flex-col items-center"
-                  >
-                    <PersyaratanTab
-                      active={isActive}
-                      Icon={j.icon}
-                      name={j.name}
-                      subtitle={j.subtitle}
-                      isDesktop={isDesktop}
-                    />
-                  </button>
-                </Reveal>
+                <div key={j.name} className="snap-center shrink-0">
+                  <Reveal delay={i * 0.08}>
+                    <button
+                      type="button"
+                      onClick={() => setActive(i)}
+                      aria-pressed={isActive}
+                      className="persyaratan-tab-btn flex cursor-pointer flex-col items-center"
+                    >
+                      <PersyaratanTab
+                        active={isActive}
+                        Icon={j.icon}
+                        name={j.name}
+                        subtitle={j.subtitle}
+                        isDesktop={isDesktop}
+                      />
+                    </button>
+                  </Reveal>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {/* Detail panel with 4-column landscape SectionBox */}
+        {/* Detail panel with 4-column SectionBox */}
         <Reveal
           delay={0.1}
-          className="mt-10"
+          className="mt-8 sm:mt-10"
           style={{
-            marginLeft: "-4cm",
-            marginRight: "-4cm",
+            marginLeft: isDesktop ? "-4cm" : undefined,
+            marginRight: isDesktop ? "-4cm" : undefined,
           }}
         >
           <SectionBox>
@@ -286,11 +289,9 @@ export default function PersyaratanSection() {
               transition={{ duration: 0.45, ease: "easeOut" }}
               style={{ overflow: "hidden" }}
             >
-              <div
-                className="grid grid-cols-1 md:grid-cols-4"
-              >
+              <div className="grid grid-cols-1 lg:grid-cols-4">
                 {/* Column 1: Left Navy Card */}
-                <div className="flex flex-col items-center gap-6 bg-navy px-6 pb-6 pt-8 text-center sm:pb-0 md:col-span-1">
+                <div className="flex flex-col items-center gap-6 bg-navy px-6 pb-6 pt-8 text-center sm:pb-8 lg:col-span-1">
                   {/* Row 1 — mini arch with active icon */}
                   <div className="flex w-full max-w-[220px] items-center gap-3">
                     <div className="relative shrink-0" style={{ width: 56, height: 68 }}>
@@ -348,9 +349,7 @@ export default function PersyaratanSection() {
                 </div>
 
                 {/* Column 2 & 3: Requirements Checklist */}
-                <div
-                  className="relative p-6 sm:p-8 md:col-span-2"
-                >
+                <div className="relative p-6 sm:p-8 lg:col-span-2">
                   {isDesktop && (
                     <div
                       className="absolute w-px bg-gold/30"
@@ -364,20 +363,20 @@ export default function PersyaratanSection() {
 
                   <h3
                     ref={titleRef}
-                    className="font-heading text-2xl text-navy sm:text-3xl"
+                    className="font-heading text-2xl text-navy sm:text-3xl text-center sm:text-left"
                   >
                     Persyaratan Pendaftaran {currentJenjang.name}
                   </h3>
 
                   <div
                     className="flex flex-col sm:flex-row"
-                    style={{ marginTop: "1cm", gap: "2rem" }}
+                    style={{ marginTop: isDesktop ? "1cm" : "1.5rem", gap: "2rem" }}
                   >
                     <div
                       className="flex flex-col"
                       style={{
                         width: isDesktop ? "calc(50% + 1cm - 1rem)" : "100%",
-                        gap: "calc(1rem + 0.5cm)",
+                        gap: isDesktop ? "calc(1rem + 0.5cm)" : "1rem",
                       }}
                     >
                       {currentReqs.left.map((item) => (
@@ -400,7 +399,7 @@ export default function PersyaratanSection() {
                       className="flex flex-col"
                       style={{
                         width: isDesktop ? "calc(50% - 1cm - 1rem)" : "100%",
-                        gap: "calc(1rem + 0.5cm)",
+                        gap: isDesktop ? "calc(1rem + 0.5cm)" : "1rem",
                       }}
                     >
                       {currentReqs.right.map((item) => (
@@ -422,9 +421,7 @@ export default function PersyaratanSection() {
                 </div>
 
                 {/* Column 4: Catatan Penting */}
-                <div
-                  className="p-6 sm:p-8 md:col-span-1"
-                >
+                <div className="p-6 sm:p-8 lg:col-span-1">
                   <div
                     className="relative h-full overflow-hidden rounded-2xl border p-5"
                     style={{ borderColor: "rgba(253, 208, 0, 0.4)", backgroundColor: "#F3ECD9" }}

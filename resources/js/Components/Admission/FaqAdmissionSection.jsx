@@ -101,23 +101,23 @@ const FAQS = [
   },
   {
     q: "Bagaimana sistem pembelajaran di Attaufiq?",
-    a: "[ISI: jawaban tentang sistem pembelajaran]",
+    a: "Kami memadukan kurikulum nasional dengan kurikulum khas SIT berbasis Al-Qur'an dan Sunnah, serta pembelajaran aktif, kreatif, dan berkarakter Islami.",
   },
   {
     q: "Apakah Attaufiq memiliki program Tahfizh?",
-    a: "[ISI: jawaban tentang program Tahfizh]",
+    a: "Ya, Attaufiq memiliki program unggulan Tahfizh Al-Qur'an dengan target mutqin yang dibimbing oleh Asatidz bersanad dan tersertifikasi.",
   },
   {
     q: "Apakah ada program beasiswa?",
-    a: "[ISI: jawaban tentang program beasiswa]",
+    a: "Tersedia program beasiswa jalur prestasi akademik, tahfizh Qur'an, serta apresiasi bagi calon santri berprestasi.",
   },
   {
     q: "Bagaimana cara tahu hasil seleksi?",
-    a: "[ISI: jawaban tentang cara mengetahui hasil seleksi]",
+    a: "Hasil seleksi akan diumumkan secara transparan melalui portal pendaftaran online resmi dan pesan konfirmasi WhatsApp terverifikasi.",
   },
   {
     q: "Apakah orang tua bisa melihat perkembangan Ananda di sekolah?",
-    a: "[ISI: jawaban tentang pemantauan perkembangan Ananda]",
+    a: "Sangat bisa. Kami menyediakan buku penghubung digital, raport perkembangan berkala, dan forum konsultasi berkala antara wali murid dengan dewan guru.",
   },
 ];
 
@@ -126,7 +126,7 @@ export default function FaqAdmissionSection() {
 
   const [isDesktop, setIsDesktop] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 640px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     setIsDesktop(mq.matches);
     const onChange = (e) => setIsDesktop(e.matches);
     mq.addEventListener("change", onChange);
@@ -157,23 +157,23 @@ export default function FaqAdmissionSection() {
   }, [accordionMinHeight, isDesktop]);
 
   return (
-    <section className="relative bg-[#FAF7F0] pb-20 pt-10 md:pb-28 md:pt-14">
-      {/* Background Image diganti ke <img> */}
+    <section className="relative bg-[#FAF7F0] pb-16 pt-10 sm:pb-20 sm:pt-12 md:pb-28 md:pt-14">
+      {/* Background Image */}
       <img
         src="/images/admission/faq-bg.png"
         alt=""
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
       />
-      <div className="relative mx-auto max-w-6xl px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
           <Sun aria-hidden="true" className="mx-auto h-5 w-5 text-[#FDD000]" />
           <span className="mt-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#FDD000]">
             FAQ
           </span>
-          <h2 className="mt-4 text-4xl leading-[1.1] text-[#0D1B68] md:text-5xl font-['Playfair_Display',serif] font-semibold">
+          <h2 className="mt-4 text-3xl sm:text-4xl leading-[1.15] text-[#0D1B68] md:text-5xl font-['Playfair_Display',serif] font-semibold">
             Pertanyaan yang Sering Diajukan
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-[#0D1B68]/70 sm:text-base">
+          <p className="mt-4 text-xs leading-relaxed text-[#0D1B68]/70 sm:text-sm md:text-base">
             Kami memahami setiap pertanyaan Bunda/Ayah.
             <br />
             Berikut jawaban atas hal-hal yang paling sering ditanyakan tentang Attaufiq.
@@ -192,7 +192,7 @@ export default function FaqAdmissionSection() {
         </Reveal>
 
         <div
-          className="mt-12 grid gap-6"
+          className="mt-10 sm:mt-12 grid gap-6"
           style={{ gridTemplateColumns: isDesktop ? "18rem 1fr" : "1fr" }}
         >
           {/* Left arch card — "Masih Punya Pertanyaan?" */}
@@ -200,8 +200,8 @@ export default function FaqAdmissionSection() {
             <div
               className="relative mx-auto w-full max-w-xs rounded-2xl border border-[#FDD000]/30 bg-[#FAF7F0] shadow-md"
               style={{
-                height: accordionMinHeight || undefined,
-                minHeight: accordionMinHeight ? undefined : 380,
+                height: isDesktop && accordionMinHeight ? accordionMinHeight : undefined,
+                minHeight: isDesktop ? (accordionMinHeight ? undefined : 380) : 340,
               }}
             >
               <div
@@ -217,7 +217,7 @@ export default function FaqAdmissionSection() {
                   <path d={keelFillPath(archSize.width, archSize.height)} fill="#FFFDF7" />
                 </svg>
 
-                {/* Building Image diganti ke <img> */}
+                {/* Building Image */}
                 <img
                   src="/images/about/building-cropped.png"
                   alt=""
@@ -247,7 +247,7 @@ export default function FaqAdmissionSection() {
 
                 <div
                   className="relative flex h-full flex-col items-center px-6 text-center"
-                  style={{ paddingTop: "calc(17% + 1cm)" }}
+                  style={{ paddingTop: isDesktop ? "calc(17% + 1cm)" : "calc(12% + 0.8cm)" }}
                 >
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-[#FDD000]/50">
                     <HelpCircle aria-hidden="true" className="h-6 w-6 text-[#FDD000]" />
@@ -273,7 +273,7 @@ export default function FaqAdmissionSection() {
           <div
             ref={accordionRef}
             className="flex flex-col gap-3"
-            style={{ minHeight: accordionMinHeight || undefined }}
+            style={{ minHeight: isDesktop && accordionMinHeight ? accordionMinHeight : undefined }}
           >
             {FAQS.map((item, i) => {
               const isOpen = openIndex === i;
@@ -287,7 +287,7 @@ export default function FaqAdmissionSection() {
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full cursor-pointer items-center gap-3 px-5 py-4 text-left"
+                    className="flex w-full cursor-pointer items-center gap-3 px-4 py-3.5 sm:px-5 sm:py-4 text-left"
                   >
                     <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#0D1B68] text-white">
                       {isOpen ? (
@@ -308,18 +308,18 @@ export default function FaqAdmissionSection() {
                     </span>
                   </button>
                   {isOpen && (
-                    <div className="px-5" style={{ paddingBottom: "0.5cm" }}>
+                    <div className="px-4 sm:px-5" style={{ paddingBottom: "0.5cm" }}>
                       <div
                         className="rounded-xl"
                         style={{
                           backgroundColor: "rgba(243, 236, 217, 0.5)",
-                          paddingTop: 16,
-                          paddingBottom: 16,
-                          paddingLeft: 40,
-                          paddingRight: 40,
+                          paddingTop: 14,
+                          paddingBottom: 14,
+                          paddingLeft: isDesktop ? 40 : 20,
+                          paddingRight: isDesktop ? 40 : 20,
                         }}
                       >
-                        <p className="text-sm leading-relaxed text-[#0D1B68]/70">{item.a}</p>
+                        <p className="text-xs sm:text-sm leading-relaxed text-[#0D1B68]/70">{item.a}</p>
                       </div>
                     </div>
                   )}
@@ -330,33 +330,33 @@ export default function FaqAdmissionSection() {
         </div>
 
         {/* Bottom help CTA bar */}
-        <Reveal delay={0.1} className="mt-10">
-          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#FDD000]/30 bg-white p-6 sm:flex-row sm:p-8">
+        <Reveal delay={0.1} className="mt-8 sm:mt-10">
+          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#FDD000]/30 bg-white p-5 sm:flex-row sm:p-8">
             <div className="flex items-center gap-4 text-center sm:text-left">
               <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#0D1B68] text-[#FDD000]">
                 <Headphones aria-hidden="true" className="h-6 w-6" />
               </span>
               <div>
-                <p className="text-lg text-[#0D1B68] font-['Playfair_Display',serif] font-semibold">
+                <p className="text-base sm:text-lg text-[#0D1B68] font-['Playfair_Display',serif] font-semibold">
                   Butuh Bantuan Lebih Lanjut?
                 </p>
-                <p className="text-sm text-[#0D1B68]/60">
+                <p className="text-xs sm:text-sm text-[#0D1B68]/60">
                   Tim Attaufiq siap membantu menjawab setiap pertanyaan Bunda/Ayah.
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-col items-stretch gap-3 sm:flex-row">
+            <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row">
               <a
                 href="https://wa.link/moeqv3"
-                className="flex items-center gap-3 rounded-xl border border-[#FDD000]/40 px-5 py-3 transition-opacity hover:opacity-80"
+                className="flex items-center gap-3 rounded-xl border border-[#FDD000]/40 px-4 py-3 sm:px-5 transition-opacity hover:opacity-80"
               >
                 <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-[#FDD000]" />
-                <span className="flex-1">
-                  <span className="block whitespace-nowrap text-sm font-semibold text-[#0D1B68]">
+                <span className="flex-1 min-w-0">
+                  <span className="block text-sm font-semibold text-[#0D1B68]">
                     Chat Admin PG-TK-SD
                   </span>
-                  <span className="block whitespace-nowrap text-xs text-[#0D1B68]/50">
+                  <span className="block text-xs text-[#0D1B68]/50">
                     Chat via WA pada jam kerja
                   </span>
                 </span>
@@ -365,14 +365,14 @@ export default function FaqAdmissionSection() {
 
               <a
                 href="https://wa.link/r67nek"
-                className="flex items-center gap-3 rounded-xl bg-[#0D1B68] px-5 py-3 text-white transition-opacity hover:opacity-90"
+                className="flex items-center gap-3 rounded-xl bg-[#0D1B68] px-4 py-3 sm:px-5 text-white transition-opacity hover:opacity-90"
               >
                 <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-[#FDD000]" />
-                <span className="flex-1">
-                  <span className="block whitespace-nowrap text-sm font-semibold">
+                <span className="flex-1 min-w-0">
+                  <span className="block text-sm font-semibold">
                     Chat Admin SMP-SMA
                   </span>
-                  <span className="block whitespace-nowrap text-xs text-white/60">
+                  <span className="block text-xs text-white/60">
                     Chat via WA pada jam kerja
                   </span>
                 </span>
