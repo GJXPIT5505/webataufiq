@@ -38,6 +38,29 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn () => $request->session()->get('message'),
             ],
+            // Data navigasi dinamis dari database (otomatis terupdate ketika admin input)
+            'navEvents' => function () {
+                try {
+                    return \App\Models\Event::where('type', 'event')
+                        ->where('is_active', true)
+                        ->select('id', 'title', 'slug')
+                        ->latest()
+                        ->get();
+                } catch (\Throwable $e) {
+                    return [];
+                }
+            },
+            'navPrograms' => function () {
+                try {
+                    return \App\Models\Event::where('type', 'program')
+                        ->where('is_active', true)
+                        ->select('id', 'title', 'slug')
+                        ->latest()
+                        ->get();
+                } catch (\Throwable $e) {
+                    return [];
+                }
+            },
         ];
     }
 }

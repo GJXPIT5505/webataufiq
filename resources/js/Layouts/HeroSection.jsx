@@ -1,138 +1,162 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Sun } from 'lucide-react';
+
+// Warna navy hasil sample PNG agar tidak ada garis batas (seamless) antara gambar frame & background
+const ASSET_NAVY = '#002672';
 
 export default function HeroSection({
     title = "Judul Halaman",
     subtitle = "Deskripsi singkat halaman di sini.",
     tagline = "SEKOLAH ISLAM ATTAUFIQ",
-    patternImage = "/images/hero/frame-left.png",
+    patternImage = "/images/hero-banner/hero-banner-bg-left.png",
     mosqueImage = "/images/hero/building-attaufiq.png",
     heroRef,
+    revealNotchBehind = false,
 }) {
+    const reduceMotion = useReducedMotion();
+
+    // Handling animasi opsional jika user mengaktifkan reduced motion di OS
+    const textInitial = reduceMotion ? undefined : { opacity: 0, y: 16 };
+    const textAnimate = reduceMotion ? undefined : { opacity: 1, y: 0 };
+
+    // Format subtitle menjadi array jika berupa string berbaris
+    const subtitleLines = Array.isArray(subtitle) ? subtitle : [subtitle];
+
     return (
-        <section 
+        <section
             key={title} /* Memaksa animasi jalan ulang saat ganti halaman */
-            ref={heroRef} 
-            className="relative w-full overflow-hidden bg-[#07327F] text-white min-h-[520px] sm:min-h-[580px] md:min-h-screen flex flex-col justify-center items-center pt-20 pb-20 md:py-0"
+            ref={heroRef}
+            className="relative overflow-hidden w-full text-white"
+            style={{ backgroundColor: ASSET_NAVY }}
         >
-            {/* 1. FOTO GEDUNG (KANAN) - ZOOM & FADE IN */}
-            <motion.div 
-                initial={{ opacity: 0, scale: 1.15 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className="absolute top-0 right-0 w-full sm:w-3/4 md:w-3/5 h-full z-0 pointer-events-none"
+            {/* 1. FRAME / PATTERN ISLAMI (DESKTOP) */}
+            <div
+                className="absolute inset-y-0 left-0 hidden w-full md:block pointer-events-none"
+                style={{ backgroundColor: ASSET_NAVY }}
+            >
+                <img
+                    src={patternImage}
+                    alt=""
+                    className="h-full w-full object-contain object-left"
+                />
+            </div>
+
+            {/* 2. FOTO GEDUNG (DESKTOP - KANAN WITH MASK) */}
+            <motion.div
+                initial={reduceMotion ? undefined : { opacity: 0, scale: 1.06 }}
+                animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="absolute inset-y-0 right-0 hidden w-[42%] md:block pointer-events-none"
+                style={{ backgroundColor: ASSET_NAVY }}
             >
                 <img
                     src={mosqueImage}
                     alt={title}
-                    className="w-full h-full object-cover object-center opacity-70 md:opacity-90"
+                    className="h-full w-full object-cover"
+                    style={{
+                        maskImage: "linear-gradient(to right, transparent, black 32%)",
+                        WebkitMaskImage: "linear-gradient(to right, transparent, black 32%)",
+                    }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#07327F] via-[#07327F]/75 to-transparent"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07327F] via-transparent to-[#07327F]/40"></div>
             </motion.div>
 
-            {/* 2. ISLAMIC ARCH FRAME (KIRI) - SLIDE IN DARI KIRI */}
-            <motion.div 
-                initial={{ opacity: 0, x: -70 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute top-0 -left-20 sm:-left-16 md:left-0 h-full w-[120%] sm:w-full md:w-7/12 z-10 pointer-events-none overflow-hidden opacity-85 md:opacity-100"
-            >
+            {/* 3. TAMPILAN MOBILE (FULL-WIDTH BACKDROP & OVERLAY) */}
+            <div className="absolute inset-0 md:hidden pointer-events-none">
                 <img
-                    src={patternImage}
-                    alt="Islamic Arch Frame"
-                    className="h-full w-full object-cover object-left [mask-image:linear-gradient(to_right,black_65%,transparent_100%)]"
+                    src={mosqueImage}
+                    alt={title}
+                    className="h-full w-full object-cover opacity-35"
                 />
-            </motion.div>
-
-            {/* 3. KONTEN TEKS HERO */}
-            <div className="relative z-20 container mx-auto px-5 sm:px-6 text-center flex flex-col items-center justify-center max-w-2xl lg:max-w-4xl">
-                
-                {/* Tagline */}
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="flex items-center space-x-2 mb-2"
-                >
-                    <span className="text-[#FFC72C] text-[10px] sm:text-xs drop-shadow">✦</span>
-                    <p className="text-[#FFC72C] font-bold text-[10px] sm:text-xs md:text-sm tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
-                        {tagline}
-                    </p>
-                    <span className="text-[#FFC72C] text-[10px] sm:text-xs drop-shadow">✦</span>
-                </motion.div>
-
-                {/* Sun Icon */}
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="text-[#FFC72C] my-1 drop-shadow"
-                >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mx-auto fill-current" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="4" />
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                </motion.div>
-
-                {/* Judul Utama */}
-                <motion.h1 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-serif text-3xl sm:text-4xl md:text-6xl font-normal text-white tracking-tight leading-tight my-2 max-w-3xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.7)]"
-                >
-                    {title}
-                </motion.h1>
-
-                {/* Divider Line Emas */}
-                <motion.div 
-                    initial={{ opacity: 0, scaleX: 0 }}
-                    animate={{ opacity: 1, scaleX: 1 }}
-                    transition={{ duration: 0.6, delay: 0.45 }}
-                    className="flex items-center space-x-2 my-2 opacity-90"
-                >
-                    <div className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></div>
-                    <span className="text-[#FFC72C] text-[10px]">☀️</span>
-                    <div className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></div>
-                </motion.div>
-
-                {/* Subtitle */}
-                <motion.p 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="text-blue-100 text-xs sm:text-sm md:text-base font-light max-w-md md:max-w-xl leading-relaxed mt-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
-                >
-                    {subtitle}
-                </motion.p>
+                <div
+                    className="absolute inset-0"
+                    style={{ backgroundColor: ASSET_NAVY, opacity: 0.8 }}
+                />
             </div>
 
-            {/* 4. GELOMBANG SVG BAWAH */}
-            <motion.div 
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.25, ease: "easeOut" }}
-                className="absolute bottom-0 left-0 right-0 z-30 pointer-events-none translate-y-[1px]"
-            >
-                <svg
-                    viewBox="0 0 1440 160"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-full h-14 sm:h-20 md:h-32 block"
-                    preserveAspectRatio="none"
-                >
-                    <path
-                        d="M0,60 C240,140 480,150 720,70 C940,-5 1200,-10 1440,55 L1440,160 L0,160 Z"
-                        fill="#D4AF37"
-                    />
-                    <path
-                        d="M0,66 C240,146 480,156 720,76 C940,1 1200,-4 1440,61 L1440,160 L0,160 Z"
-                        fill="#FAF4EB"
-                    />
-                </svg>
-            </motion.div>
+            {/* 4. KONTEN TEKS HERO */}
+            <div className="relative mx-auto flex min-h-[420px] max-w-7xl flex-col justify-center px-6 py-20 sm:min-h-[480px] md:min-h-[560px] md:pl-[14rem] lg:min-h-[640px] lg:pl-[17rem] xl:min-h-[680px] xl:pl-[20rem]">
+                <div className="max-w-[25rem] text-center sm:text-left md:pr-4">
+                    
+                    {/* Tagline */}
+                    <motion.p
+                        initial={textInitial}
+                        animate={textAnimate}
+                        transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                        className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFC72C] sm:text-sm"
+                    >
+                        {tagline}
+                    </motion.p>
 
+                    {/* Icon Sun Atas */}
+                    <motion.div
+                        initial={textInitial}
+                        animate={textAnimate}
+                        transition={{ duration: 0.6, delay: 0.22, ease: "easeOut" }}
+                        className="mt-3 flex justify-center sm:justify-start"
+                    >
+                        <Sun aria-hidden="true" className="h-5 w-5 text-[#FFC72C]" />
+                    </motion.div>
+
+                    {/* Judul Utama */}
+                    <motion.h1
+                        initial={textInitial}
+                        animate={textAnimate}
+                        transition={{ duration: 0.65, delay: 0.3, ease: "easeOut" }}
+                        className="font-serif mt-3 text-4xl leading-[1.1] text-white sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight"
+                    >
+                        {title}
+                    </motion.h1>
+
+                    {/* Divider Sun Tengah */}
+                    <motion.div
+                        initial={textInitial}
+                        animate={textAnimate}
+                        transition={{ duration: 0.6, delay: 0.42, ease: "easeOut" }}
+                        className="mx-auto mt-6 flex max-w-[220px] items-center gap-3 sm:mx-0"
+                    >
+                        <span className="h-px flex-1 bg-[#FFC72C]/50" />
+                        <Sun aria-hidden="true" className="h-4 w-4 shrink-0 text-[#FFC72C]" />
+                        <span className="h-px flex-1 bg-[#FFC72C]/50" />
+                    </motion.div>
+
+                    {/* Subtitle */}
+                    <motion.p
+                        initial={textInitial}
+                        animate={textAnimate}
+                        transition={{ duration: 0.6, delay: 0.52, ease: "easeOut" }}
+                        className="mt-5 text-sm leading-relaxed text-white/80 sm:text-base"
+                    >
+                        {subtitleLines.map((line, i) => (
+                            <span key={i} className="block">
+                                {line}
+                            </span>
+                        ))}
+                    </motion.p>
+                </div>
+            </div>
+
+            {/* 5. SVG WAVE DIVIDER EMAS DI BAWAH */}
+            <svg
+                aria-hidden="true"
+                viewBox="0 0 1440 100"
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-16 w-full sm:h-20 md:h-24 z-20"
+            >
+                {!revealNotchBehind && (
+                    <path
+                        d="M0,12 C180,12 180,92 360,92 C540,92 540,12 720,12 C900,12 900,92 1080,92 C1260,92 1260,12 1440,12 L1440,100 L0,100 Z"
+                        fill="#FAF7F0"
+                    />
+                )}
+                <path
+                    d="M0,12 C180,12 180,92 360,92 C540,92 540,12 720,12 C900,12 900,92 1080,92 C1260,92 1260,12 1440,12"
+                    fill="none"
+                    stroke="#FFC72C"
+                    strokeWidth="3"
+                    vectorEffect="non-scaling-stroke"
+                />
+            </svg>
         </section>
     );
 }

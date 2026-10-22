@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEventRequest extends FormRequest
 {
@@ -22,6 +23,10 @@ class UpdateEventRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Ambil instance atau ID event dari parameter route
+        $event = $this->route('event');
+        $eventId = $event instanceof \App\Models\Event ? $event->id : $event;
+
         return [
             'title' => ['required', 'string', 'max:255'],
             'slug' => [

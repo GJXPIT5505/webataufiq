@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { usePage } from "@inertiajs/react";
 import Logo from "@/Components/Logo";
 import { LinkButton } from "@/Components/ui/Button";
 import { getNavItems } from "@/data/navigation";
@@ -12,7 +13,10 @@ import MobileNav from "./MobileNav";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navItems = getNavItems();
+  
+  // Ambil data navigasi dinamis dari database via shared Inertia props
+  const { navEvents = [], navPrograms = [] } = usePage().props;
+  const navItems = getNavItems({ navEvents, navPrograms });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

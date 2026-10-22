@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ScallopBadge } from "@/Components/about/VisiMisiSection";
 import ImagePlaceholder from "@/Components/ui/ImagePlaceholder";
 import SectionBox from "../SectionBox";
 import Reveal from "@/Components/home/Reveal";
 
+// Tab icons — contour-traced from the icon sprite sheet the user
+// supplied (same cv2.findContours pipeline used for the FAQ tab icons
+// and the pillar icons), not hand-drawn. The sheet's background is a
+// radial-glow gradient rather than flat, so a plain global threshold
+// picked up the glow as a big blob — a large-block adaptive threshold
+// (comparing each pixel to its own local neighborhood instead of a
+// single global or lightly-local value) is what isolated the actual
+// stroke lines cleanly.
 function ClassroomIcon() {
   return (
     <svg viewBox="0 0 512 512" fill="currentColor" fillRule="evenodd" className="h-full w-full" aria-hidden="true">
@@ -98,11 +106,17 @@ const FACILITIES = [
     description:
       "Toilet ramah anak yang bersih dan aman untuk melatih kemandirian dalam kebersihan diri.",
   },
-];
+] ;
 
 const PHOTOS_PER_TAB = 4;
 const AUTO_ADVANCE_MS = 3000;
 
+// Section 3 — "Fasilitas Kami". Left = tab changer, middle (widest) =
+// photo (flush top/bottom, no margin), right = name/description + a
+// 4-dot navigator. Each tab has 4 photos that auto-advance every 3s and
+// can also be picked directly via the navigator; switching tabs resets
+// back to photo 1. Photos are placeholders for now — no real facility
+// photos supplied yet.
 export default function FacilitiesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const [activePhoto, setActivePhoto] = useState(0);
@@ -121,154 +135,110 @@ export default function FacilitiesSection() {
   const facility = FACILITIES[activeTab];
 
   return (
-    <section className="relative overflow-hidden bg-[#FAF5EE] px-6 py-14 sm:py-16">
-      {/* Ambient Lighting Ornaments */}
-      <div className="pointer-events-none absolute top-10 left-1/2 h-72 w-[600px] -translate-x-1/2 rounded-full bg-amber-200/20 blur-[130px]" />
-      <div className="pointer-events-none absolute bottom-8 left-10 h-64 w-64 rounded-full bg-blue-900/5 blur-[100px]" />
-      <div className="pointer-events-none absolute top-12 left-8 text-xl text-amber-500/30 animate-pulse">✦</div>
-      <div className="pointer-events-none absolute top-16 right-10 text-sm text-amber-600/30 animate-ping" style={{ animationDuration: "3.5s" }}>✨</div>
-
-      <div className="mx-auto max-w-6xl">
+    <section className="bg-ivory px-6 py-14">
+      {/* `fr` isn't valid inside calc() in any current browser (confirmed
+          empirically — the whole declaration gets rejected and the grid
+          silently falls back to a single column), so the 1:1.6:1 ratio is
+          expressed as percentages here instead, which calc() DOES support
+          mixing with cm. Also needs a plain scoped <style> tag rather than
+          a Tailwind utility class: Tailwind v4's arbitrary-property parser
+          can't handle a value with multiple top-level calc() functions
+          either (it silently emits an empty rule). */}
+      <style>{`
+        @media (min-width: 40rem) {
+          .facilities-grid {
+            grid-template-columns:
+              calc(27.7778% - 2cm)
+              calc(44.4444% + 4cm)
+              calc(27.7778% - 2cm);
+          }
+        }
+      `}</style>
+      <div className="mx-auto" style={{ maxWidth: "calc(72rem + 6cm)" }}>
         <Reveal>
-          <SectionBox>
-            <div className="relative overflow-hidden rounded-[2rem] border border-[#FDD000]/30 bg-gradient-to-br from-[#FFFDF7] via-[#FFFBF0] to-[#FFF6E3] p-6 shadow-xl shadow-amber-950/5 sm:p-8 md:p-10">
-              
-              {/* Header Title Section */}
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-widest text-[#B58900]">
-                  <Sparkles className="h-3 w-3" />
-                  <span>Lingkungan Belajar & Bermain</span>
-                </div>
-
-                <div className="flex items-center justify-center gap-3">
-                  <ScallopBadge n={3} />
-                  <h2 className="font-serif text-3xl font-bold tracking-wide text-[#102380] sm:text-4xl">
-                    Fasilitas Kami
-                  </h2>
-                </div>
-
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FDD000]" />
-                  <div className="h-1 w-12 rounded-full bg-[#FDD000]" />
-                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#FDD000]" />
-                </div>
-              </div>
-
-              {/* Responsive 12-Column Grid (3 : 5 : 4) */}
-              <div className="mt-10 grid grid-cols-1 items-stretch gap-6 md:grid-cols-12 md:gap-8">
-                
-                {/* Kolom Kiri: Tab Buttons (3 Kolom) */}
-                <div className="flex flex-col justify-center gap-2.5 md:col-span-4 lg:col-span-3">
-                  {FACILITIES.map((f, i) => {
-                    const isActive = i === activeTab;
-                    return (
-                      <button
-                        key={f.key}
-                        type="button"
-                        onClick={() => setActiveTab(i)}
-                        className={`group relative flex items-center gap-3 rounded-2xl p-2.5 text-left text-sm font-semibold transition-all duration-300 ${
-                          isActive
-                            ? "border border-amber-400/40 bg-[#102380] text-white shadow-lg shadow-blue-950/20 translate-x-1"
-                            : "border border-amber-200/50 bg-white/70 text-[#102380]/75 hover:border-amber-300 hover:bg-white hover:text-[#102380]"
-                        }`}
-                      >
-                        {isActive && (
-                          <span className="absolute left-1.5 h-6 w-1 rounded-full bg-[#FDD000]" />
-                        )}
-
-                        <span
-                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl p-2 transition-transform duration-300 group-hover:scale-110 ${
-                            isActive
-                              ? "bg-amber-400/20 text-[#FDD000]"
-                              : "bg-amber-100/60 text-[#102380]"
-                          }`}
-                        >
-                          <f.Icon />
-                        </span>
-
-                        <span className="truncate flex-1">{f.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Kolom Tengah: Frame Foto Interaktif (5 Kolom) */}
-                <div className="group relative min-h-[280px] w-full overflow-hidden rounded-2xl border border-amber-500/25 bg-slate-900 shadow-md sm:min-h-[340px] md:col-span-5 md:min-h-full">
-                  <div className="pointer-events-none absolute inset-3 z-10 rounded-xl border border-amber-300/30 transition-colors duration-500 group-hover:border-amber-300/70" />
-
-                  <ImagePlaceholder
-                    key={`${facility.key}-${activePhoto}`}
-                    label={`[Foto ${facility.label} #${activePhoto + 1}]`}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-
-                  <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#102380]/80 via-transparent to-transparent opacity-80" />
-
-                  {/* Indicator Pill Foto */}
-                  <div className="absolute bottom-4 left-4 z-20 flex items-center gap-2 rounded-full border border-amber-400/30 bg-[#102380]/85 px-3 py-1.5 text-xs font-semibold text-amber-300 backdrop-blur-md">
-                    <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                    <span>0{activePhoto + 1} / 0{PHOTOS_PER_TAB}</span>
-                  </div>
-                </div>
-
-                {/* Kolom Kanan: Card Deskripsi & Navigasi (4 Kolom) */}
-                <div className="relative flex flex-col justify-between rounded-2xl border border-amber-300/40 bg-white/70 p-6 shadow-sm backdrop-blur-sm md:col-span-3 lg:col-span-4 md:p-8">
-                  <div className="space-y-3.5 my-auto">
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-800">
-                      <span>✦</span> Detail Sarana
-                    </div>
-
-                    <h3 className="font-serif text-2xl font-bold text-[#102380]">
-                      {facility.label}
-                    </h3>
-
-                    <div className="h-0.5 w-10 rounded-full bg-[#FDD000]" />
-
-                    <p className="text-xs leading-relaxed text-[#102380]/80 sm:text-sm">
-                      {facility.description}
-                    </p>
-                  </div>
-
-                  {/* Carousel Controls */}
-                  <div className="mt-6 flex items-center justify-between border-t border-amber-200/60 pt-5">
-                    <button
-                      type="button"
-                      aria-label="Foto sebelumnya"
-                      onClick={() => setActivePhoto((p) => (p - 1 + PHOTOS_PER_TAB) % PHOTOS_PER_TAB)}
-                      className="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white text-[#102380] shadow-sm transition-all duration-200 hover:border-[#102380] hover:bg-[#102380] hover:text-[#FDD000] active:scale-95"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-
-                    <div className="flex items-center gap-2">
-                      {Array.from({ length: PHOTOS_PER_TAB }).map((_, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          aria-label={`Foto ${i + 1}`}
-                          onClick={() => setActivePhoto(i)}
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            i === activePhoto ? "w-6 bg-[#102380]" : "w-2 bg-amber-300/60 hover:bg-amber-400"
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <button
-                      type="button"
-                      aria-label="Foto berikutnya"
-                      onClick={() => setActivePhoto((p) => (p + 1) % PHOTOS_PER_TAB)}
-                      className="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white text-[#102380] shadow-sm transition-all duration-200 hover:border-[#102380] hover:bg-[#102380] hover:text-[#FDD000] active:scale-95"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-
+        <SectionBox>
+          <div className="p-6 sm:p-8">
+            <div className="flex items-center justify-center gap-3">
+              <ScallopBadge n={3} />
+              <h2 className="font-heading text-2xl text-navy sm:text-3xl">Fasilitas Kami</h2>
             </div>
-          </SectionBox>
+
+            <div className="facilities-grid mt-[1cm] grid gap-6 sm:items-stretch">
+              {/* Left — tab changer */}
+              <div className="flex flex-col gap-2">
+                {FACILITIES.map((f, i) => {
+                  const isActive = i === activeTab;
+                  return (
+                    <button
+                      key={f.key}
+                      type="button"
+                      onClick={() => setActiveTab(i)}
+                      className={`flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors ${
+                        isActive
+                          ? "bg-navy text-white shadow-md"
+                          : "text-navy/70 hover:bg-navy/5"
+                      }`}
+                    >
+                      <span className={`h-10 w-10 shrink-0 ${isActive ? "text-gold" : "text-navy/50"}`}>
+                        <f.Icon />
+                      </span>
+                      {f.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Middle — photo, flush top/bottom (no margin) */}
+              <div className="relative min-h-[260px] w-full overflow-hidden rounded-2xl sm:min-h-full">
+                <ImagePlaceholder
+                  key={`${facility.key}-${activePhoto}`}
+                  label={`[ISI: Foto ${facility.label} #${activePhoto + 1}]`}
+                  className="h-full w-full"
+                />
+              </div>
+
+              {/* Right — name, description, 4-dot navigator */}
+              <div className="flex flex-col justify-center">
+                <h3 className="font-heading text-xl text-navy">{facility.label}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-navy/70">{facility.description}</p>
+
+                <div className="mt-6 flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    aria-label="Foto sebelumnya"
+                    onClick={() => setActivePhoto((p) => (p - 1 + PHOTOS_PER_TAB) % PHOTOS_PER_TAB)}
+                    className="text-navy/40 transition-colors hover:text-navy"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: PHOTOS_PER_TAB }).map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        aria-label={`Foto ${i + 1}`}
+                        onClick={() => setActivePhoto(i)}
+                        className={`h-2.5 rounded-full transition-all ${
+                          i === activePhoto ? "w-6 bg-gold" : "w-2.5 bg-navy/15"
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-label="Foto berikutnya"
+                    onClick={() => setActivePhoto((p) => (p + 1) % PHOTOS_PER_TAB)}
+                    className="text-navy/40 transition-colors hover:text-navy"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SectionBox>
         </Reveal>
       </div>
     </section>

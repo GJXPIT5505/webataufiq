@@ -32,7 +32,7 @@ class PostController extends Controller
             'title'       => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content'     => 'required',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'       => 'nullable|image|mimes:jpg,JPEG,jpeg,png,webp|max:2048',
         ]);
 
         $imagePath = null;
@@ -46,7 +46,7 @@ class PostController extends Controller
             'category_id' => $request->input('category_id'),
             'content'     => $request->input('content'),
             'image'       => $imagePath,
-            'type'        => 'blog',
+         
             'is_featured' => $request->boolean('is_featured', false),
         ]);
 
@@ -67,7 +67,7 @@ class PostController extends Controller
             'title'       => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content'     => 'required',
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'       => 'nullable|image|mimes:jpg,JPEG,jpeg,png,webp|max:2048',
         ]);
 
         $post->title       = $request->input('title');

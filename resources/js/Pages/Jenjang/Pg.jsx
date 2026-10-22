@@ -14,7 +14,7 @@ export default function PgPage() {
     <AppLayout title="Play Group - SIT At-Taufiq">
       <Head title="Play Group - SIT At-Taufiq" />
 
-      {/* <main className="min-h-screen w-full bg-[#FFFBEF] text-indigo-950 flex flex-col overflow-x-hidden selection:bg-amber-100 selection:text-amber-800"> */}
+      
         <JenjangDetailHero photoSrc="/images/jenjang/pg-hero.jpg" />
         <JenjangPillarsSection />
         <WhyChooseSection />
@@ -23,7 +23,7 @@ export default function PgPage() {
         <JoinSection />
         <TestimonialsSection />
         <GallerySection />
-      {/* </main> */}
+      
     </AppLayout>
   );
 }
