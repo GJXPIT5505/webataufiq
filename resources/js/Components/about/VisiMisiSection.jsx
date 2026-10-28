@@ -101,18 +101,18 @@ function SectionHeading({ children }) {
 
 export default function VisiMisiSection() {
   return (
-    <section className="bg-[#FFFBEF] px-6 py-16 md:py-20">
+    <section className="bg-ivory px-6 py-16 md:py-20">
       <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2">
         {/* Visi */}
-        <Reveal className="relative overflow-hidden rounded-[2rem] border border-[#FDD000]/40 bg-[#FFFBEF] shadow-sm">
-          <div className="relative z-10 p-8 md:p-10">
-            <div className="flex items-start gap-5">
+        <Reveal className="relative min-w-0 overflow-hidden rounded-[2rem] border border-gold/40 bg-ivory shadow-sm">
+          <div className="relative z-10 p-6 sm:p-8 md:p-10">
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
               <ArchBadge>
                 <BookSunIcon />
               </ArchBadge>
-              <div className="flex-1 pt-1">
+              <div className="min-w-0 flex-1 pt-1">
                 <SectionHeading>Visi</SectionHeading>
-                <p className="mt-3 leading-relaxed text-[#002672]/80">
+                <p className="mt-3 leading-relaxed text-navy/80">
                   Menjadi lembaga pendidikan Islam unggulan yang melahirkan
                   generasi beriman, berilmu, berakhlak mulia, dan
                   berprestasi menuju ridha Allah.
@@ -139,22 +139,22 @@ export default function VisiMisiSection() {
         </Reveal>
 
         {/* Misi */}
-        <Reveal delay={0.12} className="rounded-[2rem] border border-[#FDD000]/40 bg-[#FFFBEF] p-8 shadow-sm md:p-10">
-          <div className="flex items-start gap-5">
+        <Reveal delay={0.12} className="min-w-0 rounded-[2rem] border border-gold/40 bg-ivory p-6 shadow-sm sm:p-8 md:p-10">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:gap-5">
             <ArchBadge>
               <TargetArrowIcon />
             </ArchBadge>
-            <div className="flex-1 pt-1">
+            <div className="min-w-0 flex-1 pt-1">
               <SectionHeading>Misi</SectionHeading>
               <ol className="mt-3">
                 {MISI_ITEMS.map((item, i) => (
                   <li
                     key={i}
-                    className="border-b border-[#002672]/10 py-3.5 first:pt-0 last:border-0 last:pb-0"
+                    className="border-b border-navy/10 py-3.5 first:pt-0 last:border-0 last:pb-0"
                   >
                     <Reveal delay={0.05 * i} className="flex items-start gap-4">
                       <ScallopBadge n={i + 1} />
-                      <p className="text-sm leading-relaxed text-[#002672]/80">{item}</p>
+                      <p className="text-sm leading-relaxed text-navy/80">{item}</p>
                     </Reveal>
                   </li>
                 ))}

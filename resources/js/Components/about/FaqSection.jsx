@@ -276,8 +276,8 @@ export function JenjangTabShape({ active, Icon, name, subtitle }) {
     <div
       className={
         active
-          ? "relative h-32 w-28 shrink-0 drop-shadow-[0_10px_18px_rgba(16,35,128,0.35)] sm:h-36 sm:w-32"
-          : "relative h-24 w-20 shrink-0 drop-shadow-[0_6px_10px_rgba(16,35,128,0.2)] sm:h-28 sm:w-24"
+          ? "relative h-[6.75rem] w-[5.5rem] shrink-0 drop-shadow-[0_10px_18px_rgba(16,35,128,0.35)] min-[400px]:h-32 min-[400px]:w-28 sm:h-36 sm:w-32"
+          : "relative h-[5.25rem] w-[4.25rem] shrink-0 drop-shadow-[0_6px_10px_rgba(16,35,128,0.2)] min-[400px]:h-24 min-[400px]:w-20 sm:h-28 sm:w-24"
       }
     >
       <svg viewBox="0 0 245 299" className="absolute inset-0 h-full w-full" aria-hidden="true">
@@ -310,7 +310,7 @@ export function JenjangTabShape({ active, Icon, name, subtitle }) {
         </span>
         <span
           className={`mt-1 text-[0.55rem] leading-tight sm:text-[0.6rem] ${
-            active ? "text-white/70" : "text-navy/50"
+            active ? "text-white/70" : "hidden text-navy/50 sm:block"
           }`}
         >
           ({subtitle})
@@ -364,12 +364,12 @@ export default function FaqSection() {
           </div>
         </Reveal>
 
-        <div className="mx-auto mt-12 max-w-6xl px-6">
+        <div className="mx-auto mt-12 max-w-6xl px-4 sm:px-6">
           {/* Jenjang tab selector — bottoms align (items-end) so the
               active tab's extra height makes it read as taller/raised
               while all four still meet the panel's top edge. Clicking a
               tab moves the active styling and swaps Box B's placeholder. */}
-          <div className="relative z-20 flex items-end justify-center gap-3 sm:gap-4">
+          <div className="relative z-20 flex items-end justify-center gap-1.5 min-[400px]:gap-3 sm:gap-4">
             {JENJANG.map((j, i) => (
               <Reveal key={j.name} delay={i * 0.08}>
                 <button
@@ -392,55 +392,24 @@ export default function FaqSection() {
             ))}
           </div>
 
-          {/* Box A is pulled up under the tabs; Box B starts lower than
-              Box A (not at the same top edge) by BOX_B_TOP, so Box A's
-              own rounded top corner peeks out above Box B. Row 2's
-              minmax(600px, auto) is the fixed floor: measured live with
-              every single FAQ item open, one at a time, across all 4
-              jenjang — the tallest case (a 2-line answer) came to
-              593.5px, so 600px covers all of them with a small buffer.
-              That means opening/closing any accordion item no longer
-              resizes the whole white box at all (every state hits the
-              same floor); it would only grow past 600px for a answer
-              longer than any current one. */}
-          {/* Reveal wraps the grid from the outside (not swapped in for
-              it) so its own inline gridTemplateRows sizing math is
-              untouched. */}
           <Reveal delay={0.1}>
           <div
             className="relative -mt-6 grid grid-cols-1 sm:-mt-7"
             style={{ gridTemplateRows: `${BOX_B_TOP} minmax(600px, auto) auto` }}
           >
-            {/* Box A — portrait: narrower (centered, 88% width) than Box
-                B, spans all 3 rows so its total height auto-follows Box
-                B's own content height (row 2) plus the top peek (row 1)
-                and the footer strip (row 3). */}
+            {/* Box A — portrait */}
             <div
               className="relative z-0 col-start-1 row-span-3 row-start-1 mx-auto w-[88%] overflow-hidden rounded-[2rem] shadow-xl"
               style={{ backgroundColor: "#FAF8F4" }}
             />
 
-            {/* Small sun mark centered on the seam where Box A's peek
-                meets Box B's top edge. */}
             <Sun
               aria-hidden="true"
               className="relative z-20 col-start-1 row-start-1 mx-auto h-4 w-4 self-end text-gold"
             />
 
-            {/* Box B — landscape: full width (wider than Box A), sits in
-                row 2 only, so its own content height determines row 2's
-                height (and therefore Box A's total height too). */}
+            {/* Box B — landscape */}
             <div className="relative z-10 col-start-1 row-start-2 grid grid-cols-1 overflow-hidden rounded-3xl bg-white shadow-2xl sm:grid-cols-[24rem_1fr]">
-              {/* Left — title/subtitle, divider, description as plain
-                  text, then a photo that GROWS (flex-1) to fill the rest
-                  of the column's height — which now matches the right
-                  column's fixed height — instead of stopping at a small
-                  square, so its bottom edge lines up with the bottom of
-                  the FAQ list. The navy caption card overlaps its bottom
-                  edge. Column track sized to this content (not an even
-                  50/50 split), so the description is capped to the
-                  photo's own width (max-w-xs) rather than stretching
-                  wider than the photo. */}
               <div className="flex flex-col p-6 sm:p-8">
                 <h3 className="font-heading text-2xl text-navy">
                   {jenjang.name}{" "}
@@ -453,33 +422,22 @@ export default function FaqSection() {
                   {jenjang.description}
                 </p>
 
-                {/* The caption card is absolutely positioned over the
-                    photo's own bottom portion instead of pushing extra
-                    height below it, so the photo's bottom edge always
-                    reaches all the way down to the caption card's
-                    bottom edge — and now the whole block's bottom edge
-                    too, via flex-1. */}
-                <div className="relative mt-5 w-full max-w-xs flex-1">
-                  <div className="absolute inset-0 overflow-hidden rounded-2xl shadow-md">
+                <div className="relative mt-5 w-full max-w-xs flex-none sm:h-auto sm:flex-1">
+                  <div className="relative h-52 overflow-hidden rounded-2xl shadow-md sm:absolute sm:inset-0 sm:h-auto">
                     <img
                       src={jenjang.photo}
                       alt=""
                       className="h-full w-full object-cover"
                     />
                   </div>
-                  <div className="absolute inset-x-4 bottom-4 z-10 flex items-start gap-3 rounded-xl bg-navy p-4 shadow-lg">
+                  <div className="relative z-10 mt-3 flex items-start gap-3 rounded-xl bg-navy p-4 shadow-lg sm:absolute sm:inset-x-4 sm:bottom-4 sm:mt-0">
                     <Sun aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                    <p className="text-xs leading-relaxed text-white/90">{jenjang.caption}</p>
+                    <p className="text-sm leading-relaxed text-white/90 sm:text-xs">{jenjang.caption}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Right — FAQ accordion list for the active jenjang. Takes
-                  the remaining space (1fr) rather than an even half, so
-                  it extends further left into what used to be empty
-                  space next to the narrower left column. Top-aligned
-                  (not centered) so the list's own position stays put
-                  regardless of the reserved extra height below it. */}
+              {/* Right — FAQ accordion list */}
               <div className="flex flex-col justify-start gap-2.5 p-6 sm:p-8">
                 {jenjang.faqs.map((item, i) => {
                   const isOpen = openFaq === i;
@@ -493,7 +451,7 @@ export default function FaqSection() {
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? null : i)}
                         aria-expanded={isOpen}
-                        className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left"
+                        className="flex min-h-11 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left"
                       >
                         <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-xs font-bold text-navy">
                           ?
@@ -517,31 +475,28 @@ export default function FaqSection() {
               </div>
             </div>
 
-            {/* Footer — sits directly on Box A's own exposed lower strip
-                (row 3), not a separate box. Row 3 is "auto" height now,
-                so Box A's cream bottom is trimmed to exactly this
-                content's height instead of a fixed placeholder. */}
-            <div className="relative z-10 col-start-1 row-start-3 mx-auto flex w-[88%] flex-col items-center gap-4 px-6 py-6 sm:flex-row sm:justify-between sm:px-8">
-              <div className="flex items-center gap-4 text-center sm:text-left">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-gold/50">
+            {/* Footer banner */}
+            <div className="relative z-10 col-start-1 row-start-3 mx-auto flex w-[88%] items-center gap-3 px-4 py-4 sm:justify-between sm:gap-4 sm:px-8 sm:py-6">
+              <div className="flex min-w-0 flex-1 items-center gap-4 text-left">
+                <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-xl border border-gold/50 sm:grid">
                   <Lightbulb aria-hidden="true" className="h-5 w-5 text-gold" />
                 </span>
-                <div>
-                  <p className="font-medium text-navy">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-snug text-navy sm:text-base sm:leading-normal">
                     Tidak menemukan jawaban yang Bunda/Ayah cari?
                   </p>
-                  <p className="text-sm text-navy/60">
+                  <p className="mt-0.5 text-xs text-navy/60 sm:mt-0 sm:text-sm">
                     Silakan hubungi kami, tim Attaufiq siap membantu.
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                className="flex shrink-0 cursor-pointer items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white shadow-md"
+              <a
+                href="#contact"
+                className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full bg-navy px-4 py-2 text-xs font-semibold text-white shadow-md sm:gap-2 sm:px-5 sm:py-2.5 sm:text-sm"
               >
                 Hubungi Kami
                 <ChevronRight aria-hidden="true" className="h-4 w-4" />
-              </button>
+              </a>
             </div>
           </div>
           </Reveal>

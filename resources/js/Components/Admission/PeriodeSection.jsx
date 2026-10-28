@@ -1,12 +1,6 @@
-"use client";
-
-import { useRef, useState } from "react";
 import { Calendar, ChevronRight, FileText, Gift, Shirt, Sun, Users } from "lucide-react";
 import Reveal from "@/Components/home/Reveal";
 
-// Three-layer composition: full-bleed wall photo (arched window, geometric shadow)
-// as section background, marble podium standing on top of it, and three calendar cards
-// standing on top of the podium — one per registration wave.
 const periods = [
   {
     wave: "GELOMBANG 1",
@@ -29,27 +23,27 @@ const periods = [
     title: "Regular Admission",
     dateRange: "1 April – 30 Juni 2026",
     description:
-      "Periode reguler dengan kuota terbatas. Pastikan Ananda tidak kehabisan kesempatan.",
+      "Periode reguler dengan kuota yang mulai terbatas. Pastikan Ananda tidak melewatkan kesempatan ini.",
     benefits: [
       { icon: Gift, text: "Potongan biaya pendaftaran 15%" },
       { icon: Shirt, text: "Free seragam sekolah" },
-      { icon: Users, text: "Prioritas kelas (sesuai kuota)" },
+      { icon: Users, text: "Prioritas kelas (selama kuota ada)" },
       { icon: FileText, text: "Free konsultasi tumbuh kembang" },
     ],
-    statusLabel: "Sedang Dibuka",
-    statusOpen: true,
+    statusLabel: "Akan Dibuka",
+    statusOpen: false,
     cta: "Daftar Sekarang",
   },
   {
     wave: "GELOMBANG 3",
-    title: "Last Admission",
-    dateRange: "1 Juli – 31 Agustus 2026",
+    title: "Late Admission",
+    dateRange: "1 Juli – 31 Juli 2026",
     description:
-      "Periode terakhir dengan kuota sangat terbatas sebelum tahun ajaran baru dimulai.",
+      "Periode terakhir untuk mengisi sisa kuota yang tersedia di setiap jenjang pendidikan.",
     benefits: [
-      { icon: Gift, text: "Potongan biaya pendaftaran 10%" },
+      { icon: Gift, text: "Sesuai ketersediaan sisa kuota" },
       { icon: Shirt, text: "Free seragam sekolah" },
-      { icon: Users, text: "Kelas menyesuaikan ketersediaan" },
+      { icon: Users, text: "Penempatan kelas oleh sekolah" },
       { icon: FileText, text: "Free konsultasi tumbuh kembang" },
     ],
     statusLabel: "Akan Dibuka",
@@ -58,84 +52,59 @@ const periods = [
   },
 ];
 
-function CalendarCard({ period, delay, isMobile = false }) {
+const CALENDAR_FRAME_SRC = "/images/admission/periode-calendar-v2.png";
+
+function CalendarCard({ period, delay }) {
   return (
     <Reveal
       delay={delay}
-      className="shrink-0"
-      style={!isMobile ? { width: "clamp(19.44rem, 18vw + 13.5rem, 24.84rem)" } : { width: "100%" }}
+      className="w-[min(100vw-3rem,22rem)] shrink-0 lg:w-[min(clamp(19.44rem,18vw+13.5rem,24.84rem),calc((100vw-4rem)/3))]"
     >
       <div
-        className="relative w-full drop-shadow-xl"
-        style={{ aspectRatio: "1102 / 1427" }}
+        className="periode-calendar relative w-full drop-shadow-xl lg:aspect-[1102/1427]"
+        style={{ "--calendar-frame": `url(${CALENDAR_FRAME_SRC})` }}
       >
         <img
           src="/images/admission/periode-calendar-v2.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-contain"
+          className="hidden h-full w-full object-contain lg:block"
         />
 
-        <div
-          className="absolute inset-x-0 flex flex-col items-center text-center"
-          style={{
-            top: "calc(16% + 1.6cm)",
-            paddingLeft: isMobile ? "calc(8% + 0.5cm)" : "calc(9% + 1cm)",
-            paddingRight: isMobile ? "calc(8% + 0.5cm)" : "calc(9% + 1cm)",
-          }}
-        >
-          {/* Sun icon, wave label, and title, raised 1cm as one unit */}
-          <div className="relative flex flex-col items-center" style={{ top: "-1cm" }}>
+        <div className="relative flex flex-col items-center px-2 pb-1 text-center lg:absolute lg:inset-x-0 lg:top-[calc(16%+1.6cm)] lg:px-[calc(9%+1cm)] lg:pb-0">
+          <div className="relative flex flex-col items-center lg:top-[-1cm]">
             <Sun aria-hidden="true" className="h-4 w-4 text-gold" />
 
-            <span className="mt-2 text-[11px] font-bold uppercase tracking-wide text-gold sm:text-xs">
+            <span className="mt-2 text-xs font-bold uppercase tracking-wide text-gold">
               {period.wave}
             </span>
-            <h3 className="font-heading mt-0.5 text-base leading-tight text-navy sm:text-xl">
+            <h3 className="font-heading mt-0.5 text-xl leading-tight text-navy">
               {period.title}
             </h3>
           </div>
 
-          <span
-            className="relative mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/10 px-2.5 py-1 text-[10px] font-semibold text-navy sm:text-[11px]"
-            style={{ top: "-0.8cm" }}
-          >
-            <Calendar aria-hidden="true" className="h-3 w-3 text-gold" />
+          <span className="relative mt-3 inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/10 px-3 py-1 text-[13px] font-semibold text-navy lg:mt-2 lg:top-[-0.8cm] lg:px-2.5 lg:text-[11px]">
+            <Calendar aria-hidden="true" className="h-3.5 w-3.5 text-gold lg:h-3 lg:w-3" />
             {period.dateRange}
           </span>
 
-          {/* Description through benefits list, raised 0.2cm as one unit */}
-          <div className="relative flex w-full flex-col items-center" style={{ top: "-0.2cm" }}>
-            <p
-              className="mt-2 leading-snug text-navy/70"
-              style={{
-                marginLeft: isMobile ? "-0.1cm" : "-0.3cm",
-                marginRight: isMobile ? "-0.1cm" : "-0.3cm",
-                fontSize: isMobile ? "12px" : "13.5px",
-              }}
-            >
+          <div className="relative flex w-full flex-col items-center lg:top-[-0.2cm]">
+            <p className="mt-3 text-[15px] leading-snug text-navy/70 lg:-mx-[0.3cm] lg:mt-2 lg:text-[13.5px]">
               {period.description}
             </p>
 
-            <div className="mt-2 flex w-full items-center gap-2">
+            <div className="mt-3 flex w-full items-center gap-2 lg:mt-2">
               <span className="h-px flex-1 bg-gold/30" />
               <Sun aria-hidden="true" className="h-2.5 w-2.5 shrink-0 text-gold/60" />
               <span className="h-px flex-1 bg-gold/30" />
             </div>
 
-            <ul
-              className="mt-2 w-full space-y-0.5 text-left"
-              style={{
-                paddingLeft: isMobile ? "0.2cm" : "0.4cm",
-                paddingRight: isMobile ? "0.2cm" : "0.4cm",
-              }}
-            >
+            <ul className="mt-3 w-full space-y-1.5 text-left lg:mt-2 lg:space-y-0.5 lg:px-[0.4cm]">
               {period.benefits.map((b) => (
                 <li
                   key={b.text}
-                  className="flex items-center gap-1.5 leading-tight text-navy/80"
-                  style={{ fontSize: isMobile ? "11.5px" : "12.5px" }}
+                  className="flex items-start gap-2 text-[15px] leading-snug text-navy/80 lg:items-center lg:gap-1.5 lg:text-[12.5px] lg:leading-tight"
                 >
-                  <b.icon aria-hidden="true" className="h-3 w-3 shrink-0 text-gold" />
+                  <b.icon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-gold lg:mt-0 lg:h-3 lg:w-3" />
                   {b.text}
                 </li>
               ))}
@@ -143,138 +112,62 @@ function CalendarCard({ period, delay, isMobile = false }) {
           </div>
         </div>
 
-        {/* CTA — pinned to a fixed spot on the card */}
-        <span
-          className="absolute inset-x-0 flex items-center justify-center gap-1.5 rounded-full bg-navy px-4 py-2 text-[11px] font-semibold text-white sm:text-xs"
-          style={{
-            bottom: "calc(8% + 0.8cm)",
-            left: isMobile ? "calc(8% + 0.6cm)" : "calc(9% + 1cm)",
-            right: isMobile ? "calc(8% + 0.6cm)" : "calc(9% + 1cm)",
-          }}
+        <a
+          href="#hubungi-admin"
+          className="relative mx-2 mt-5 flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-navy px-4 py-2 text-sm font-semibold text-white lg:absolute lg:inset-x-[calc(9%+1cm)] lg:bottom-[calc(8%+0.8cm)] lg:mx-0 lg:mt-0 lg:min-h-0 lg:text-xs"
         >
           Daftar Sekarang
           <ChevronRight aria-hidden="true" className="h-3.5 w-3.5" />
-        </span>
+        </a>
       </div>
     </Reveal>
   );
 }
 
 export default function PeriodeSection() {
-  const [activeMobileWave, setActiveMobileWave] = useState(0);
-  const scrollRef = useRef(null);
-
-  const scrollToWave = (index) => {
-    setActiveMobileWave(index);
-    if (scrollRef.current && scrollRef.current.children[index]) {
-      const targetCard = scrollRef.current.children[index];
-      targetCard.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }
-  };
-
   return (
-    <section className="relative pt-16 sm:pt-20 md:pt-28">
-      {/* Raised 6cm above this section's own top edge */}
+    <section className="relative pt-20 md:pt-28">
       <div className="absolute inset-x-0 bottom-0" style={{ top: "-6cm" }}>
         <img
           src="/images/admission/periode-bg-wall.png"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
-      {/* Light ivory wash */}
       <div className="absolute inset-x-0 bottom-0 bg-ivory/55" style={{ top: "-6cm" }} />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative mx-auto max-w-6xl px-6">
         <Reveal className="mx-auto max-w-xl text-center">
-          <div className="relative top-0 md:-top-[2cm] lg:-top-[4cm]">
+          <div className="relative lg:top-[-4cm]">
             <Sun aria-hidden="true" className="mx-auto h-5 w-5 text-gold" />
             <span className="mt-3 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-gold">
               Periode Pendaftaran
             </span>
-            <h2 className="font-heading mt-3 text-3xl leading-[1.1] text-navy sm:text-4xl md:text-5xl">
+            <h2 className="font-heading mt-4 text-4xl leading-[1.1] text-navy md:text-5xl">
               Pilih Periode Pendaftaran
             </h2>
-            <p className="mt-3 text-xs leading-relaxed text-navy/70 sm:mt-4 sm:text-sm md:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-navy/70 sm:text-base">
               Setiap langkah besar dimulai dari keputusan hari ini.
-              <br className="hidden sm:inline" />
-              {" "}Pilih periode terbaik untuk memulai perjalanan Ananda di Attaufiq.
+              <br />
+              Pilih periode terbaik untuk memulai perjalanan Ananda di Attaufiq.
             </p>
           </div>
         </Reveal>
       </div>
 
-      {/* Mobile/Tablet View (< 1024px) */}
-      <div className="relative mt-8 block w-full px-4 sm:mt-12 lg:hidden">
-        {/* Wave quick switcher on mobile */}
-        <div className="mb-4 flex items-center justify-center gap-2">
-          {periods.map((p, i) => (
-            <button
-              key={p.wave}
-              type="button"
-              onClick={() => scrollToWave(i)}
-              className={`rounded-full px-3 py-1 text-xs font-bold transition-all cursor-pointer ${
-                activeMobileWave === i
-                  ? "bg-navy text-gold shadow-sm scale-105"
-                  : "bg-white/80 text-navy/70 border border-gold/30 hover:bg-gold/10"
-              }`}
-            >
-              {p.wave}
-            </button>
-          ))}
-        </div>
-
-        {/* Swipeable cards container */}
-        <div
-          ref={scrollRef}
-          onScroll={(e) => {
-            const el = e.currentTarget;
-            const scrollLeft = el.scrollLeft;
-            const itemWidth = el.scrollWidth / periods.length;
-            const newIndex = Math.round(scrollLeft / itemWidth);
-            if (newIndex >= 0 && newIndex < periods.length && newIndex !== activeMobileWave) {
-              setActiveMobileWave(newIndex);
-            }
-          }}
-          className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scrollbar-none justify-start sm:justify-center items-end"
-        >
-          {periods.map((p, i) => (
-            <div key={p.wave} className="snap-center shrink-0 w-[285px] sm:w-[320px]">
-              <CalendarCard period={p} delay={0.1 * i} isMobile />
-            </div>
-          ))}
-        </div>
-
-        {/* Podium base */}
-        <div className="relative mx-auto mt-2 aspect-[1460/270] w-full max-w-2xl">
-          <img
-            src="/images/admission/periode-podium-v2.png"
-            alt=""
-            className="absolute inset-0 h-full w-full object-contain"
-          />
-        </div>
-      </div>
-
-      {/* Desktop View (>= 1024px): 100% original pixel-perfect layout */}
-      <div
-        className="relative left-1/2 hidden w-screen -translate-x-1/2 lg:block"
-        style={{ marginTop: "21rem" }}
-      >
+      <div className="relative left-1/2 mt-10 w-screen -translate-x-1/2 lg:mt-[21rem]">
         <div className="relative mx-auto max-w-[96vw]">
-          <Reveal delay={0.15} className="w-full">
+          <Reveal delay={0.15} className="hidden lg:block">
             <div className="relative aspect-[1460/270] w-full">
               <img
                 src="/images/admission/periode-podium-v2.png"
                 alt=""
-                className="absolute inset-0 h-full w-full object-contain"
+                className="h-full w-full object-contain"
               />
             </div>
           </Reveal>
 
-          <div
-            className="absolute inset-x-0 z-10 flex items-end justify-center gap-4 sm:gap-6"
-            style={{ bottom: "calc(85% - 0.5cm)" }}
-          >
+          <div className="relative z-10 flex flex-col items-center gap-6 lg:absolute lg:inset-x-0 lg:bottom-[calc(85%-0.5cm)] lg:flex-row lg:items-end lg:justify-center">
             {periods.map((p, i) => (
               <CalendarCard key={p.wave} period={p} delay={0.25 + i * 0.1} />
             ))}

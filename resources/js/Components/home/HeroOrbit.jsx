@@ -1,8 +1,5 @@
-"use client";
-
 import { useId } from "react";
 
-// Default orbit: curve dan posisi titik fallback jika slide tidak menentukannya
 export const DEFAULT_ORBIT = {
   path: "M58,88 Q95,55 90,46",
   dots: [
@@ -10,6 +7,15 @@ export const DEFAULT_ORBIT = {
     { x: 90, y: 46, size: 18 },
   ],
   fade: { x1: 90, y1: 46, x2: 58, y2: 88 },
+};
+
+export const MOBILE_DEFAULT_ORBIT = {
+  path: "M14,48 Q48,22 82,26",
+  dots: [
+    { x: 48, y: 36, size: 11 },
+    { x: 82, y: 26, size: 18 },
+  ],
+  fade: { x1: 48, y1: 36, x2: 14, y2: 48 },
 };
 
 function SunDot({ size }) {
@@ -45,7 +51,7 @@ function SunDot({ size }) {
         })}
       </svg>
       <span
-        className="animate-pulse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        className="motion-safe:animate-pulse absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           width: size * 0.42,
           height: size * 0.42,
@@ -58,14 +64,14 @@ function SunDot({ size }) {
   );
 }
 
-export default function HeroOrbit({ orbit = DEFAULT_ORBIT }) {
+export default function HeroOrbit({ orbit = DEFAULT_ORBIT, className = "" }) {
   const id = useId();
   const gradientId = `hero-orbit-fade-${id}`;
 
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-10 hidden md:block"
+      className={`pointer-events-none absolute inset-0 z-10 ${className}`}
     >
       <svg
         viewBox="0 0 100 100"

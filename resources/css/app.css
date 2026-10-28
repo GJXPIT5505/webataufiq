@@ -11,3 +11,57 @@
     font-family: 'Playfair Display', Georgia, serif;
   }
 }
+
+/* 3. Floating Quick Menu (Menu Bintang 8) */
+.quick-menu {
+  display: none;
+}
+@media (min-width: 64rem) and (hover: hover) and (pointer: fine) {
+  .quick-menu {
+    display: block;
+  }
+  .quick-menu-mobile {
+    display: none;
+  }
+}
+
+/* 4. Mobile Readable Typography */
+@media (max-width: 48rem) {
+  .mobile-readable {
+    --text-sm: 0.9375rem;
+  }
+}
+
+/* 5. Hero Entrance Animation on Mobile */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .hero-in > * {
+    animation: hero-in 0.7s ease-out both;
+  }
+  .hero-in > :nth-child(2) {
+    animation-delay: 0.15s;
+  }
+}
+
+/* 6. Admission calendar cards below lg: 9-slice frame so card grows with its text */
+@media (max-width: 63.99rem) {
+  .periode-calendar {
+    --cal-scale: calc(min(100vw - 3rem, 22rem) / 1102);
+    border-style: solid;
+    border-color: transparent;
+    border-width: calc(var(--cal-scale) * 300) calc(var(--cal-scale) * 82)
+      calc(var(--cal-scale) * 207) calc(var(--cal-scale) * 110);
+    border-image-source: var(--calendar-frame);
+    border-image-slice: 300 82 207 110 fill;
+    border-image-repeat: stretch;
+  }
+}

@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import {
   CheckCircle2,
@@ -23,31 +21,35 @@ const steps = [
     badge: "LANGKAH 01",
     title: "Informasi",
     description:
-      "Pelajari informasi lengkap seputar program, jenjang, dan alur pendaftaran sebelum memulai proses pendaftaran Ananda.",
-    checklistLeft: ["Profil sekolah & program", "Jenjang yang tersedia", "Jadwal penerimaan"],
-    checklistRight: ["Syarat & dokumen", "Biaya pendaftaran"],
+      "Dapatkan informasi lengkap mengenai kurikulum, program unggulan, fasilitas, dan biaya pendidikan di Sekolah Islam Plus Tahfizh Attaufiq.",
+    checklistLeft: ["Biaya pendaftaran & SPP", "Brosur & kurikulum sekolah", "Jadwal dan alur pendaftaran"],
+    checklistRight: ["Pilihan program & jenjang", "Informasi program beasiswa"],
     note: "Hubungi tim kami jika ada pertanyaan sebelum mendaftar.",
     cta: "Registrasi Sekarang",
     image: "/images/admission/alur-icon-1-v2.png",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     icon: FileText,
-    label: "Registrasi",
+    label: "Registration",
     badge: "LANGKAH 02",
-    title: "Registrasi",
+    title: "Registration",
     description:
       "Lakukan registrasi dengan melengkapi formulir pendaftaran online. Pastikan semua informasi yang diisi sudah benar.",
     checklistLeft: ["Data pribadi Ananda", "Data orang tua/wali", "Periode pendaftaran yang dipilih"],
-    checklistRight: ["Informasi kontak aktif", "Pilih jenjang dan program"],
+    checklistRight: ["Pilihan jenjang pendidikan", "Kontak aktif yang dapat dihubungi"],
     note: "Anda dapat menyimpan data registrasi sementara dan melanjutkan kembali kapan saja.",
     cta: "Registrasi Sekarang",
     image: "/images/admission/alur-icon-2-v2.png",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     icon: Users,
-    label: "Observasi & Wawancara",
+    label: "Observation & Interview",
     badge: "LANGKAH 03",
-    title: "Observasi & Wawancara",
+    title: "Observation & Interview",
     description:
       "Ananda akan mengikuti sesi observasi dan wawancara sesuai jadwal yang ditentukan oleh tim Attaufiq.",
     checklistLeft: ["Jadwal observasi & wawancara", "Lokasi pelaksanaan tes"],
@@ -55,6 +57,8 @@ const steps = [
     note: "Jadwal sesi observasi dan wawancara akan dikonfirmasi melalui WhatsApp resmi tim admission.",
     cta: "Registrasi Sekarang",
     image: "/images/admission/alur-icon-3-v2.png",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     icon: Megaphone,
@@ -68,6 +72,8 @@ const steps = [
     note: "Hasil seleksi diterbitkan maksimal 3 hari kerja setelah pelaksanaan tes.",
     cta: "Registrasi Sekarang",
     image: "/images/admission/alur-icon-4-v2.png",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     icon: GraduationCap,
@@ -81,6 +87,8 @@ const steps = [
     note: "Batas waktu konfirmasi dan daftar ulang adalah 7 hari kerja setelah pengumuman.",
     cta: "Registrasi Sekarang",
     image: "/images/admission/alur-icon-5-v2.png",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
 ];
 
@@ -92,13 +100,25 @@ export default function AlurSection() {
 
   const [isDesktop, setIsDesktop] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 768px)");
     setIsDesktop(mq.matches);
     const onChange = (e) => setIsDesktop(e.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
   const cardGridColumns = isDesktop ? "13rem 1fr 16rem" : "1fr";
+
+  const stepperRef = useRef(null);
+  useEffect(() => {
+    const scroller = stepperRef.current;
+    const button = scroller?.querySelectorAll("button")[active];
+    if (!scroller || !button || scroller.scrollWidth <= scroller.clientWidth) return;
+    const offset = button.getBoundingClientRect().left - scroller.getBoundingClientRect().left;
+    scroller.scrollTo({
+      left: scroller.scrollLeft + offset - (scroller.clientWidth - button.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [active]);
 
   const checklistLeft = step.checklistLeft;
   const checklistRight = step.checklistRight;
@@ -109,7 +129,6 @@ export default function AlurSection() {
   const checklistGridRef = useRef(null);
   const catatanBoxRef = useRef(null);
   const [refHeights, setRefHeights] = useState({});
-
   useEffect(() => {
     if (active === 0) {
       const titleHeight = titleRef.current?.getBoundingClientRect().height;
@@ -126,8 +145,7 @@ export default function AlurSection() {
   const CM_PX = 37.7952755906;
 
   return (
-    <section className="relative overflow-hidden bg-navy py-16 sm:py-20 md:py-28">
-      {/* Background decorative lattice frame */}
+    <section className="relative overflow-hidden bg-navy py-20 md:py-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 w-full">
         <img
           src="/images/admission/alur-pattern-frame.png"
@@ -137,17 +155,17 @@ export default function AlurSection() {
       </div>
       <div className="pointer-events-none absolute inset-0 bg-navy/70" />
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative mx-auto max-w-6xl px-6">
         <div className="relative mx-auto max-w-4xl">
           <Reveal className="relative mx-auto max-w-4xl text-center">
             <Sun aria-hidden="true" className="mx-auto h-5 w-5 text-gold" />
             <span className="mt-3 block text-xs font-bold uppercase tracking-[0.2em] text-gold">
               Alur Pendaftaran
             </span>
-            <h2 className="font-heading mt-4 text-3xl leading-[1.15] text-white sm:text-4xl md:text-5xl sm:whitespace-nowrap">
+            <h2 className="font-heading mt-4 text-3xl leading-[1.1] text-white sm:text-4xl md:whitespace-nowrap md:text-5xl">
               5 Langkah Mudah Menuju Attaufiq
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-xs leading-relaxed text-white/70 sm:text-sm md:text-base">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
               Ikuti tahapan pendaftaran berikut dengan mudah
               <br />
               dan pastikan Ananda menjadi bagian dari keluarga besar Attaufiq.
@@ -166,12 +184,14 @@ export default function AlurSection() {
           </Reveal>
         </div>
 
-        {/* Stepper with connecting line - horizontally responsive */}
-        <Reveal delay={0.1} className="relative mt-12 sm:mt-16">
-          <div className="overflow-x-auto pb-4 pt-3 -mx-4 px-4 scrollbar-none sm:mx-0 sm:px-0 sm:overflow-visible">
-            <div className="relative flex min-w-[500px] sm:min-w-0 items-start justify-between">
+        <Reveal delay={0.1} className="relative mt-10 sm:mt-16">
+          <div
+            ref={stepperRef}
+            className="pt-3 sm:pt-0"
+          >
+            <div className="relative flex items-start justify-between">
               <div
-                className="absolute inset-x-6 top-8 bg-gold/30 sm:inset-x-10 sm:top-10 md:top-12"
+                className="absolute inset-x-[10%] top-6 bg-gold/30 sm:inset-x-10 sm:top-12"
                 style={{ height: "3px" }}
               />
               {steps.map((s, i) => {
@@ -181,25 +201,25 @@ export default function AlurSection() {
                     key={s.label}
                     type="button"
                     onClick={() => setActive(i)}
-                    className="flex flex-col items-center gap-2.5 sm:gap-3 cursor-pointer z-10"
+                    className="relative flex min-w-0 flex-1 flex-col items-center gap-2 sm:flex-none sm:gap-3 cursor-pointer"
                   >
                     <span
-                      className={`relative grid h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 shrink-0 place-items-center rounded-full border-2 bg-white transition-all ${
-                        isActive ? "border-gold shadow-lg scale-105" : "border-gold/40 hover:border-gold/70"
+                      className={`relative grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 bg-white transition-colors sm:h-24 sm:w-24 ${
+                        isActive ? "border-gold" : "border-gold/40"
                       }`}
                       style={{ aspectRatio: "1 / 1" }}
                     >
                       <s.icon
                         aria-hidden="true"
-                        className="h-6 w-6 text-navy sm:h-7 sm:w-7 md:h-8 md:w-8"
+                        className="h-5 w-5 text-navy sm:h-8 sm:w-8"
                       />
-                      <span className="absolute left-1/2 top-0 grid h-5 w-5 sm:h-6 sm:w-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-gold text-[10px] sm:text-[11px] font-bold text-navy">
+                      <span className="absolute left-1/2 top-0 grid h-5 w-5 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-gold text-[10px] font-bold text-navy sm:h-6 sm:w-6 sm:text-[11px]">
                         {i + 1}
                       </span>
                     </span>
                     <span
-                      className={`text-center text-xs sm:text-sm font-medium transition-colors ${
-                        isActive ? "text-gold font-bold" : "text-white/70"
+                      className={`text-center text-[10px] leading-tight sm:text-sm sm:leading-snug ${
+                        isActive ? "text-white" : "text-white/60"
                       }`}
                     >
                       {s.label}
@@ -211,21 +231,15 @@ export default function AlurSection() {
           </div>
         </Reveal>
 
-        {/* Active step detail card */}
         <Reveal
           key={active}
           delay={0.05}
-          className="mt-8 sm:mt-10"
-          style={{
-            marginLeft: isDesktop ? "-3cm" : undefined,
-            marginRight: isDesktop ? "-3cm" : undefined,
-          }}
+          className="mt-6 sm:mt-10 lg:-mx-[min(3cm,calc((100vw-100%)/2-1rem))]"
         >
           <div
             className="relative overflow-hidden rounded-3xl bg-white px-5 pt-12 shadow-2xl sm:px-8 sm:pt-14"
-            style={{ paddingBottom: isDesktop ? "32px" : "24px" }}
+            style={{ paddingBottom: isDesktop ? "32px" : "20px" }}
           >
-            {/* Pill top edge sits flush with card top edge */}
             <span
               className="absolute left-5 top-0 inline-flex bg-gold font-bold uppercase tracking-wide text-navy sm:left-8"
               style={{
@@ -244,17 +258,17 @@ export default function AlurSection() {
             </span>
 
             <div
-              className="grid gap-6 md:gap-8 items-start"
+              className="grid gap-4 md:items-start md:gap-8"
               style={{ gridTemplateColumns: cardGridColumns }}
             >
               <div
-                className="relative mx-auto shrink-0 overflow-hidden rounded-full bg-lightblue/10 md:mx-0"
-                style={{ width: "166px", height: "166px", alignSelf: isDesktop ? "center" : "auto" }}
+                className="absolute right-4 top-3 h-20 w-20 shrink-0 overflow-hidden rounded-full bg-lightblue/10 sm:right-6 md:relative md:right-auto md:top-auto md:mx-0 md:h-[166px] md:w-[166px]"
+                style={{ alignSelf: "center" }}
               >
                 <img
                   src={step.image}
                   alt=""
-                  className="h-full w-full object-contain p-3"
+                  className="h-full w-full object-contain p-2 md:p-3"
                 />
               </div>
 
@@ -271,13 +285,13 @@ export default function AlurSection() {
               >
                 <h3
                   ref={titleRef}
-                  className="font-heading text-2xl leading-tight text-navy sm:text-3xl text-center md:text-left"
+                  className="font-heading pr-20 text-2xl leading-tight text-navy sm:text-3xl md:pr-0"
                 >
                   {step.title}
                 </h3>
                 <p
                   ref={descRef}
-                  className="mt-2 text-xs leading-relaxed text-navy/70 sm:text-sm md:text-base text-center md:text-left"
+                  className="mt-2 text-sm leading-relaxed text-navy/70 sm:text-base"
                   style={isDesktop && refHeights.desc ? { minHeight: refHeights.desc } : undefined}
                 >
                   {step.description}
@@ -299,14 +313,15 @@ export default function AlurSection() {
                   }
                 >
                   <div className="flex items-center gap-3">
-                    <ClipboardList aria-hidden="true" className="h-6 w-6 sm:h-7 sm:w-7 shrink-0 text-gold" />
+                    <ClipboardList aria-hidden="true" className="h-7 w-7 shrink-0 text-gold" />
                     <p className="text-sm font-semibold text-navy">Yang Perlu Disiapkan</p>
                   </div>
                   <div
                     ref={checklistGridRef}
-                    className="relative mt-3 grid grid-cols-1 gap-y-2 sm:grid-cols-2"
+                    className="relative mt-3 grid grid-cols-1 gap-y-2"
                     style={{
-                      gridTemplateColumns: isDesktop ? "calc(50% + 1cm) 1fr" : undefined,
+                      gridTemplateColumns: isDesktop ? "calc(50% + 1cm) 1fr" : "1fr 1fr",
+                      columnGap: isDesktop ? undefined : "0.75rem",
                       minHeight: isDesktop && refHeights.checklistGrid
                         ? refHeights.checklistGrid - CM_PX
                         : undefined,
@@ -320,12 +335,12 @@ export default function AlurSection() {
                     )}
                     <ul
                       className="flex flex-col gap-2"
-                      style={{ paddingLeft: isDesktop ? "40px" : "0" }}
+                      style={{ paddingLeft: isDesktop ? "40px" : undefined }}
                     >
                       {checklistLeft.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center gap-2 text-xs sm:text-sm text-navy/80"
+                          className="flex items-start gap-1.5 text-sm leading-snug text-navy/80 md:items-center md:gap-2 md:leading-normal"
                         >
                           <CheckCircle2
                             aria-hidden="true"
@@ -339,7 +354,7 @@ export default function AlurSection() {
                       {checklistRight.map((item) => (
                         <li
                           key={item}
-                          className="flex items-center gap-2 text-xs sm:text-sm text-navy/80"
+                          className="flex items-start gap-1.5 text-sm leading-snug text-navy/80 md:items-center md:gap-2 md:leading-normal"
                         >
                           <CheckCircle2
                             aria-hidden="true"
@@ -354,51 +369,51 @@ export default function AlurSection() {
               </div>
 
               <div
-                className="shrink-0 w-full md:w-auto"
+                className="shrink-0"
                 style={isDesktop ? { position: "relative", alignSelf: "stretch" } : undefined}
               >
                 <div
                   ref={catatanBoxRef}
-                  className="flex items-start gap-3 rounded-2xl p-3.5"
+                  className="flex items-start gap-3 rounded-2xl p-3"
                   style={{
                     backgroundColor: "rgba(0, 161, 233, 0.1)",
-                    marginTop: isDesktop ? refHeights.titleOffset : 0,
+                    marginTop: isDesktop ? refHeights.titleOffset : undefined,
                     ...(isDesktop && refHeights.catatanBox ? { minHeight: refHeights.catatanBox } : undefined),
                   }}
                 >
                   <Lightbulb
                     aria-hidden="true"
-                    className="h-5 w-5 shrink-0 text-navy mt-0.5"
+                    className="h-5 w-5 shrink-0"
+                    style={{ color: "#0b1a63" }}
                   />
                   <div>
                     <p className="text-sm font-semibold text-navy">Catatan</p>
-                    <p className="mt-1 text-xs leading-relaxed text-navy/70">{step.note}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-navy/70 md:text-xs">{step.note}</p>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 cursor-pointer"
+                <a
+                  href="#hubungi-admin"
+                  className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 cursor-pointer"
                 >
                   {step.cta}
                   <ChevronRight aria-hidden="true" className="h-4 w-4" />
-                </button>
+                </a>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* Prev/next + dot pagination */}
         <div className="mt-8 flex items-center justify-center gap-6">
           <button
             type="button"
             onClick={() => go(-1)}
             aria-label="Langkah sebelumnya"
-            className="grid h-10 w-10 place-items-center rounded-full border border-gold/50 text-gold transition-colors hover:bg-gold/10 cursor-pointer"
+            className="grid h-11 w-11 place-items-center rounded-full border border-gold/50 text-gold transition-colors hover:bg-gold/10 cursor-pointer"
           >
             <ChevronLeft aria-hidden="true" className="h-4 w-4" />
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             {steps.map((s, i) => (
               <button
                 key={s.label}
@@ -406,10 +421,14 @@ export default function AlurSection() {
                 onClick={() => setActive(i)}
                 aria-label={`Lihat langkah ${s.label}`}
                 aria-current={i === active}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  i === active ? "w-6 bg-gold" : "w-2.5 bg-white/30"
-                }`}
-              />
+                className="grid h-11 place-items-center px-1 cursor-pointer"
+              >
+                <span
+                  className={`block h-2.5 rounded-full transition-all duration-300 ${
+                    i === active ? "w-6 bg-gold" : "w-2.5 bg-white/30"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -417,7 +436,7 @@ export default function AlurSection() {
             type="button"
             onClick={() => go(1)}
             aria-label="Langkah berikutnya"
-            className="grid h-10 w-10 place-items-center rounded-full border border-gold/50 text-gold transition-colors hover:bg-gold/10 cursor-pointer"
+            className="grid h-11 w-11 place-items-center rounded-full border border-gold/50 text-gold transition-colors hover:bg-gold/10 cursor-pointer"
           >
             <ChevronRight aria-hidden="true" className="h-4 w-4" />
           </button>

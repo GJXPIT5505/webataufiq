@@ -1,4 +1,10 @@
 import { MapPin, PhoneCall } from "lucide-react";
+import ResponsiveSwitch from "@/Components/ResponsiveSwitch";
+import { TABLET_DOWN_QUERY } from "@/hooks/useMediaQuery";
+
+const BUILDING_SRC = "/images/footer/footer-building-v3.png";
+const LANTERN_SRC = "/images/footer/footer-lantern.png";
+const LOGO_SRC = "/images/footer/footer-logo.png";
 
 // STEP 1 of a deliberately incremental rebuild (explicitly requested):
 // just the navy block + gold outline shape, no photos/logo/text yet.
@@ -443,7 +449,151 @@ const SOCIAL_ICONS = [
     },
 ];
 
+const MOBILE_WAVE_D =
+  "M0,50 C16,44 30,37 47,36 C75,35 105,45 132,44 C155,43 172,30 187.5,18 C203,30 220,43 243,44 C270,45 300,35 328,36 C345,37 359,44 375,50";
+
+function MobileDivider() {
+  return (
+    <div aria-hidden="true" className="my-4 flex items-center gap-2">
+      <span className="h-0.5 w-16 bg-[#FDD000]" />
+      <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0 text-[#FDD000]">
+        <path d="M12 2l1.6 5.1L18 4l-2.6 4.7L21 10l-5 1.6L21 14l-5.6 1.3L18 20l-4.4-3.1L12 22l-1.6-5.1L6 20l2.6-4.7L3 14l5-1.6L3 10l5.6-1.3L6 4l4.4 3.1z" />
+      </svg>
+      <span className="flex-1 border-t border-dashed border-[#FDD000]/50" />
+    </div>
+  );
+}
+
+function FooterMobile() {
+  return (
+    <footer className="relative bg-ivory px-3 pb-2 pt-5">
+      <div className="relative overflow-hidden rounded-t-[2.5rem] border-x-2 border-t-2 border-[#FDD000] bg-navy-dark text-white">
+        <img
+          src={BUILDING_SRC}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute left-0 top-0 h-56 w-1/2 object-cover opacity-40 [-webkit-mask-image:linear-gradient(to_right,black_20%,transparent),linear-gradient(to_bottom,black_40%,transparent)] [mask-image:linear-gradient(to_right,black_20%,transparent),linear-gradient(to_bottom,black_40%,transparent)] [mask-composite:intersect] [-webkit-mask-composite:source-in]"
+        />
+        <img
+          src={LANTERN_SRC}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute -right-6 top-2 w-28 opacity-40 [-webkit-mask-image:linear-gradient(to_left,black_35%,transparent)] [mask-image:linear-gradient(to_left,black_35%,transparent)] sm:w-36"
+        />
+
+        <div className="relative mx-auto max-w-2xl px-4 pb-3 pt-7">
+          <div className="relative mx-auto max-w-[17rem] text-center">
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              className="absolute left-1/2 top-0 h-6 w-6 -translate-x-1/2 -translate-y-[85%] text-[#FDD000] motion-safe:animate-pulse"
+            >
+              <path d="M12 2l1.6 5.1L18 4l-2.6 4.7L21 10l-5 1.6L21 14l-5.6 1.3L18 20l-4.4-3.1L12 22l-1.6-5.1L6 20l2.6-4.7L3 14l5-1.6L3 10l5.6-1.3L6 4l4.4 3.1z" />
+            </svg>
+            <FooterArchLineArt domeOnly className="block w-full" />
+            <div className="flow-root">
+              <img
+                src={LOGO_SRC}
+                alt="Sekolah Islam Attaufiq"
+                loading="lazy"
+                className="relative mx-auto -mt-12 w-44"
+              />
+            </div>
+            <p className="mt-3 text-sm font-bold text-[#FDD000]">Memberi Arti itu ATTAUFIQ</p>
+            <p className="mt-1 text-xs leading-relaxed text-white/80">
+              Membina generasi beradab dengan pendidikan Islam yang menyeluruh untuk masa depan yang penuh
+              keberkahan.
+            </p>
+            <div className="mt-3 flex justify-center gap-2">
+              {SOCIAL_ICONS.map(({ Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-[#FDD000] text-[#FDD000] transition-opacity hover:opacity-75"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <MobileDivider />
+
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+            <div className="space-y-3">
+              {ALAMAT_BLOCKS.map((block) => (
+                <div key={block.heading}>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin aria-hidden="true" className="h-4 w-4 shrink-0 text-[#FDD000]" />
+                    <span className="text-xs font-bold">{block.heading}</span>
+                  </div>
+                  <div className="mt-1 text-[11px] leading-snug text-white/80">
+                    {block.lines.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <div className="flex items-center gap-1.5">
+                <PhoneCall aria-hidden="true" className="h-4 w-4 shrink-0 text-[#FDD000]" />
+                <span className="text-xs font-bold">Kontak Kami</span>
+              </div>
+              <div className="mt-0.5">
+                {KONTAK_ROWS.map((row, i) => (
+                  <a
+                    key={i}
+                    href={row.href}
+                    className="flex min-h-11 items-center gap-2 border-b border-dotted border-[#FDD000]/30 text-[11px] leading-snug transition-colors last:border-b-0 hover:text-[#FDD000]"
+                  >
+                    <row.Icon aria-hidden="true" className="h-4 w-4 shrink-0 text-[#FDD000]" />
+                    <span className="min-w-0 [overflow-wrap:anywhere]">{row.text.replace(/^Email : /, "")}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <svg
+        viewBox="0 0 375 56"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        className="-mt-px block h-12 w-full sm:h-14"
+      >
+        <path d={`M0,0 L0,50 ${MOBILE_WAVE_D.slice(MOBILE_WAVE_D.indexOf(" C"))} L375,0 Z`} fill="#0b1a63" />
+        <path
+          d={`M1,0 L1,50 ${MOBILE_WAVE_D.slice(MOBILE_WAVE_D.indexOf(" C"))} L374,50 L374,0`}
+          fill="none"
+          stroke="#FDD000"
+          strokeWidth="2"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+    </footer>
+  );
+}
+
 export default function Footer() {
+  return (
+    <ResponsiveSwitch
+      mobile={<FooterMobile />}
+      desktop={<FooterDesktop />}
+      query={TABLET_DOWN_QUERY}
+    />
+  );
+}
+
+function FooterDesktop() {
     return (
         <footer className="relative bg-ivory">
             {/* A fixed pixel `height` here would force `preserveAspectRatio="none"`

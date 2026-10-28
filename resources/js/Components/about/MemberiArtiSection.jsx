@@ -14,22 +14,24 @@ const ARCH_BOX_WIDTH = "calc(47.2% + 1.164cm)";
 export default function MemberiArtiSection() {
   return (
     <section className="relative overflow-hidden bg-navy">
-      <div
-        className="absolute inset-0"
-        style={{
-          maskImage: "linear-gradient(to right, black 0%, black 40%, transparent 58%)",
-          WebkitMaskImage: "linear-gradient(to right, black 0%, black 40%, transparent 58%)",
-        }}
-      >
+      {/* Background photo spans the full section on desktop, top quote-block only on mobile */}
+      <div className="absolute inset-x-0 top-0 h-[25rem] [-webkit-mask-image:linear-gradient(to_bottom,black_55%,transparent)] [mask-image:linear-gradient(to_bottom,black_55%,transparent)] md:inset-y-0 md:h-auto md:[-webkit-mask-image:linear-gradient(to_right,black_0%,black_40%,transparent_58%)] md:[mask-image:linear-gradient(to_right,black_0%,black_40%,transparent_58%)]">
         <img
           src="/images/about/memberi-arti-bg-1.png"
           alt=""
-          className="h-full w-full object-contain object-left"
+          className="h-full w-full object-cover md:object-contain md:object-left"
         />
       </div>
 
       <div className="relative grid min-h-[520px] md:min-h-[640px] md:grid-cols-2">
-        <div className="absolute inset-y-0" style={{ left: ARCH_BOX_LEFT, width: ARCH_BOX_WIDTH }}>
+        {/* Holds the quote block's place in the stacked mobile layout */}
+        <div aria-hidden="true" className="h-[25rem] md:hidden" />
+
+        {/* Arch + quote */}
+        <div
+          className="absolute top-0 left-[calc(50%-77.26vw)] h-[25rem] w-[130vw] md:inset-y-0 md:left-[var(--arch-left)] md:h-auto md:w-[var(--arch-width)]"
+          style={{ "--arch-left": ARCH_BOX_LEFT, "--arch-width": ARCH_BOX_WIDTH }}
+        >
           <svg
             aria-hidden="true"
             viewBox="0 0 100 100"
@@ -59,31 +61,33 @@ export default function MemberiArtiSection() {
           </svg>
 
           <Reveal className="relative z-10 flex h-full flex-col items-center justify-center px-4 pl-[21%] text-center">
-            <span className="font-heading text-[6.75rem] leading-none text-gold">&ldquo;</span>
-            <p className="font-heading mt-2 max-w-xs text-3xl leading-snug text-white sm:text-4xl">
+            <span className="font-heading text-6xl leading-none text-gold md:text-[6.75rem]">&ldquo;</span>
+            <p className="font-heading mt-1 max-w-[15rem] text-2xl leading-snug text-white sm:text-3xl md:mt-2 md:max-w-xs md:text-3xl lg:text-4xl">
               Setiap anak adalah amanah, setiap langkah pendidikan adalah
               kesempatan untuk memberi arti.
             </p>
             <div className="mt-5 h-px w-24 bg-gold/60" />
-            <span className="font-heading mt-2 text-[6.75rem] leading-none text-gold">&rdquo;</span>
+            <span className="font-heading mt-1 text-6xl leading-none text-gold md:mt-2 md:text-[6.75rem]">&rdquo;</span>
           </Reveal>
         </div>
 
+        {/* Divider between quote block and tagline block on desktop */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-1/2 hidden h-40 w-[2px] -translate-y-1/2 bg-gold/30 md:block"
         />
 
+        {/* Right — tagline block */}
         <Reveal
           delay={0.15}
-          className="relative col-start-2 flex flex-col items-center justify-center px-6 py-14 text-center md:px-10 md:py-16"
+          className="relative flex md:col-start-2 flex-col items-center justify-center px-6 pb-12 pt-4 text-center md:px-10 md:py-16"
         >
           <p className="text-white/90">Itulah sebabnya kami hadir,</p>
 
           <img
             src="/images/about/tagline-memberi-arti-gold.png"
             alt="Memberi Arti itu Attaufiq"
-            className="mt-4 h-auto w-full max-w-sm"
+            className="mt-3 h-auto w-full max-w-[15rem] md:mt-4 md:max-w-sm"
           />
 
           <div className="mt-5 flex w-full max-w-[220px] items-center gap-3">
@@ -92,7 +96,7 @@ export default function MemberiArtiSection() {
             <span className="h-px flex-1 bg-gold/50" />
           </div>
 
-          <p className="mt-5 max-w-md leading-relaxed text-white/70">
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/70 md:mt-5 md:text-base">
             Attaufiq berkomitmen untuk terus menjadi rumah pendidikan Islam
             yang memberikan arti, membimbing, dan mengantarkan setiap anak
             menuju masa depan terbaiknya.
@@ -102,4 +106,3 @@ export default function MemberiArtiSection() {
     </section>
   );
 }
-

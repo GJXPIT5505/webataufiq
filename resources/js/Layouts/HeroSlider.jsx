@@ -76,7 +76,7 @@ export default function HeroSlider() {
             className="relative h-full shrink-0"
             style={{ width: `${100 / SLIDE_COUNT}%` }}
           >
-            <HeroSlideContent slide={slide} priority={i === 0} />
+            <HeroSlideContent slide={slide} priority={i === 0} active={i === index} />
           </div>
         ))}
       </div>

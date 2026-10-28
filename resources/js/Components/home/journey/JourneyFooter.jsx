@@ -20,12 +20,18 @@ function smoothstep(t) {
   return c * c * (3 - 2 * c);
 }
 
-export default function JourneyFooter({ sunLayerRef }) {
+export default function JourneyFooter({ sunLayerRef, sunHandoff = true }) {
   const footerRef = useRef(null);
   const textRef = useRef(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
+    if (!sunHandoff) {
+      if (sunLayerRef.current) sunLayerRef.current.style.opacity = "1";
+      if (textRef.current) textRef.current.style.opacity = "1";
+      return;
+    }
+
     if (reduceMotion) {
       if (sunLayerRef.current) sunLayerRef.current.style.opacity = "0";
       if (textRef.current) textRef.current.style.opacity = "0";
@@ -95,7 +101,7 @@ export default function JourneyFooter({ sunLayerRef }) {
       window.removeEventListener("scroll", applyFrame);
       window.removeEventListener("resize", applyFrame);
     };
-  }, [reduceMotion, sunLayerRef]);
+  }, [reduceMotion, sunLayerRef, sunHandoff]);
 
   return (
     <div
