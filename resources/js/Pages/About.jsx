@@ -14,22 +14,24 @@ export default function About() {
     <AppLayout title="About Us - SIT At-Taufiq">
       <Head title="About Us | SIT At-Taufiq Jambi" />
 
-      {/* Hero Banner disesuaikan dengan komponen PageHeroBanner dari Claude TSX */}
-      <PageHeroBanner
-        heading="About Us"
-        subheading={[
-          "Islam + Future Ready — mengenal lebih dekat",
-          "Sekolah Islam Plus Tahfizh Attaufiq.",
-        ]}
-        photoSrc="/images/hero-banner/hero-banner-photo-example.jpg"
-      />
+      <div className="w-full overflow-x-clip mobile-readable">
+        {/* Hero Banner disesuaikan dengan komponen PageHeroBanner dari Claude TSX */}
+        <PageHeroBanner
+          heading="About Us"
+          subheading={[
+            "Islam + Future Ready — mengenal lebih dekat",
+            "Sekolah Islam Plus Tahfizh Attaufiq.",
+          ]}
+          photoSrc="/images/hero-banner/hero-banner-photo-example.jpg"
+        />
 
-      <VisiMisiSection />
-      <SejarahAmanahSection />
-      <AttaufiqHariIniSection />
-      <MemberiArtiSection />
-      <FaqSection />
-      <ContactSection />
+        <VisiMisiSection />
+        <SejarahAmanahSection />
+        <AttaufiqHariIniSection />
+        <MemberiArtiSection />
+        <FaqSection />
+        <ContactSection />
+      </div>
     </AppLayout>
   );
 }

@@ -1,18 +1,29 @@
-import { LinkButton } from "@/Components/ui/Button"; // Sesuaikan huruf kapital folder Components
+import { LinkButton } from "@/Components/ui/Button";
+import ResponsiveSwitch from "@/Components/ResponsiveSwitch";
 import ActivityCardGrid from "@/Components/home/ActivityCardGrid";
+import ActivityRail from "@/Components/home/ActivityRail";
 import FloatingElement from "@/Components/home/FloatingElement";
 import Reveal from "./Reveal";
 
-// Blok "Karakter" (dulu Tagline) dan blok "Aktivitas" berbagi satu canvas
-// ivory (foto arch + swoosh dekoratif melintasi keduanya), jadi harus jadi
-// satu komponen, bukan dua section yang cuma di-stack.
+const activityHeading = (
+  <Reveal className="mx-auto max-w-2xl text-center">
+    <h2 className="text-3xl font-bold text-navy md:text-4xl">
+      Belajar yang Tak Berhenti di Kelas
+    </h2>
+    <p className="mt-4 text-base leading-relaxed text-navy/70">
+      Setiap kegiatan dirancang untuk membentuk karakter, cara berpikir, dan
+      rasa percaya diri ananda, bukan hanya nilai di atas kertas.
+    </p>
+  </Reveal>
+);
+
 export default function CharacterActivitySection() {
   return (
-    <section className="relative overflow-hidden bg-ivory">
-      {/* Foto arch dekoratif, menempel tepi kiri & kanan canvas */}
+    <section className="relative overflow-clip bg-ivory">
+      {/* Foto arch dekoratif */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-40 overflow-hidden opacity-90 md:block lg:w-56"
+        className="pointer-events-none absolute left-0 top-0 z-0 h-[36rem] w-14 overflow-hidden opacity-70 md:inset-y-0 md:h-auto md:w-40 md:opacity-90 lg:w-56"
         style={{
           WebkitMaskImage:
             "linear-gradient(to right, black 0%, black 55%, transparent 100%)",
@@ -28,7 +39,7 @@ export default function CharacterActivitySection() {
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-40 overflow-hidden opacity-90 md:block lg:w-56"
+        className="pointer-events-none absolute right-0 top-0 z-0 h-[36rem] w-14 overflow-hidden opacity-70 md:inset-y-0 md:h-auto md:w-40 md:opacity-90 lg:w-56"
         style={{
           WebkitMaskImage:
             "linear-gradient(to left, black 0%, black 55%, transparent 100%)",
@@ -45,7 +56,7 @@ export default function CharacterActivitySection() {
 
       {/* Swoosh dekoratif */}
       <FloatingElement
-        className="pointer-events-none absolute top-2 z-0 hidden w-40 opacity-90 md:left-40 md:top-6 md:block md:w-44 lg:left-56 lg:top-8 lg:w-56"
+        className="pointer-events-none absolute left-1 top-3 z-0 w-12 opacity-80 md:left-40 md:top-6 md:w-44 md:opacity-90 lg:left-56 lg:top-8 lg:w-56"
         range={20}
         duration={2.2}
       >
@@ -56,7 +67,7 @@ export default function CharacterActivitySection() {
         />
       </FloatingElement>
       <FloatingElement
-        className="pointer-events-none absolute z-0 hidden w-20 overflow-hidden opacity-90 md:right-[236px] md:top-[280px] md:block md:h-[350px] lg:right-[300px] lg:top-[518px] lg:h-[485px] lg:w-28"
+        className="pointer-events-none absolute right-1 top-[24rem] z-0 h-36 w-7 overflow-hidden opacity-80 md:right-[236px] md:top-[280px] md:h-[350px] md:w-20 md:opacity-90 lg:right-[300px] lg:top-[518px] lg:h-[485px] lg:w-28"
         range={26}
         duration={2.6}
         delay={0.6}
@@ -90,24 +101,21 @@ export default function CharacterActivitySection() {
 
       {/* BLOK 2 — Aktivitas */}
       <div className="relative z-10 mx-auto max-w-6xl px-6 pb-20 pt-16 md:pt-20">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-navy md:text-4xl">
-            Belajar yang Tak Berhenti di Kelas
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-navy/70">
-            Setiap kegiatan dirancang untuk membentuk karakter, cara
-            berpikir, dan rasa percaya diri ananda, bukan hanya nilai di atas
-            kertas.
-          </p>
-        </Reveal>
+        <ResponsiveSwitch
+          mobile={<ActivityRail heading={activityHeading} />}
+          desktop={
+            <>
+              {activityHeading}
+              <ActivityCardGrid />
+            </>
+          }
+        />
 
-        <ActivityCardGrid />
-
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-          <LinkButton href="/events" variant="navy-hover-gold">
+        <div className="mt-8 flex items-center justify-center gap-3 sm:mt-12 sm:gap-4">
+          <LinkButton href="/events" variant="navy-hover-gold" className="flex-1 px-4 sm:flex-none sm:px-6">
             More Events
           </LinkButton>
-          <LinkButton href="/programs" variant="navy-hover-gold">
+          <LinkButton href="/programs" variant="navy-hover-gold" className="flex-1 px-4 sm:flex-none sm:px-6">
             More Programs
           </LinkButton>
         </div>

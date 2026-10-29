@@ -330,57 +330,59 @@ export default function FaqAdmissionSection() {
         </div>
 
         {/* Bottom help CTA bar */}
-        <Reveal delay={0.1} className="mt-8 sm:mt-10">
-          <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-[#FDD000]/30 bg-white p-5 sm:flex-row sm:p-8">
-            <div className="flex items-center gap-4 text-center sm:text-left">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#0D1B68] text-[#FDD000]">
-                <Headphones aria-hidden="true" className="h-6 w-6" />
-              </span>
-              <div>
-                <p className="text-base sm:text-lg text-[#0D1B68] font-['Playfair_Display',serif] font-semibold">
-                  Butuh Bantuan Lebih Lanjut?
-                </p>
-                <p className="text-xs sm:text-sm text-[#0D1B68]/60">
-                  Tim Attaufiq siap membantu menjawab setiap pertanyaan Bunda/Ayah.
-                </p>
+        <div id="hubungi-admin" className="scroll-mt-28">
+          <Reveal delay={0.1} className="mt-6 sm:mt-10">
+            <div className="flex flex-col justify-between gap-4 rounded-2xl border border-gold/30 bg-white p-4 sm:flex-row sm:items-center sm:gap-6 sm:p-8">
+              <div className="flex items-center gap-3 text-left sm:gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy text-gold sm:h-12 sm:w-12">
+                  <Headphones aria-hidden="true" className="h-6 w-6" />
+                </span>
+                <div>
+                  <p className="font-heading text-lg text-navy">
+                    Butuh Bantuan Lebih Lanjut?
+                  </p>
+                  <p className="text-sm text-navy/60">
+                    Tim Attaufiq siap membantu menjawab setiap pertanyaan Bunda/Ayah.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:gap-3">
+                <a
+                  href="https://wa.link/moeqv3"
+                  className="flex items-center gap-2 rounded-xl border border-gold/40 px-3 py-2.5 transition-opacity hover:opacity-80 sm:gap-3 sm:px-5 sm:py-3"
+                >
+                  <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-gold" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs font-semibold text-navy sm:text-sm">
+                      Admin PG-TK-SD
+                    </span>
+                    <span className="hidden text-xs text-navy/50 sm:block">
+                      Chat via WA pada jam kerja
+                    </span>
+                  </span>
+                  <ChevronRight aria-hidden="true" className="hidden h-4 w-4 shrink-0 text-navy/40 sm:block" />
+                </a>
+
+                <a
+                  href="https://wa.link/r67nek"
+                  className="flex items-center gap-2 rounded-xl bg-navy px-3 py-2.5 text-white transition-opacity hover:opacity-90 sm:gap-3 sm:px-5 sm:py-3"
+                >
+                  <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-gold" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs font-semibold sm:text-sm">
+                      Admin SMP-SMA
+                    </span>
+                    <span className="hidden text-xs text-white/60 sm:block">
+                      Chat via WA pada jam kerja
+                    </span>
+                  </span>
+                  <ChevronRight aria-hidden="true" className="hidden h-4 w-4 shrink-0 text-white/60 sm:block" />
+                </a>
               </div>
             </div>
-
-            <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row">
-              <a
-                href="https://wa.link/moeqv3"
-                className="flex items-center gap-3 rounded-xl border border-[#FDD000]/40 px-4 py-3 sm:px-5 transition-opacity hover:opacity-80"
-              >
-                <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-[#FDD000]" />
-                <span className="flex-1 min-w-0">
-                  <span className="block text-sm font-semibold text-[#0D1B68]">
-                    Chat Admin PG-TK-SD
-                  </span>
-                  <span className="block text-xs text-[#0D1B68]/50">
-                    Chat via WA pada jam kerja
-                  </span>
-                </span>
-                <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[#0D1B68]/40" />
-              </a>
-
-              <a
-                href="https://wa.link/r67nek"
-                className="flex items-center gap-3 rounded-xl bg-[#0D1B68] px-4 py-3 sm:px-5 text-white transition-opacity hover:opacity-90"
-              >
-                <FaqWhatsappIcon aria-hidden="true" className="h-5 w-5 shrink-0 text-[#FDD000]" />
-                <span className="flex-1 min-w-0">
-                  <span className="block text-sm font-semibold">
-                    Chat Admin SMP-SMA
-                  </span>
-                  <span className="block text-xs text-white/60">
-                    Chat via WA pada jam kerja
-                  </span>
-                </span>
-                <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-white/60" />
-              </a>
-            </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

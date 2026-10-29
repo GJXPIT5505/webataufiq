@@ -12,7 +12,7 @@ export default function AdmissionIndex() {
     <AppLayout title="Penerimaan Murid Baru - SIT At-Taufiq">
       <Head title="Admission & Pendaftaran PMB | SIT At-Taufiq Jambi" />
 
-      <div className="w-full overflow-x-clip">
+      <div className="w-full overflow-x-clip mobile-readable">
         {/* 1. Hero Section */}
         <PageHeroBanner
           heading="Admission"

@@ -21,7 +21,7 @@ function CornerOrnament() {
       aria-hidden="true"
       className="pointer-events-none absolute left-0 top-0 z-10 h-36 w-36 overflow-hidden rounded-br-[4rem] sm:h-44 sm:w-44 md:h-52 md:w-52"
     >
-      <div className="absolute inset-0 bg-navy/15 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 bg-navy/15 lg:backdrop-blur-[1px]" />
       <svg
         aria-hidden="true"
         viewBox="0 0 200 200"
@@ -54,14 +54,15 @@ export default function ClosingCtaSection() {
 
   return (
     <section className="relative overflow-hidden bg-navy">
-      <div className="absolute inset-0">
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[170px] bg-ivory md:hidden" />
+      <div className="absolute inset-x-0 bottom-[156px] top-[150px] md:inset-0">
         <img
           src={BG_SRC}
           alt=""
-          className="h-full w-full object-cover"
-          style={{ objectPosition: "center 30%" }}
+          className="h-full w-full object-cover object-[47%_50%] md:object-[center_30%]"
         />
-        <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-ivory/85 via-ivory/25 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-navy to-transparent md:hidden" />
+        <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-ivory via-ivory/25 to-transparent md:from-ivory/85" />
 
         <div
           id="closing-sun-handoff"
@@ -69,57 +70,59 @@ export default function ClosingCtaSection() {
           className="pointer-events-none absolute h-0 w-0"
           style={{ left: `${SUN_FRACTION.x}%`, top: `${SUN_FRACTION.y}%` }}
         />
+
+        <div
+          className="pointer-events-none absolute aspect-square w-[72%] max-w-[440px] md:w-[38%]"
+          style={{
+            left: `${RING_CENTER.x}%`,
+            top: `${RING_CENTER.y}%`,
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <motion.div
+            aria-hidden="true"
+            className="absolute inset-0 rounded-full border-2 border-gold/60"
+            style={{ boxShadow: "0 0 40px 6px rgba(253,208,0,0.35)" }}
+            animate={reduceMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }
+          />
+          <motion.div
+            aria-hidden="true"
+            className="absolute -inset-3 rounded-full border border-gold/25"
+            animate={reduceMotion ? undefined : { rotate: 360 }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { duration: 50, repeat: Infinity, ease: "linear" }
+            }
+          />
+          {RING_SPARKLES.map((s, i) => (
+            <Sparkle
+              key={i}
+              aria-hidden="true"
+              className={`motion-safe:animate-pulse absolute -translate-x-1/2 -translate-y-1/2 text-gold drop-shadow-[0_0_4px_rgba(253,208,0,0.8)] ${
+                i > 0 ? "hidden md:block" : ""
+              }`}
+              style={{
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: s.size,
+                height: s.size,
+                animationDelay: s.delay,
+                animationDuration: "3s",
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       <CornerOrnament />
 
-      <div
-        className="pointer-events-none absolute aspect-square w-[38%] max-w-[440px]"
-        style={{
-          left: `${RING_CENTER.x}%`,
-          top: `${RING_CENTER.y}%`,
-          transform: "translate(-50%, -50%)",
-        }}
-      >
-        <motion.div
-          aria-hidden="true"
-          className="absolute inset-0 rounded-full border-2 border-gold/60"
-          style={{ boxShadow: "0 0 40px 6px rgba(253,208,0,0.35)" }}
-          animate={reduceMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
-          transition={
-            reduceMotion
-              ? undefined
-              : { duration: 4, repeat: Infinity, ease: "easeInOut" }
-          }
-        />
-        <motion.div
-          aria-hidden="true"
-          className="absolute -inset-3 rounded-full border border-gold/25"
-          animate={reduceMotion ? undefined : { rotate: 360 }}
-          transition={
-            reduceMotion
-              ? undefined
-              : { duration: 50, repeat: Infinity, ease: "linear" }
-          }
-        />
-        {RING_SPARKLES.map((s, i) => (
-          <Sparkle
-            key={i}
-            aria-hidden="true"
-            className="animate-pulse absolute -translate-x-1/2 -translate-y-1/2 text-gold drop-shadow-[0_0_4px_rgba(253,208,0,0.8)]"
-            style={{
-              left: `${s.x}%`,
-              top: `${s.y}%`,
-              width: s.size,
-              height: s.size,
-              animationDelay: s.delay,
-              animationDuration: "3s",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-20 mx-auto flex min-h-[560px] max-w-3xl flex-col items-center px-6 pb-14 pt-16 text-center sm:min-h-[640px] md:min-h-[760px] md:pb-20 md:pt-20">
+      <div className="relative z-20 mx-auto flex min-h-[760px] max-w-3xl flex-col items-center px-6 pb-8 pt-12 text-center sm:min-h-[820px] md:min-h-[760px] md:pb-20 md:pt-20">
         <Reveal>
           <p className="text-sm font-semibold tracking-wide text-gold sm:text-base">
             ✦ Perjalanan Hebat Dimulai di Sini ✦
@@ -152,12 +155,12 @@ export default function ClosingCtaSection() {
           <Reveal delay={0.32}>
             <Link
               href="/admission"
-              className="flex items-center gap-3 rounded-full bg-navy py-2 pl-2 pr-5 shadow-lg shadow-navy/20 transition-colors duration-200 hover:bg-navy-dark"
+              className="flex items-center gap-3 rounded-full border border-white/25 bg-navy py-2 pl-2 pr-5 shadow-lg shadow-navy/20 transition-colors duration-200 hover:bg-navy-dark md:border-0"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15">
                 <UserRound aria-hidden="true" className="h-5 w-5 text-white" />
               </span>
-              <span className="text-left">
+              <span className="flex-1 text-left sm:flex-none">
                 <span className="block text-sm font-bold leading-tight text-white">
                   Daftarkan Ananda
                 </span>
@@ -172,12 +175,12 @@ export default function ClosingCtaSection() {
           <Reveal delay={0.4}>
             <Link
               href="/admission"
-              className="flex items-center gap-3 rounded-full border border-gold/50 bg-ivory/90 py-2 pl-2 pr-5 shadow-lg shadow-navy/10 backdrop-blur-sm transition-colors duration-200 hover:bg-ivory"
+              className="flex items-center gap-3 rounded-full border border-gold/50 bg-ivory/95 py-2 pl-2 pr-5 shadow-lg shadow-navy/10 transition-colors duration-200 hover:bg-ivory lg:bg-ivory/90 lg:backdrop-blur-sm"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy/10">
                 <CalendarDays aria-hidden="true" className="h-5 w-5 text-navy" />
               </span>
-              <span className="text-left">
+              <span className="flex-1 text-left sm:flex-none">
                 <span className="block text-sm font-bold leading-tight text-navy">
                   Jadwalkan Kunjungan
                 </span>

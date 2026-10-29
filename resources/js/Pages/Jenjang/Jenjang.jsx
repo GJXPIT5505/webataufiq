@@ -91,12 +91,12 @@ export default function JenjangPage() {
           <SectionHeading>Pilih Jenjang Pendidikan</SectionHeading>
 
           {/* 5 Jenjang Cards (Mihrab Shaped) */}
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="-mx-6 mt-10 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-3 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5">
             {JENJANG_DISPLAY.map((j) => (
               <Link
                 key={j.slug}
                 href={`/jenjang/${j.slug}`}
-                className="group flex flex-col items-center gap-3 rounded-t-full rounded-b-2xl border border-[#F1B23A]/30 bg-white px-4 py-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+                className="group flex w-36 shrink-0 snap-start flex-col items-center gap-3 rounded-t-full rounded-b-2xl border border-[#F1B23A]/30 bg-white px-4 py-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:w-auto"
               >
                 <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-[#102380]">
                   <span className="h-8 w-8 text-[#F1B23A]">
@@ -134,10 +134,10 @@ export default function JenjangPage() {
             {JENJANG_DISPLAY.map((j) => (
               <Link
                 key={j.slug}
-                href={`/${j.slug}`}
-                className="group flex items-stretch gap-4 overflow-hidden rounded-2xl border border-[#102380]/10 bg-white shadow-sm transition-all hover:shadow-md sm:gap-5"
+                href={`/jenjang/${j.slug}`}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#102380]/10 bg-white shadow-sm transition-all hover:shadow-md sm:flex-row sm:items-stretch sm:gap-5"
               >
-                <div className="relative w-32 shrink-0 sm:w-48 md:w-56">
+                <div className="relative h-44 w-full shrink-0 sm:h-auto sm:w-[calc(11rem+5cm)]">
                   {j.photo ? (
                     <img
                       src={j.photo}
@@ -151,15 +151,15 @@ export default function JenjangPage() {
                   )}
                 </div>
 
-                <div className="flex flex-1 items-center gap-4 py-4 pr-4 sm:gap-5">
+                <div className="flex flex-1 items-center gap-4 p-4 sm:gap-5 sm:pl-0">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#102380] sm:h-14 sm:w-14">
                     <span className="h-6 w-6 text-[#F1B23A] sm:h-7 sm:w-7">
                       {j.Icon ? <j.Icon /> : <Blocks className="h-full w-full" strokeWidth={1.6} />}
                     </span>
                   </span>
 
-                  <div className="flex-1">
-                    <h4 className="font-[#102380] font-['Playfair_Display',Georgia,serif] text-lg font-bold">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-['Playfair_Display',Georgia,serif] text-lg font-bold text-[#102380]">
                       {j.fullLabel}
                     </h4>
                     <p className="mt-1 text-sm leading-relaxed text-[#102380]/70">
@@ -167,7 +167,7 @@ export default function JenjangPage() {
                     </p>
                   </div>
 
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#102380]/15 text-[#102380]/40 transition-colors group-hover:border-[#F1B23A] group-hover:bg-[#F1B23A] group-hover:text-white">
+                  <span className="hidden h-9 w-9 shrink-0 place-items-center rounded-full border border-[#102380]/15 text-[#102380]/40 transition-colors group-hover:border-[#F1B23A] group-hover:bg-[#F1B23A] group-hover:text-white sm:grid">
                     <Plus aria-hidden="true" className="h-4 w-4" />
                   </span>
                 </div>
